@@ -1,5 +1,5 @@
 import { ShardingManager } from "discord.js";
-import { Logger } from "./core/utils/logger";
+import { Logger } from "./core/utils/Logger";
 import { token } from "./config/bot-config.json";
 
 process.chdir("dist");

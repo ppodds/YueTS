@@ -1,6 +1,7 @@
 import { Client, Intents } from "discord.js";
 import { token } from "./config/bot-config.json";
-import { Logger } from "./core/utils/logger";
+import { EventHandler } from "./core/event-handler/EventHandler";
+import { Logger } from "./core/utils/Logger";
 
 const launchTimestamp = Date.now();
 
@@ -39,6 +40,7 @@ async function preLaunch(client: Client) {
         "「現在剛起床還沒搞清楚狀況... 等一下再叫我吧...」",
         { type: "LISTENING" }
     );
+    EventHandler.init(client, { launchTimestamp });
 }
 
 preLaunch(client);
