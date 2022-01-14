@@ -1,0 +1,6 @@
+{
+  "appenders": {
+    "bot": { "type": "file", "filename": "/var/log/yue/bot.log" }
+  },
+  "categories": { "default": { "appenders": ["bot"], "level": "info" } }
+}
