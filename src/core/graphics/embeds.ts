@@ -5,14 +5,18 @@ import {
     MessageButton,
     Client,
     ColorResolvable,
-    Interaction,
-    CommandInteraction,
     MessageComponentInteraction,
+    CommandInteraction,
+    ButtonInteraction,
 } from "discord.js";
 import { Color } from "./Color";
 import { author } from "../../config/bot-config.json";
-import { ButtonPaginator } from "@psibean/discord.js-pagination";
+import {
+    ButtonPaginator,
+    PaginatorEvents,
+} from "@psibean/discord.js-pagination";
 import { Reaction } from "./Reaction";
+import { Logger } from "../utils/Logger";
 
 export function info(
     client: Client,
@@ -56,14 +60,12 @@ export function error(client: Client, description: string) {
  * @param {CommandInteraction} interaction interaction object of interaction event
  * @param {MessageEmbed[]} pages an array of MessageEmbed, each one is a page of paginationEmbed
  * @param {MessageButton[]} buttonList an array of MessageButton which length is 2
- * @param {number} timeout timeout(ms)
  * @returns {Promise<Message>} reply message
  */
 export async function paginationEmbed(
     interaction: CommandInteraction,
     pages: MessageEmbed[],
-    buttonList: MessageButton[],
-    timeout: number = 120000
+    buttonList: MessageButton[]
 ): Promise<void> {
     if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
         throw new Error("Link buttons are not supported");
@@ -72,91 +74,63 @@ export async function paginationEmbed(
     for (let page = 0; page < pages.length; page++) {
         pages[page].setDescription(
             pages[page].description +
-                +"\n" +
-                `目前顯示的是第 ${page + 1} 頁的結果 共有 ${pages.length} 頁`
+                `
+                目前顯示的是第 ${page + 1} 頁的結果 共有 ${pages.length} 頁`
         );
     }
 
+    const identifiersResolver = async ({
+        interaction,
+        paginator,
+    }: {
+        interaction: ButtonInteraction;
+        paginator: ButtonPaginator;
+    }) => {
+        let { pageIdentifier } = paginator.currentIdentifiers;
+        switch (interaction.customId) {
+            case buttonList[0].customId:
+                pageIdentifier =
+                    pageIdentifier > 0 ? --pageIdentifier : pages.length - 1;
+                break;
+            case buttonList[1].customId:
+                pageIdentifier =
+                    pageIdentifier + 1 < pages.length ? ++pageIdentifier : 0;
+                break;
+            default:
+                break;
+        }
+        return { ...paginator.currentIdentifier, pageIdentifier };
+    };
+
     const paginator = new ButtonPaginator(interaction, {
         pages,
-        button: buttonList,
-    });
+        buttons: buttonList,
+        identifiersResolver: identifiersResolver,
+    })
+        .on(PaginatorEvents.PAGINATION_READY, async (paginator) => {
+            for (const actionRow of paginator.messageActionRows) {
+                for (const button of actionRow.components) {
+                    button.disabled = false;
+                }
+            }
+            await paginator.message.edit(paginator.currentPage);
+        })
+        .on(PaginatorEvents.COLLECT_ERROR, ({ error }) => {
+            Logger.error("Paginator encounter collect error!", error);
+        })
+        .on(PaginatorEvents.PAGINATION_END, async ({ reason, paginator }) => {
+            try {
+                if (paginator.message.deletable)
+                    await paginator.message.delete();
+            } catch (error) {
+                Logger.error(
+                    "There was an error when deleting the message!",
+                    error
+                );
+            }
+        });
     await paginator.send();
-    // let page = 0;
-    // const originDescription = pages[page].description;
-    // const row = new MessageActionRow().addComponents(buttonList);
-    // const curPage = await interaction.reply({
-    //     embeds: [
-    //         pages[page].setDescription(
-    //             originDescription +
-    //                 `
-    //                 目前顯示的是第 ${page + 1} 頁的結果 共有 ${
-    //                     pages.length
-    //                 } 頁`
-    //         ),
-    //     ],
-    //     components: [row],
-    //     fetchReply: true,
-    // }) as Message;
-
-    // const filter = (i: MessageComponentInteraction) =>
-    //     i.customId === buttonList[0].customId ||
-    //     i.customId === buttonList[1].customId;
-
-    // const collector = curPage.createMessageComponentCollector({
-    //     filter,
-    //     time: timeout,
-    // });
-
-    // collector.on("collect", async (i) => {
-    //     switch (i.customId) {
-    //         case buttonList[0].customId:
-    //             page = page > 0 ? --page : pages.length - 1;
-    //             break;
-    //         case buttonList[1].customId:
-    //             page = page + 1 < pages.length ? ++page : 0;
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    //     await i.deferUpdate();
-    //     await i.editReply({
-    //         embeds: [
-    //             pages[page].setDescription(
-    //                 originDescription +
-    //                     `
-    //                     目前顯示的是第 ${page + 1} 頁的結果 共有 ${
-    //                         pages.length
-    //                     } 頁`
-    //             ),
-    //         ],
-    //         components: [row],
-    //     });
-    //     collector.resetTimer();
-    // });
-    // collector.on
-    // collector.on("end", () => {
-    //     if (!curPage.deleted) {
-    //         const disabledRow = new MessageActionRow().addComponents(
-    //             buttonList[0].setDisabled(true),
-    //             buttonList[1].setDisabled(true)
-    //         );
-    //         curPage.edit({
-    //             embeds: [
-    //                 pages[page].setDescription(
-    //                     originDescription +
-    //                         `
-    //                         目前顯示的是第 ${page + 1} 頁的結果 共有 ${
-    //                             pages.length
-    //                         } 頁`
-    //                 ),
-    //             ],
-    //             components: [disabledRow],
-    //         });
-    //     }
-    // });
-
-    // return curPage;
+    return paginator.message;
 }
 /**
  * Send a select menu embed reply
@@ -302,16 +276,16 @@ export async function paginationEmbed(
  * Generate a button list for paginationEmbed
  * @returns {MessageButton[]} a button list for paginationEmbed
  */
-// paginationButton() {
-//     const buttonList = [
-//         new MessageButton()
-//             .setCustomId("prevPage")
-//             .setLabel("上一頁")
-//             .setStyle("PRIMARY"),
-//         new MessageButton()
-//             .setCustomId("nextPage")
-//             .setLabel("下一頁")
-//             .setStyle("PRIMARY"),
-//     ];
-//     return buttonList;
-// },
+export function paginationButton(): MessageButton[] {
+    const buttonList = [
+        new MessageButton()
+            .setCustomId("prevPage")
+            .setLabel("上一頁")
+            .setStyle("PRIMARY"),
+        new MessageButton()
+            .setCustomId("nextPage")
+            .setLabel("下一頁")
+            .setStyle("PRIMARY"),
+    ];
+    return buttonList;
+}
