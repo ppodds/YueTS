@@ -3,10 +3,10 @@ import dbConfig from "../../config/db-config.json";
 import { env } from "../../config/bot-config.json";
 import { Logger } from "../utils/Logger";
 import * as user from "./models/user";
-// import grab from "./models/grab";
-// import image from "./models/image";
+import * as grab from "./models/grab";
+import * as image from "./models/image";
 import * as reply from "./models/reply";
-// import donor from "./models/donor";
+import * as donor from "./models/donor";
 
 export class DatabaseManager {
     public static sequelize: Sequelize;
@@ -32,10 +32,10 @@ export class DatabaseManager {
             }
         );
         user.init();
-        // grab.init();
-        // image.init();
+        grab.init();
+        image.init();
         reply.init();
-        // donor.init();
+        donor.init();
 
         await this.sequelize.sync();
         Logger.info("Database initialized!");

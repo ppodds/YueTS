@@ -2,6 +2,12 @@ import { Model, DataTypes } from "sequelize";
 import { DatabaseManager } from "../DatabaseManager";
 
 export class Reply extends Model {
+    id: number;
+    dm: boolean;
+    scope: string;
+    key: string;
+    response: string;
+    formatted: boolean;
     /**
      * Get reply(only response) according parameters
      * @param {String} key reply's key
