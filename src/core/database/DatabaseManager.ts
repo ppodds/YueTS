@@ -5,7 +5,7 @@ import { Logger } from "../utils/Logger";
 import * as user from "./models/user";
 // import grab from "./models/grab";
 // import image from "./models/image";
-// import reply from "./models/reply";
+import * as reply from "./models/reply";
 // import donor from "./models/donor";
 
 export class DatabaseManager {
@@ -32,10 +32,10 @@ export class DatabaseManager {
             }
         );
         user.init();
-        // grab.init(sequelize);
-        // image.init(sequelize);
-        // reply.init(sequelize);
-        // donor.init(sequelize);
+        // grab.init();
+        // image.init();
+        reply.init();
+        // donor.init();
 
         await this.sequelize.sync();
         Logger.info("Database initialized!");
