@@ -1,9 +1,11 @@
 import axios from "axios";
 import { Message } from "discord.js";
 import { info } from "../../graphics/embeds";
+import { EventInterface } from "../EventInterface";
 
-module.exports = {
+const event: EventInterface = {
     name: "messageCreate",
+    once: false,
     async execute(message: Message) {
         if (message.author.bot) return;
         const result = message.content.match(
@@ -100,3 +102,5 @@ module.exports = {
         }
     },
 };
+
+export = event;
