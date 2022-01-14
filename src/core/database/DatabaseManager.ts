@@ -2,15 +2,16 @@ import { Sequelize } from "sequelize";
 import dbConfig from "../../config/db-config.json";
 import { env } from "../../config/bot-config.json";
 import { Logger } from "../utils/Logger";
-// import user from "./models/user";
+import * as user from "./models/user";
 // import grab from "./models/grab";
 // import image from "./models/image";
 // import reply from "./models/reply";
 // import donor from "./models/donor";
 
 export class DatabaseManager {
+    public static sequelize: Sequelize;
     public static async init() {
-        const sequelize = new Sequelize(
+        this.sequelize = new Sequelize(
             dbConfig.database,
             dbConfig.user,
             dbConfig.password,
@@ -30,13 +31,13 @@ export class DatabaseManager {
                 },
             }
         );
-        // user.init(sequelize);
+        user.init();
         // grab.init(sequelize);
         // image.init(sequelize);
         // reply.init(sequelize);
         // donor.init(sequelize);
 
-        await sequelize.sync();
+        await this.sequelize.sync();
         Logger.info("Database initialized!");
     }
 }
