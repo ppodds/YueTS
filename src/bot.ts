@@ -1,5 +1,6 @@
 import { Client, Intents } from "discord.js";
 import { token } from "./config/bot-config.json";
+import { DatabaseManager } from "./core/database/DatabaseManager";
 import { EventHandler } from "./core/event-handler/EventHandler";
 import { Logger } from "./core/utils/Logger";
 
@@ -29,6 +30,7 @@ const client = new Client({
 });
 
 async function preLaunch(client: Client) {
+    await DatabaseManager.init();
     try {
         await client.login(token);
         Logger.info("Logged into Discord successfully");
