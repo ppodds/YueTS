@@ -9,7 +9,12 @@ export class Reply extends Model {
      * @param {Boolean} global whether the reply is a global reply
      * @param {Boolean} formated whether the reply is a formatted message
      */
-    static async getResponse(key, scope, global, formated) {
+    static async getResponse(
+        key: string,
+        scope: string,
+        global: boolean,
+        formated: boolean
+    ) {
         return await Reply.findOne({
             where: {
                 dm: global,
