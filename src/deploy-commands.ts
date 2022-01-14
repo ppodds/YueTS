@@ -6,6 +6,7 @@ import {
 import { token, env, dev } from "./config/bot-config.json";
 import * as fs from "fs";
 import { CommandInterface } from "./core/command-handler/CommandInterface";
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 process.chdir("dist");
 
@@ -21,7 +22,7 @@ for (const folder of commandFolders) {
         .filter((file) => file.endsWith(".js"));
     for (const file of commandFiles) {
         const command: CommandInterface = require(`./core/command-handler/commands/${folder}/${file}`);
-        commands.push(command.data.toJSON());
+        commands.push((<SlashCommandBuilder>command.data).toJSON());
     }
 }
 
