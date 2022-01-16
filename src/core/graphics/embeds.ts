@@ -145,144 +145,121 @@ export async function paginationEmbed(
 }
 /**
  * Send a select menu embed reply
- * @param {Interaction} interaction interaction object of interaction event
- * @param {MessageEmbed} embed original embed
- * @param {number} options options amount (1~5)
- * @param {Function} callback option callback function Ex: function foo(option) {}
- * @param {number} timeout timeout(ms)
+ * @param interaction interaction object of interaction event
+ * @param embed original embed
+ * @param options options amount (1~5)
+ * @param callback option callback function Ex: function foo(option) {}
+ * @param timeout timeout(ms)
  * @returns {Promise<Message>} reply message
  */
-// async selectMenuEmbed(
-//     interaction,
-//     embed,
-//     options,
-//     callback,
-//     timeout = 60000
-// ) {
-//     if (!embed) throw new Error("Embed are not given.");
-//     if (!options) throw new Error("options amount are not given.");
-//     if (options > 5 || options < 1)
-//         throw new Error("options amount need be a integer in 1~5.");
-//     if (!callback)
-//         throw new Error("options callback function are not given.");
+export async function selectMenuEmbed(
+    interaction: CommandInteraction,
+    embed: MessageEmbed,
+    options: number,
+    callback: Function,
+    timeout: number = 60000
+): Promise<Message> {
+    if (options > 5 || options < 1)
+        throw new Error("options amount need be a integer in 1~5.");
 
-//     const buttonList = [];
-//     for (let i = 0; i < options; i++) {
-//         switch (i) {
-//             case 0:
-//                 buttonList.push(
-//                     new MessageButton()
-//                         .setCustomId("one")
-//                         .setEmoji(reactions.one)
-//                         .setStyle("SECONDARY")
-//                 );
-//                 break;
-//             case 1:
-//                 buttonList.push(
-//                     new MessageButton()
-//                         .setCustomId("two")
-//                         .setEmoji(reactions.two)
-//                         .setStyle("SECONDARY")
-//                 );
-//                 break;
-//             case 2:
-//                 buttonList.push(
-//                     new MessageButton()
-//                         .setCustomId("three")
-//                         .setEmoji(reactions.three)
-//                         .setStyle("SECONDARY")
-//                 );
-//                 break;
-//             case 3:
-//                 buttonList.push(
-//                     new MessageButton()
-//                         .setCustomId("four")
-//                         .setEmoji(reactions.four)
-//                         .setStyle("SECONDARY")
-//                 );
-//                 break;
-//             case 4:
-//                 buttonList.push(
-//                     new MessageButton()
-//                         .setCustomId("five")
-//                         .setEmoji(reactions.five)
-//                         .setStyle("SECONDARY")
-//                 );
-//                 break;
-//         }
-//     }
+    const buttonList: MessageButton[] = [];
+    for (let i = 0; i < options; i++) {
+        switch (i) {
+            case 0:
+                buttonList.push(
+                    new MessageButton()
+                        .setCustomId("one")
+                        .setEmoji(Reaction.one)
+                        .setStyle("SECONDARY")
+                );
+                break;
+            case 1:
+                buttonList.push(
+                    new MessageButton()
+                        .setCustomId("two")
+                        .setEmoji(Reaction.two)
+                        .setStyle("SECONDARY")
+                );
+                break;
+            case 2:
+                buttonList.push(
+                    new MessageButton()
+                        .setCustomId("three")
+                        .setEmoji(Reaction.three)
+                        .setStyle("SECONDARY")
+                );
+                break;
+            case 3:
+                buttonList.push(
+                    new MessageButton()
+                        .setCustomId("four")
+                        .setEmoji(Reaction.four)
+                        .setStyle("SECONDARY")
+                );
+                break;
+            case 4:
+                buttonList.push(
+                    new MessageButton()
+                        .setCustomId("five")
+                        .setEmoji(Reaction.five)
+                        .setStyle("SECONDARY")
+                );
+                break;
+        }
+    }
 
-//     const row = new MessageActionRow().addComponents(buttonList);
-//     let menuEmbed;
-//     if (interaction.deferred) {
-//         // menuEmbed = await interaction.editReply({
-//         //     content: "請選擇以下選項",
-//         //     fetchReply: true,
-//         // });
-//         menuEmbed = await interaction.editReply({
-//             embeds: [embed],
-//             components: [row],
-//             fetchReply: true,
-//         });
-//     } else {
-//         menuEmbed = await interaction.reply({
-//             embeds: [embed],
-//             components: [row],
-//             fetchReply: true,
-//         });
-//     }
+    const identifiersResolver = async ({
+        interaction,
+        paginator,
+    }: {
+        interaction: ButtonInteraction;
+        paginator: ButtonPaginator;
+    }) => {
+        for (let i = 0; i < 5; i++) {
+            if (interaction.customId === buttonList[i].customId) {
+                callback(i);
+                break;
+            }
+        }
+        paginator.stop("USER_SELECTED");
+        return paginator.currentIdentifier;
+    };
 
-//     const filter = (i) =>
-//         i.customId === "one" ||
-//         i.customId === "two" ||
-//         i.customId === "three" ||
-//         i.customId === "four" ||
-//         i.customId === "five";
+    const paginator = new ButtonPaginator(interaction, {
+        pages: [embed],
+        buttons: buttonList,
+        identifiersResolver: identifiersResolver,
+    })
+        .on(
+            PaginatorEvents.PAGINATION_READY,
+            async (paginator: ButtonPaginator) => {
+                for (const actionRow of paginator.messageActionRows) {
+                    for (const button of actionRow.components) {
+                        button.disabled = false;
+                    }
+                }
+                await paginator.message.edit(paginator.currentPage);
+            }
+        )
+        .on(PaginatorEvents.COLLECT_ERROR, ({ error }) => {
+            Logger.error("Paginator encounter collect error!", error);
+        })
+        .on(PaginatorEvents.PAGINATION_END, async ({ reason, paginator }) => {
+            if (reason === "USER_SELECTED") {
+                for (const actionRow of paginator.messageActionRows) {
+                    for (const button of actionRow.components) {
+                        button.disabled = true;
+                    }
+                }
+                await paginator.message.edit(paginator.currentPage);
+            }
+        });
 
-//     const collector = await menuEmbed.createMessageComponentCollector({
-//         filter,
-//         time: timeout,
-//     });
+    if (!interaction.deferred) await interaction.deferReply();
+    await paginator.send();
 
-//     collector.on("collect", async (i) => {
-//         switch (i.customId) {
-//             case "one":
-//                 callback(0);
-//                 break;
-//             case "two":
-//                 callback(1);
-//                 break;
-//             case "three":
-//                 callback(2);
-//                 break;
-//             case "four":
-//                 callback(3);
-//                 break;
-//             case "five":
-//                 callback(4);
-//                 break;
-//             default:
-//                 break;
-//         }
-//         await i.deferUpdate();
-//         collector.stop("user select");
-//     });
-
-//     collector.on("end", () => {
-//         if (!menuEmbed.deleted) {
-//             buttonList.forEach((button) => button.setDisabled(true));
-//             const disabledRow = new MessageActionRow().addComponents(
-//                 buttonList
-//             );
-//             menuEmbed.edit({
-//                 embeds: [embed],
-//                 components: [disabledRow],
-//             });
-//         }
-//     });
-
-//     return menuEmbed;
-// },
+    return paginator.message;
+}
 /**
  * Generate a button list for paginationEmbed
  * @returns {MessageButton[]} a button list for paginationEmbed
