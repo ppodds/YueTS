@@ -10,8 +10,6 @@ export class User extends sequelize.Model {
                 id: id,
             },
         });
-        console.log(user);
-        console.log(created);
         return user;
     }
 }

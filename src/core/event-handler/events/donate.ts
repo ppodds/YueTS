@@ -3,7 +3,6 @@ import { Logger } from "../../utils/Logger.js";
 import { Message, TextChannel } from "discord.js";
 import axios from "axios";
 import { fileTypeFromBuffer } from "file-type";
-//const FileType = (await import("file-type")).default;
 import { Image } from "../../database/models/image.js";
 import { send } from "../../graphics/message.js";
 import imageManager from "../../image/ImageManager.js";
@@ -23,17 +22,11 @@ async function saveAndSendMessage(
     // get image ext and mime
     const filetype = await fileTypeFromBuffer(imageData);
     if (filetype.mime.startsWith("image/")) {
-        console.log(2);
         const imagePhash = await imageManager.makePhash(imageData);
-        console.log(3);
         const inDatabase = await imageManager.inDatabase(
             donor.type,
             imagePhash
         );
-        console.log(4);
-        console.log(donor);
-        console.log(imagePhash);
-        console.log(inDatabase);
         if (inDatabase)
             // the picture is already in the database
             return await send(
@@ -48,11 +41,9 @@ async function saveAndSendMessage(
             imageData,
             imagePhash
         );
-        console.log(image);
         await donor.increment("amount", { by: 1 });
         // update contribution
         const user = await User.get(message.author.id);
-        console.log(user);
         await user.increment("contribution", {
             by: Donor.contributionRatio(donor.type),
         });
