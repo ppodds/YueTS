@@ -3,21 +3,10 @@ services:
   app:
     build:
       context: .
-      dockerfile: dev.dockerfile
+      dockerfile: prod.dockerfile
     container_name: yue
-    stdin_open: true
-    tty: true
     volumes:
-      - ./src:/app/src
-      - ./config:/app/config
-      - ./tests:/app/tests
-      - ./node_modules:/app/node_modules
-      - ./package.json:/app/package.json
-      - ./package-lock.json:/app/package-lock.json
       - ./logs:/var/log/yue
-      - ./tsconfig.json:/app/tsconfig.json
-      - ./tslint.json:/app/tslint.json
-      - ./jest.config.cjs:/app/jest.config.cjs
     env_file:
       - bot.env
     depends_on:

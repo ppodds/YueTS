@@ -14,7 +14,4 @@ RUN npm install -g typescript && \
 # general package
 RUN npm install -g node-gyp
 
-# deploy commands
-# RUN node deploy-commands.js
-
 CMD ["/bin/bash"]
