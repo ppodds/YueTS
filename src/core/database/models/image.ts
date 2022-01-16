@@ -65,10 +65,10 @@ export class Image extends sequelize.Model {
 
     /**
      * Get image amount of according type
-     * @param {string} type image type
-     * @returns {Promise<Number>} image amount
+     * @param type image type
+     * @returns image amount
      */
-    static async amount(type: string): Promise<number> {
+    static async amount(type: ImageType): Promise<number> {
         return await Image.count({
             where: {
                 type: type,

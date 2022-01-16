@@ -3,7 +3,8 @@ import { CommandInterface } from "../../CommandInterface";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { info } from "../../../graphics/embeds.js";
-// const { Image } = require("../../../database/models/image");
+import { Image } from "../../../database/models/image.js";
+import { ImageType } from "../../../image/ImageType.js";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -19,23 +20,22 @@ const command: CommandInterface = {
                 name: "和你的距離",
                 value: `${interaction.client.ws.ping}`,
                 inline: false,
+            },
+            {
+                name: "pic圖庫數量",
+                value: (await Image.amount(ImageType.PIC)).toString(),
+                inline: true,
+            },
+            {
+                name: "wtfpic圖庫數量",
+                value: (await Image.amount(ImageType.WTFPIC)).toString(),
+                inline: true,
+            },
+            {
+                name: "hpic圖庫數量",
+                value: (await Image.amount(ImageType.HPIC)).toString(),
+                inline: true,
             }
-
-            // {
-            //     name: "pic圖庫數量",
-            //     value: (await Image.amount("pic")).toString(),
-            //     inline: true,
-            // },
-            // {
-            //     name: "wtfpic圖庫數量",
-            //     value: (await Image.amount("wtfpic")).toString(),
-            //     inline: true,
-            // },
-            // {
-            //     name: "hpic圖庫數量",
-            //     value: (await Image.amount("hpic")).toString(),
-            //     inline: true,
-            // }
         );
         await interaction.reply({ embeds: [embed] });
     },
