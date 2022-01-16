@@ -77,7 +77,7 @@ export async function setPermission(
         const command = commands.find((command) => command.name === name);
         client.guilds.cache.forEach(async (key, guild) => {
             await command.permissions.set({
-                //guild: guild,
+                // guild: guild,
                 permissions: permissions,
             });
         });

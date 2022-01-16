@@ -55,15 +55,15 @@ class ImageManager {
                 const COS = initCOS(SAMPLE_SIZE);
 
                 function applyDCT(f, size) {
-                    var N = size;
+                    let N = size;
 
-                    var F = new Array(N);
-                    for (var u = 0; u < N; u++) {
+                    let F = new Array(N);
+                    for (let u = 0; u < N; u++) {
                         F[u] = new Array(N);
-                        for (var v = 0; v < N; v++) {
-                            var sum = 0;
-                            for (var i = 0; i < N; i++) {
-                                for (var j = 0; j < N; j++) {
+                        for (let v = 0; v < N; v++) {
+                            let sum = 0;
+                            for (let i = 0; i < N; i++) {
+                                for (let j = 0; j < N; j++) {
                                     sum += COS[i][u] * COS[j][v] * f[i][j];
                                 }
                             }
