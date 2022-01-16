@@ -1,6 +1,6 @@
 import { CommandInterface } from "../../CommandInterface";
 
-const { SlashCommandBuilder } = require("@discordjs/builders");
+import { SlashCommandBuilder } from "@discordjs/builders";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -20,4 +20,4 @@ const command: CommandInterface = {
     },
 };
 
-export = command;
+export default command;

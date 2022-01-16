@@ -9,14 +9,16 @@ import {
     CommandInteraction,
     ButtonInteraction,
 } from "discord.js";
-import { Color } from "./Color";
-import { author } from "../../config/bot-config.json";
+import { Color } from "./Color.js";
 import {
     ButtonPaginator,
     PaginatorEvents,
 } from "@psibean/discord.js-pagination";
-import { Reaction } from "./Reaction";
-import { Logger } from "../utils/Logger";
+import { Reaction } from "./Reaction.js";
+import { Logger } from "../utils/Logger.js";
+import configManager from "../../config/ConfigManager.js";
+
+const author = (await configManager.getBotConfig()).author;
 
 export function info(
     client: Client,
@@ -31,7 +33,10 @@ export function info(
         })
         .setDescription(description)
 
-        .setFooter({ text: "由ppodds親手調教", iconURL: author.avatar });
+        .setFooter({
+            text: "由ppodds親手調教",
+            iconURL: author.avatar,
+        });
 }
 
 export function warn(client: Client, description: string) {
@@ -42,7 +47,10 @@ export function warn(client: Client, description: string) {
             iconURL: client.user.displayAvatarURL(),
         })
         .setDescription(description)
-        .setFooter({ text: "由ppodds親手調教", iconURL: author.avatar });
+        .setFooter({
+            text: "由ppodds親手調教",
+            iconURL: author.avatar,
+        });
 }
 
 export function error(client: Client, description: string) {
@@ -53,7 +61,10 @@ export function error(client: Client, description: string) {
             iconURL: client.user.displayAvatarURL(),
         })
         .setDescription(description)
-        .setFooter({ text: "由ppodds親手調教", iconURL: author.avatar });
+        .setFooter({
+            text: "由ppodds親手調教",
+            iconURL: author.avatar,
+        });
 }
 /**
  * Send a pagination embed reply

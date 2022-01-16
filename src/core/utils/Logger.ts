@@ -1,12 +1,14 @@
-import { configure, getLogger } from "log4js";
-import { name } from "../../config/bot-config.json";
-import * as logConfig from "../../config/log-config.json";
+import log4js from "log4js";
+import configManager from "../../config/ConfigManager.js";
 
-configure(logConfig);
+const { configure, getLogger } = log4js;
+
+configure(await configManager.getLogConfig());
 const logger = getLogger();
+const BOTNAME = (await configManager.getBotConfig()).name;
 
 function formatText(text: string) {
-    return text.replace("BOTNAME", name);
+    return text.replace("BOTNAME", BOTNAME);
 }
 
 export class Logger {

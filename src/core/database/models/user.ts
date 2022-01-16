@@ -1,7 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import { DatabaseManager } from "../DatabaseManager";
+import sequelize from "sequelize";
+import { DatabaseManager } from "../DatabaseManager.js";
 
-export class User extends Model {
+export class User extends sequelize.Model {
     id: string;
     contribution: number;
     static async get(id: string) {
@@ -10,6 +10,8 @@ export class User extends Model {
                 id: id,
             },
         });
+        console.log(user);
+        console.log(created);
         return user;
     }
 }
@@ -17,12 +19,12 @@ export function init() {
     User.init(
         {
             id: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 unique: true,
                 primaryKey: true,
             },
             contribution: {
-                type: DataTypes.INTEGER,
+                type: sequelize.DataTypes.INTEGER,
                 defaultValue: 0,
                 allowNull: false,
             },

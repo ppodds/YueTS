@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds";
+import { info } from "../../../graphics/embeds.js";
 import { CommandInterface } from "../../CommandInterface";
 
 const command: CommandInterface = {
@@ -48,4 +48,4 @@ const command: CommandInterface = {
     },
 };
 
-export = command;
+export default command;

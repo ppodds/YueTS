@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Message } from "discord.js";
-import { info } from "../../graphics/embeds";
+import { info } from "../../graphics/embeds.js";
 import { EventInterface } from "../EventInterface";
 
 const event: EventInterface = {
@@ -103,4 +103,4 @@ const event: EventInterface = {
     },
 };
 
-export = event;
+export default event;

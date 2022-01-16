@@ -1,6 +1,6 @@
-import { Logger } from "../utils/Logger";
-import { env, statusList, statusType } from "../../config/bot-config.json";
-import commands from "../command-handler/command-handler";
+import { Logger } from "../utils/Logger.js";
+import configManager from "../../config/ConfigManager.js";
+import commands from "../command-handler/command-handler.js";
 import * as fs from "fs";
 import { Client, ExcludeEnum } from "discord.js";
 import { ActivityTypes } from "discord.js/typings/enums";
@@ -14,12 +14,18 @@ export class EventHandler {
     }
     private static initEssentialEvents(args: { launchTimestamp: number }) {
         (async () => {
-            const updateBotStatus = () => {
+            const updateBotStatus = async () => {
                 this.client.user.setActivity(
-                    statusList[Math.floor(Math.random() * statusList.length)],
+                    (await configManager.getBotConfig()).statusList[
+                        Math.floor(
+                            Math.random() *
+                                (await configManager.getBotConfig()).statusList
+                                    .length
+                        )
+                    ],
                     {
                         type: <ExcludeEnum<typeof ActivityTypes, "CUSTOM">>(
-                            statusType
+                            (await configManager.getBotConfig()).statusType
                         ),
                     }
                 );
@@ -62,12 +68,14 @@ export class EventHandler {
                 await command.execute(interaction);
             } catch (error) {
                 Logger.error("Command threw an error", error);
-                if (env === "dev") {
+                if ((await configManager.getBotConfig()).env === "dev") {
                     console.log(error);
                 }
                 const content = {
                     content:
-                        env === "dev" ? error.message : "指令在執行階段出錯了!",
+                        (await configManager.getBotConfig()).env === "dev"
+                            ? error.message
+                            : "指令在執行階段出錯了!",
                     ephemeral: true,
                 };
                 if (interaction.deferred) {
@@ -93,13 +101,13 @@ export class EventHandler {
             Logger.warn("The client received a warning", warn)
         );
     }
-    private static initEvents() {
+    private static async initEvents() {
         const eventFiles = fs
             .readdirSync("./core/event-handler/events")
             .filter((file) => file.endsWith(".js"));
 
         for (const file of eventFiles) {
-            const event = require(`./events/${file}`);
+            const event = (await import(`./events/${file}`)).default;
             if (event.once) {
                 this.client.once(event.name, async (...args) => {
                     try {

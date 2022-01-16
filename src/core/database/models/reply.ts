@@ -1,7 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import { DatabaseManager } from "../DatabaseManager";
+import sequelize from "sequelize";
+import { DatabaseManager } from "../DatabaseManager.js";
 
-export class Reply extends Model {
+export class Reply extends sequelize.Model {
     id: number;
     dm: boolean;
     scope: string;
@@ -37,23 +37,23 @@ export function init() {
     Reply.init(
         {
             dm: {
-                type: DataTypes.BOOLEAN,
+                type: sequelize.DataTypes.BOOLEAN,
                 allowNull: false,
             },
             scope: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             key: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             response: {
-                type: DataTypes.STRING(2000),
+                type: sequelize.DataTypes.STRING(2000),
                 allowNull: false,
             },
             formatted: {
-                type: DataTypes.BOOLEAN,
+                type: sequelize.DataTypes.BOOLEAN,
                 allowNull: false,
             },
         },

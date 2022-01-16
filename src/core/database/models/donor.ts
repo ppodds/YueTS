@@ -1,8 +1,8 @@
-import { Model, DataTypes } from "sequelize";
-import { ImageType } from "../../image/ImageType";
-import { DatabaseManager } from "../DatabaseManager";
+import sequelize from "sequelize";
+import { ImageType } from "../../image/ImageType.js";
+import { DatabaseManager } from "../DatabaseManager.js";
 
-export class Donor extends Model {
+export class Donor extends sequelize.Model {
     id: number;
     guild: string;
     channel: string;
@@ -37,23 +37,23 @@ export function init() {
     Donor.init(
         {
             guild: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             channel: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             user: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             type: {
-                type: DataTypes.TINYINT,
+                type: sequelize.DataTypes.TINYINT,
                 allowNull: false,
             },
             amount: {
-                type: DataTypes.INTEGER,
+                type: sequelize.DataTypes.INTEGER,
                 defaultValue: 0,
                 allowNull: false,
             },

@@ -1,12 +1,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Reply } from "../../../database/models/reply";
-import { Logger } from "../../../utils/Logger";
+import { Reply } from "../../../database/models/reply.js";
+import { Logger } from "../../../utils/Logger.js";
 import { CommandInterface } from "../../CommandInterface";
 import {
     info,
     paginationEmbed,
     paginationButton,
-} from "../../../graphics/embeds";
+} from "../../../graphics/embeds.js";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -188,4 +188,4 @@ const command: CommandInterface = {
     },
 };
 
-export = command;
+export default command;

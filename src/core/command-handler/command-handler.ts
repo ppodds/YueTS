@@ -10,9 +10,9 @@ for (const folder of commandFolders) {
         .readdirSync(`./core/command-handler/commands/${folder}`)
         .filter((file) => file.endsWith(".js"));
     for (const file of commandFiles) {
-        const command = require(`./commands/${folder}/${file}`);
+        const command = (await import(`./commands/${folder}/${file}`)).default;
         commands.set(command.data.name, command);
     }
 }
 
-export = commands;
+export default commands;

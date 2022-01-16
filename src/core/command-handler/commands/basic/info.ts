@@ -2,7 +2,7 @@ import { CommandInteraction } from "discord.js";
 import { CommandInterface } from "../../CommandInterface";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds";
+import { info } from "../../../graphics/embeds.js";
 // const { Image } = require("../../../database/models/image");
 
 const command: CommandInterface = {
@@ -41,4 +41,4 @@ const command: CommandInterface = {
     },
 };
 
-export = command;
+export default command;

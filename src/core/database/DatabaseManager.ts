@@ -1,26 +1,25 @@
 import { Sequelize } from "sequelize";
-import dbConfig from "../../config/db-config.json";
-import { env } from "../../config/bot-config.json";
-import { Logger } from "../utils/Logger";
-import * as user from "./models/user";
-import * as grab from "./models/grab";
-import * as image from "./models/image";
-import * as reply from "./models/reply";
-import * as donor from "./models/donor";
+import configManager from "../../config/ConfigManager.js";
+import { Logger } from "../utils/Logger.js";
+import * as user from "./models/user.js";
+import * as grab from "./models/grab.js";
+import * as image from "./models/image.js";
+import * as reply from "./models/reply.js";
+import * as donor from "./models/donor.js";
 
 export class DatabaseManager {
     public static sequelize: Sequelize;
     public static async init() {
         this.sequelize = new Sequelize(
-            dbConfig.database,
-            dbConfig.user,
-            dbConfig.password,
+            (await configManager.getDBConfig()).database,
+            (await configManager.getDBConfig()).user,
+            (await configManager.getDBConfig()).password,
             {
-                host: dbConfig.host,
+                host: (await configManager.getDBConfig()).host,
                 dialect: "mariadb",
                 timezone: "+08:00",
                 logging:
-                    env === "prod"
+                    (await configManager.getBotConfig()).env === "prod"
                         ? false
                         : (sql: string, timing?: number) => Logger.info(sql),
                 pool: {

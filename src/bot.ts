@@ -1,8 +1,9 @@
 import { Client, Intents } from "discord.js";
-import { token } from "./config/bot-config.json";
-import { DatabaseManager } from "./core/database/DatabaseManager";
-import { EventHandler } from "./core/event-handler/EventHandler";
-import { Logger } from "./core/utils/Logger";
+import configManager from "./config/ConfigManager.js";
+import { DatabaseManager } from "./core/database/DatabaseManager.js";
+import { EventHandler } from "./core/event-handler/EventHandler.js";
+import imageManager from "./core/image/ImageManager.js";
+import { Logger } from "./core/utils/Logger.js";
 
 const launchTimestamp = Date.now();
 
@@ -32,7 +33,7 @@ const client = new Client({
 async function preLaunch(client: Client) {
     await DatabaseManager.init();
     try {
-        await client.login(token);
+        await client.login((await configManager.getBotConfig()).token);
         Logger.info("Logged into Discord successfully");
     } catch (err) {
         Logger.error("Error logging into Discord", <Error>err);
@@ -42,6 +43,7 @@ async function preLaunch(client: Client) {
         "「現在剛起床還沒搞清楚狀況... 等一下再叫我吧...」",
         { type: "LISTENING" }
     );
+    await imageManager.init();
     EventHandler.init(client, { launchTimestamp });
 }
 

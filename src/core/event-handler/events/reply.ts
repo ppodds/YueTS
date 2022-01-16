@@ -1,8 +1,8 @@
-import { Reply } from "../../database/models/reply";
-import { Logger } from "../../utils/Logger";
-import { author } from "../../../config/bot-config.json";
+import { Reply } from "../../database/models/reply.js";
+import { Logger } from "../../utils/Logger.js";
 import { Collection, Message, TextChannel } from "discord.js";
 import { EventInterface } from "../EventInterface";
+import configManager from "../../../config/ConfigManager.js";
 
 const cooldown = new Collection();
 
@@ -21,7 +21,9 @@ async function sendReply(message: Message, reply: Reply) {
         setTimeout(() => cooldown.set(message.guild.id, true), 30000);
         await message.channel.sendTyping();
         await message.channel.send(reply.response);
-    } else if (message.author.id === author.id) {
+    } else if (
+        message.author.id === (await configManager.getBotConfig()).author.id
+    ) {
         await message.channel.sendTyping();
         await message.channel.send(reply.response);
     }
@@ -82,4 +84,4 @@ const event: EventInterface = {
     },
 };
 
-export = event;
+export default event;

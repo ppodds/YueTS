@@ -1,7 +1,7 @@
-import { Model, DataTypes } from "sequelize";
-import { DatabaseManager } from "../DatabaseManager";
+import sequelize from "sequelize";
+import { DatabaseManager } from "../DatabaseManager.js";
 
-export class Grab extends Model {
+export class Grab extends sequelize.Model {
     id: number;
     guild: string;
     channel: string;
@@ -12,16 +12,16 @@ export function init() {
     Grab.init(
         {
             guild: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             channel: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             time: {
-                type: DataTypes.DATE,
-                defaultValue: DataTypes.NOW,
+                type: sequelize.DataTypes.DATE,
+                defaultValue: sequelize.DataTypes.NOW,
                 allowNull: false,
             },
         },

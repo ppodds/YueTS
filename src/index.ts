@@ -1,12 +1,11 @@
 import { ShardingManager } from "discord.js";
-import { Logger } from "./core/utils/Logger";
-import { token } from "./config/bot-config.json";
+import configManager from "./config/ConfigManager.js";
+import { Logger } from "./core/utils/Logger.js";
 
-process.chdir("dist");
+process.chdir(`${process.env.BASE_PATH}/dist`);
 
 const manager = new ShardingManager("bot.js", {
-    token: token,
+    token: (await configManager.getBotConfig()).token,
 });
-
 manager.on("shardCreate", (shard) => Logger.info(`Launched shard ${shard.id}`));
 manager.spawn();

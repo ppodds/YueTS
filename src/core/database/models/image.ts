@@ -1,31 +1,35 @@
-import { Model, DataTypes } from "sequelize";
-import { ImageType } from "../../image/ImageType";
-import { DatabaseManager } from "../DatabaseManager";
+import sequelize from "sequelize";
+import { ImageType } from "../../image/ImageType.js";
+import { DatabaseManager } from "../DatabaseManager.js";
 
-export class Image extends Model {
+export class Image extends sequelize.Model {
     id: number;
     type: number;
     uploader: string;
     ext: string;
     image: ArrayBuffer;
+    phash: string;
     /**
      * Add a image to db
-     * @param {string} type pic, hpic, wtfpic
-     * @param {string} uploader uploader user id
-     * @param {string} ext image's extension
-     * @param {ArrayBuffer} data image's binary data
+     * @param type pic, hpic, wtfpic
+     * @param uploader uploader user id
+     * @param ext image's extension
+     * @param data image's binary data
+     * @param phash image's phash
      */
     static async add(
         type: ImageType,
         uploader: string,
         ext: string,
-        data: ArrayBuffer
+        data: ArrayBuffer,
+        phash: string
     ) {
         return await Image.create({
             type: type,
             uploader: uploader,
             ext: ext,
             image: data,
+            phash: phash,
         });
     }
     /**
@@ -77,19 +81,23 @@ export function init() {
     Image.init(
         {
             type: {
-                type: DataTypes.TINYINT,
+                type: sequelize.DataTypes.TINYINT,
                 allowNull: false,
             },
             uploader: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             ext: {
-                type: DataTypes.STRING,
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
             image: {
-                type: DataTypes.BLOB("long"),
+                type: sequelize.DataTypes.BLOB("long"),
+                allowNull: false,
+            },
+            phash: {
+                type: sequelize.DataTypes.STRING,
                 allowNull: false,
             },
         },

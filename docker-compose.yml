@@ -6,15 +6,18 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ./dist:/app/dist
       - ./src:/app/src
+      - ./config:/app/config
+      - ./tests:/app/tests
       - ./node_modules:/app/node_modules
       - ./package.json:/app/package.json
       - ./package-lock.json:/app/package-lock.json
       - ./logs:/var/log/yue
-      - ./temp:/app/temp
       - ./tsconfig.json:/app/tsconfig.json
       - ./tslint.json:/app/tslint.json
+      - ./jest.config.cjs:/app/jest.config.cjs
+    env_file:
+      - bot.env
     depends_on:
       - database
   database:

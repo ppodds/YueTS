@@ -1,7 +1,7 @@
 import { CommandInterface } from "../../CommandInterface";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { User } from "../../../database/models/user";
+import { User } from "../../../database/models/user.js";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -29,4 +29,4 @@ const command: CommandInterface = {
     },
 };
 
-export = command;
+export default command;
