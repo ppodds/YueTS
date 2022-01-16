@@ -45,6 +45,7 @@ try {
         });
     }
     console.log("Successfully reloaded application (/) commands.");
+    process.exit(0);
 } catch (error) {
     console.error(error);
 }
