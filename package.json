@@ -6,7 +6,10 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "watch": "tsc --watch",
-    "dev": "node ./dist/deploy-commands.js && concurrently 'npm run watch' 'nodemon ./dist/index.js'",
+    "deploy-cmd": "node ./dist/deploy-commands.js",
+    "start": "node --no-deprecation --no-warnings ./dist/index.js",
+    "dev": "npm run deploy-cmd && concurrently 'npm run watch' 'nodemon ./dist/index.js'",
+    "prod": "npm run build && npm run deploy-cmd  && npm run start",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "clean": "rm -rf dist/*",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
