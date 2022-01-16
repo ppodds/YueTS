@@ -286,4 +286,13 @@ export class MusicPlayer {
             });
         return true;
     }
+    public getPlayerStatus() {
+        return this.player.state.status;
+    }
+    public getNowPlayingMessageContent() {
+        return this.np.content;
+    }
+    public getQueue() {
+        return Array.from(this.queue);
+    }
 }
