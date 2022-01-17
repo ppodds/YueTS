@@ -105,9 +105,11 @@ docker-compose -f "prod.docker-compose.yml" up -d --build
 
 ##### docker run
 
+If you use this method, you should set up database manually.
+
 ```
 docker build --pull --rm -f "prod.dockerfile" -t yuets:latest "."
-docker run -d yuets:latest -v ./logs:/var/log/yue --name yuets
+docker run -d -v $PWD/logs:/var/log/yue --network host --name yuets yuets:latest
 ```
 
 ## FAQ
