@@ -7,8 +7,10 @@ export class Image extends sequelize.Model {
     type: number;
     uploader: string;
     ext: string;
-    image: ArrayBuffer;
+    image: Buffer;
     phash: string;
+    createdAt: Date;
+    updateAt: Date;
     /**
      * Add a image to db
      * @param type pic, hpic, wtfpic
@@ -47,10 +49,10 @@ export class Image extends sequelize.Model {
 
     /**
      * Get an random image with according type
-     * @param {string} type image type
-     * @returns {Promise<Image>} a random image
+     * @param type image type
+     * @returns a random image
      */
-    static async random(type: string): Promise<Image> {
+    static async random(type: ImageType): Promise<Image> {
         const dbImageIdList = await Image.findAll({
             where: {
                 type: type,
