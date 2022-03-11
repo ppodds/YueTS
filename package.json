@@ -41,7 +41,7 @@
     "log4js": "^6.3.0",
     "mariadb": "^2.5.5",
     "node-worker-threads-pool": "^1.5.1",
-    "sequelize": "^6.13.0",
+    "sequelize": "^6.17.0",
     "sharp": "^0.29.3",
     "sodium": "^3.0.2",
     "utf-8-validate": "^5.0.8",
