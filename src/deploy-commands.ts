@@ -10,7 +10,7 @@ import configManager from "./config/ConfigManager.js";
 
 process.chdir("dist");
 
-const commands: RESTPostAPIApplicationCommandsJSONBody[] = [];
+const commands: any[] = [];
 const commandFolders = fs.readdirSync("./core/command-handler/commands");
 
 const clientId = (await configManager.getBotConfig()).dev.clientId;
