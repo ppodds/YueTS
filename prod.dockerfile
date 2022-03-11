@@ -1,4 +1,4 @@
-FROM node:16.8-bullseye
+FROM node:16.14.0-bullseye
 
 RUN mkdir -p /app
 
