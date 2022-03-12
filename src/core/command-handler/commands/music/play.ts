@@ -42,7 +42,7 @@ const command: CommandInterface = {
             );
             musicPlayer.add(resource);
             await interaction.editReply(
-                `\`\`\`[已增加 ${resource.metadata.videoDetails.title} 到撥放序列中]\`\`\``
+                `\`\`\`[已增加 ${resource.metadata.videoInfo.title} 到撥放序列中]\`\`\``
             );
         } else {
             try {

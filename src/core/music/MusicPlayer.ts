@@ -8,8 +8,6 @@ import {
     TextChannel,
     VoiceChannel,
 } from "discord.js";
-import ytdlDiscord from "ytdl-core-discord";
-import ytdl from "ytdl-core";
 import {
     AudioPlayerStatus,
     StreamType,
@@ -28,8 +26,10 @@ import {
     AudioPlayerError,
 } from "@discordjs/voice";
 import { Logger } from "../utils/Logger.js";
+import { stream, video_info, YouTubeVideo } from "play-dl";
 
-interface Metadata extends ytdl.videoInfo {
+interface Metadata {
+    videoInfo: YouTubeVideo;
     requester: GuildMember;
 }
 
@@ -173,7 +173,7 @@ export class MusicPlayer {
             Logger.error(
                 `${error.name}: ${error.message} with resource ${
                     (error.resource as AudioResource<Metadata>).metadata
-                        .videoDetails.title
+                        .videoInfo.title
                 }
                 Stack: ${error.stack}`
             );
@@ -193,7 +193,11 @@ export class MusicPlayer {
         requester: GuildMember
     ): Promise<Track> {
         try {
-            const metadata = { ...(await ytdl.getBasicInfo(url)), requester };
+            const info = await video_info(url);
+            const metadata: Metadata = {
+                videoInfo: info.video_details,
+                requester,
+            };
             return { url: url, metadata: metadata };
         } catch (err) {
             throw new Error("找不到指定的Youtube影片呢...");
@@ -252,14 +256,14 @@ export class MusicPlayer {
 
         const nextTrack = this.queue.shift();
         try {
-            const stream = await ytdlDiscord(nextTrack.url);
-            const resource = createAudioResource(stream, {
+            const s = await stream(nextTrack.url);
+            const resource = createAudioResource(s.stream, {
                 metadata: nextTrack.metadata,
-                inputType: StreamType.Opus,
+                inputType: s.type,
             });
             this.current = resource;
             this.np = await this.channel.send(
-                `**正在撥放:** \`${this.current.metadata.videoDetails.title}\` 點歌者: \`${this.current.metadata.requester.displayName}\``
+                `**正在撥放:** \`${this.current.metadata.videoInfo.title}\` 點歌者: \`${this.current.metadata.requester.displayName}\``
             );
             this.player.play(resource);
             this.queueLock = false;

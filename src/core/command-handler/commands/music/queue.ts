@@ -54,7 +54,7 @@ const command: CommandInterface = {
             for (const i in queue) {
                 embed.addField(
                     (parseInt(i) + 1).toString(),
-                    queue[i].metadata.videoDetails.title
+                    queue[i].metadata.videoInfo.title
                 );
             }
             await interaction.reply({ embeds: [embed] });
