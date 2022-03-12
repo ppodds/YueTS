@@ -25,6 +25,7 @@ import {
     VoiceConnectionState,
     AudioPlayer,
     CreateAudioPlayerOptions,
+    AudioPlayerError,
 } from "@discordjs/voice";
 import { Logger } from "../utils/Logger.js";
 
@@ -168,7 +169,14 @@ export class MusicPlayer {
             }
         });
 
-        this.player.on("error", async (error) => {
+        this.player.on("error", async (error: AudioPlayerError) => {
+            Logger.error(
+                `${error.name}: ${error.message} with resource ${
+                    (error.resource as AudioResource<Metadata>).metadata
+                        .videoDetails.title
+                }
+                Stack: ${error.stack}`
+            );
             await this.channel.send("嗯....似乎沒辦法唱下去的樣子...");
         });
 

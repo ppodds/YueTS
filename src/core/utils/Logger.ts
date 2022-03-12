@@ -16,11 +16,11 @@ export class Logger {
         logger.info(formatText(text));
     }
 
-    public static warn(text: string, warn: string) {
+    public static warn(text: string, warn: string = null) {
         logger.warn(formatText(`${text}${warn ? "\n" + warn : ""}`));
     }
 
-    public static error(text: string, err: Error) {
+    public static error(text: string, err: Error = null) {
         logger.error(formatText(`${text}${err ? "\n" + err : ""}`));
     }
 }
