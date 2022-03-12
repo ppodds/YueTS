@@ -8,8 +8,7 @@ WORKDIR /app
 RUN npm install -g npm
 
 # install TypeScript
-RUN npm install -g typescript && \
-    npm install -g tslint
+RUN npm install -g typescript
 
 # general package
 RUN npm install -g node-gyp
