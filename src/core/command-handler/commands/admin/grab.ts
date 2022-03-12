@@ -83,7 +83,7 @@ const command: CommandInterface = {
         if (type === undefined)
             return await interaction.reply("這不是我能使用的呢....");
 
-        let grabData = await Grab.findOne({
+        const grabData = await Grab.findOne({
             where: {
                 guild: interaction.guildId,
                 channel: channel.id,

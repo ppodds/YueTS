@@ -18,7 +18,7 @@ export class Donor extends sequelize.Model {
         switch (type) {
             case ImageType.PIC:
                 return 1;
-            case ImageType.PIC:
+            case ImageType.HPIC:
                 return 3;
             case ImageType.WTFPIC:
                 return 1;

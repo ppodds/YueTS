@@ -1,4 +1,4 @@
-import { Collection, DataResolver } from "discord.js";
+import { Collection } from "discord.js";
 import { Image } from "../database/models/image.js";
 import AsyncLock from "async-lock";
 import { Logger } from "../utils/Logger.js";
@@ -16,7 +16,7 @@ class ImageManager {
     private readonly staticPool = new StaticPool({
         size: 4,
         task: async (buf: Buffer) => {
-            const sharp = require("sharp");
+            const sharp = (await import("sharp")).default;
             try {
                 const regularImageBuffer = await sharp(buf)
                     .greyscale()
@@ -28,50 +28,22 @@ class ImageManager {
 
                 const SAMPLE_SIZE = 32;
 
-                function initSQRT(N) {
-                    const c = new Array(N);
-                    for (let i = 1; i < N; i++) {
-                        c[i] = 1;
-                    }
-                    c[0] = 1 / Math.sqrt(2.0);
-                    return c;
+                // init sqrt
+                const sqrt = new Array(SAMPLE_SIZE);
+                for (let i = 1; i < SAMPLE_SIZE; i++) {
+                    sqrt[i] = 1;
                 }
+                sqrt[0] = 1 / Math.sqrt(2.0);
 
-                const SQRT = initSQRT(SAMPLE_SIZE);
-
-                function initCOS(N) {
-                    const cosines = new Array(N);
-                    for (let k = 0; k < N; k++) {
-                        cosines[k] = new Array(N);
-                        for (let n = 0; n < N; n++) {
-                            cosines[k][n] = Math.cos(
-                                ((2 * k + 1) / (2.0 * N)) * n * Math.PI
-                            );
-                        }
+                // init cosines
+                const cosines = new Array(SAMPLE_SIZE);
+                for (let k = 0; k < SAMPLE_SIZE; k++) {
+                    cosines[k] = new Array(SAMPLE_SIZE);
+                    for (let n = 0; n < SAMPLE_SIZE; n++) {
+                        cosines[k][n] = Math.cos(
+                            ((2 * k + 1) / (2.0 * SAMPLE_SIZE)) * n * Math.PI
+                        );
                     }
-                    return cosines;
-                }
-
-                const COS = initCOS(SAMPLE_SIZE);
-
-                function applyDCT(f, size) {
-                    let N = size;
-
-                    let F = new Array(N);
-                    for (let u = 0; u < N; u++) {
-                        F[u] = new Array(N);
-                        for (let v = 0; v < N; v++) {
-                            let sum = 0;
-                            for (let i = 0; i < N; i++) {
-                                for (let j = 0; j < N; j++) {
-                                    sum += COS[i][u] * COS[j][v] * f[i][j];
-                                }
-                            }
-                            sum *= (SQRT[u] * SQRT[v]) / 4;
-                            F[u][v] = sum;
-                        }
-                    }
-                    return F;
                 }
 
                 const LOW_SIZE = 8;
@@ -86,7 +58,20 @@ class ImageManager {
                 }
 
                 // apply 2D DCT II
-                const dct = applyDCT(s, SAMPLE_SIZE);
+                const dct = new Array(SAMPLE_SIZE);
+                for (let u = 0; u < SAMPLE_SIZE; u++) {
+                    dct[u] = new Array(SAMPLE_SIZE);
+                    for (let v = 0; v < SAMPLE_SIZE; v++) {
+                        let sum = 0;
+                        for (let i = 0; i < SAMPLE_SIZE; i++) {
+                            for (let j = 0; j < SAMPLE_SIZE; j++) {
+                                sum += cosines[i][u] * cosines[j][v] * s[i][j];
+                            }
+                        }
+                        sum *= (sqrt[u] * sqrt[v]) / 4;
+                        dct[u][v] = sum;
+                    }
+                }
 
                 // get AVG on high frequencies
                 let totalSum = 0;
@@ -139,18 +124,18 @@ class ImageManager {
         Logger.info(`Loading image phashs which type is ${toString(type)}...`);
         const LIMIT = 100;
         let offset = 0;
-        while (true) {
-            const images = await Image.findAll({
+        let images: Image[];
+        do {
+            images = await Image.findAll({
                 where: { type },
                 attributes: ["id", "phash"],
                 limit: LIMIT,
                 offset: offset,
             });
             offset += LIMIT;
-            if (images.length === 0) break;
             for (const image of images)
                 this.addPhash(type, image.id, image.phash);
-        }
+        } while (images.length !== 0);
         Logger.info(`type ${toString(type)} load complete!`);
     }
     /**

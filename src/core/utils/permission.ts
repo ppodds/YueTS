@@ -3,7 +3,6 @@ import {
     ApplicationCommandPermissionData,
     Client,
     Collection,
-    GuildResolvable,
     User,
 } from "discord.js";
 import configManager from "../../config/ConfigManager.js";

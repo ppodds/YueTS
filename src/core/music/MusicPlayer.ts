@@ -5,12 +5,9 @@ import {
     GuildMember,
     Message,
     TextBasedChannel,
-    TextChannel,
-    VoiceChannel,
 } from "discord.js";
 import {
     AudioPlayerStatus,
-    StreamType,
     createAudioPlayer,
     createAudioResource,
     joinVoiceChannel,
@@ -19,10 +16,7 @@ import {
     VoiceConnectionDisconnectReason,
     VoiceConnectionStatus,
     VoiceConnection,
-    DiscordGatewayAdapterCreator,
-    VoiceConnectionState,
     AudioPlayer,
-    CreateAudioPlayerOptions,
     AudioPlayerError,
 } from "@discordjs/voice";
 import { Logger } from "../utils/Logger.js";
@@ -206,23 +200,15 @@ export class MusicPlayer {
 
     /**
      * Add a track to music player queue
-     * @param youtube resource contains metadata
+     * @param resource youtube resource contains metadata
      */
     public add(resource: Track) {
-        try {
-            this.queue.push(resource);
-            this.processQueue();
-        } catch (err) {
-            throw err;
-        }
+        this.queue.push(resource);
+        this.processQueue();
     }
     public addList(resources: Track[]) {
-        try {
-            resources.forEach((resource) => this.queue.push(resource));
-            this.processQueue();
-        } catch (err) {
-            throw err;
-        }
+        resources.forEach((resource) => this.queue.push(resource));
+        this.processQueue();
     }
     public skip() {
         this.player.stop();

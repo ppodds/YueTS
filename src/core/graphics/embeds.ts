@@ -1,11 +1,9 @@
 import {
     Message,
-    MessageActionRow,
     MessageEmbed,
     MessageButton,
     Client,
     ColorResolvable,
-    MessageComponentInteraction,
     CommandInteraction,
     ButtonInteraction,
 } from "discord.js";
@@ -156,8 +154,8 @@ export async function selectMenuEmbed(
     interaction: CommandInteraction,
     embed: MessageEmbed,
     options: number,
-    callback: Function,
-    timeout: number = 60000
+    callback: (option: number) => void,
+    timeout = 60000
 ): Promise<Message> {
     if (options > 5 || options < 1)
         throw new Error("options amount need be a integer in 1~5.");

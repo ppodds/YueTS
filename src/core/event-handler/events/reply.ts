@@ -36,8 +36,7 @@ const event: EventInterface = {
         if (message.author.bot) return;
         // TODO formatted message response
         if (message.guild !== null) {
-            let reply: Reply, globalReply: Reply;
-            [reply, globalReply] = await Promise.all([
+            const [reply, globalReply] = await Promise.all([
                 Reply.getResponse(
                     message.content,
                     message.guildId,
@@ -65,8 +64,7 @@ const event: EventInterface = {
             // TODO 增加rpg經驗值
         } else {
             // in dm channel
-            let globalReply: Reply;
-            [globalReply] = await Promise.all([
+            const [globalReply] = await Promise.all([
                 Reply.getResponse(
                     message.content,
                     message.author.id,

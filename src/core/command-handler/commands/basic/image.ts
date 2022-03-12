@@ -6,9 +6,7 @@ import { info } from "../../../graphics/embeds.js";
 import {
     CommandInteraction,
     DMChannel,
-    GuildChannel,
     MessageAttachment,
-    TextBasedChannel,
     TextChannel,
 } from "discord.js";
 import { toDatetimeString } from "../../../utils/time.js";

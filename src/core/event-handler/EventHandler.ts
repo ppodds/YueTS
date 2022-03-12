@@ -40,10 +40,9 @@ export class EventHandler {
             commands.forEach((command, name) => {
                 if (command.init) {
                     tasks.push(
-                        new Promise<void>(async (resolve, reject) => {
-                            await command.init(this.client, name);
-                            resolve();
-                        })
+                        new Promise<void>((resolve, reject) =>
+                            command.init(this.client, name).then(resolve)
+                        )
                     );
                 }
             });

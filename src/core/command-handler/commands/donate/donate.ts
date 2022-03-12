@@ -32,7 +32,7 @@ const command: CommandInterface = {
         ),
     async execute(interaction) {
         if (interaction.options.getSubcommand() === "start") {
-            let typeText = interaction.options.getString("type");
+            const typeText = interaction.options.getString("type");
             const type: ImageType = ImageType[typeText.toUpperCase()];
             if (type === undefined)
                 return await interaction.reply({

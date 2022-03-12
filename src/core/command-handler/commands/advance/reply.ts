@@ -7,6 +7,28 @@ import {
     paginationEmbed,
     paginationButton,
 } from "../../../graphics/embeds.js";
+import { CommandInteraction } from "discord.js";
+
+function generateEmbed(interaction: CommandInteraction) {
+    const embed = info(
+        interaction.client,
+        "「以前你跟我說過的這些~ Yue通通都記住了喔~ :heart:」"
+    );
+
+    embed.addFields(
+        {
+            name: "格式範例",
+            value: "「待會Yue就用這種方式照著念喔~」",
+            inline: false,
+        },
+        {
+            name: "關鍵字",
+            value: "回應內容",
+            inline: false,
+        }
+    );
+    return embed;
+}
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -137,30 +159,9 @@ const command: CommandInterface = {
                 attributes: ["key", "response"],
             });
 
-            function generateEmbed() {
-                const embed = info(
-                    interaction.client,
-                    "「以前你跟我說過的這些~ Yue通通都記住了喔~ :heart:」"
-                );
-
-                embed.addFields(
-                    {
-                        name: "格式範例",
-                        value: "「待會Yue就用這種方式照著念喔~」",
-                        inline: false,
-                    },
-                    {
-                        name: "關鍵字",
-                        value: "回應內容",
-                        inline: false,
-                    }
-                );
-                return embed;
-            }
-
             // don't need paginationEmbed
             if (replies.length <= 23) {
-                let embed = generateEmbed();
+                const embed = generateEmbed(interaction);
                 replies.forEach((reply) =>
                     embed.addField(reply.key, reply.response)
                 );
@@ -175,7 +176,7 @@ const command: CommandInterface = {
 
                 const pages = [];
                 pagesData.forEach((pageData) => {
-                    let embed = generateEmbed();
+                    const embed = generateEmbed(interaction);
                     pageData.forEach((reply: Reply) => {
                         embed.addField(reply.key, reply.response);
                     });

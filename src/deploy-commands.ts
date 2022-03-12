@@ -1,6 +1,5 @@
 import { REST } from "@discordjs/rest";
 import {
-    RESTPostAPIApplicationCommandsJSONBody,
     Routes,
 } from "discord-api-types/v9";
 import * as fs from "fs";
