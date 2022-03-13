@@ -48,7 +48,7 @@ export async function ownerOnly(
     } else {
         // owner is a Team object
         const owners = [];
-        client.application.owner.members.forEach((member, key) => {
+        client.application.owner.members.forEach((member) => {
             owners.push({
                 id: member.user.id,
                 type: "USER",

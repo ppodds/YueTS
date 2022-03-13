@@ -105,7 +105,7 @@ const command: CommandInterface = {
             const response = interaction.options.getString("response");
 
             // create reply if not exist
-            const [reply, created] = await Reply.findOrCreate({
+            const [_, created] = await Reply.findOrCreate({
                 where: {
                     key: key,
                     dm: getDm(),

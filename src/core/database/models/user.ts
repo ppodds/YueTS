@@ -5,7 +5,7 @@ export class User extends sequelize.Model {
     id: string;
     contribution: number;
     static async get(id: string) {
-        const [user, created] = await User.findOrCreate({
+        const [user, _] = await User.findOrCreate({
             where: {
                 id: id,
             },

@@ -49,7 +49,7 @@ const command: CommandInterface = {
                     ephemeral: true,
                 });
             // create donor if not exist
-            const [donor, created] = await Donor.findOrCreate({
+            const [_, created] = await Donor.findOrCreate({
                 where: {
                     guild: interaction.inGuild() ? interaction.guildId : "dm",
                     channel: interaction.channelId,

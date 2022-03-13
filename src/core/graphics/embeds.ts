@@ -127,7 +127,7 @@ export async function paginationEmbed(
         .on(PaginatorEvents.COLLECT_ERROR, ({ error }) => {
             Logger.error("Paginator encounter collect error!", error);
         })
-        .on(PaginatorEvents.PAGINATION_END, async ({ reason, paginator }) => {
+        .on(PaginatorEvents.PAGINATION_END, async ({ paginator }) => {
             try {
                 if (paginator.message.deletable)
                     await paginator.message.delete();
@@ -227,6 +227,7 @@ export async function selectMenuEmbed(
         pages: [embed],
         buttons: buttonList,
         identifiersResolver: identifiersResolver,
+        timeout: timeout,
     })
         .on(
             PaginatorEvents.PAGINATION_READY,

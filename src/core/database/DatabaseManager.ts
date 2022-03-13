@@ -21,7 +21,7 @@ export class DatabaseManager {
                 logging:
                     (await configManager.getBotConfig()).env === "prod"
                         ? false
-                        : (sql: string, timing?: number) => Logger.info(sql),
+                        : (sql: string, _?: number) => Logger.info(sql),
                 pool: {
                     max: 50,
                     min: 10,

@@ -157,7 +157,7 @@ class ImageManager {
      * @returns if the picture is already in the database
      */
     public async inDatabase(type: ImageType, phash: string): Promise<boolean> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             for (const imagePhash of this.imagePhashs.get(type)) {
                 if (ImageManager.isSimilar(imagePhash.data, phash))
                     resolve(true);
