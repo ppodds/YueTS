@@ -16,11 +16,22 @@ export class Logger {
         logger.info(formatText(text));
     }
 
+    public static debug(text: string) {
+        logger.debug(formatText(text));
+    }
+
     public static warn(text: string, warn: string = null) {
         logger.warn(formatText(`${text}${warn ? "\n" + warn : ""}`));
     }
 
     public static error(text: string, err: Error = null) {
-        logger.error(formatText(`${text}${err ? "\n" + err : ""}`));
+        const errorMessage = err
+            ? ""
+            : `${err.name}: ${err.message}
+            Stack: ${err.stack}`;
+        logger.error(
+            formatText(`${text}
+        ${errorMessage}`)
+        );
     }
 }

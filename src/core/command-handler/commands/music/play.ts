@@ -7,6 +7,7 @@ import { Reaction } from "../../../graphics/Reaction.js";
 import { CommandInterface } from "../../CommandInterface.js";
 import { GuildMember } from "discord.js";
 import { MusicPlayer } from "../../../music/MusicPlayer.js";
+import { Logger } from "../../../utils/Logger.js";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -36,10 +37,12 @@ const command: CommandInterface = {
         const regex =
             /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
         if (target.match(regex) ? true : false) {
+            Logger.debug(`Creating resource from ${target}`);
             const resource = await MusicPlayer.createResource(
                 target,
                 user as GuildMember
             );
+            Logger.debug("Resource created");
             musicPlayer.add(resource);
             await interaction.editReply(
                 `\`\`\`[已增加 ${resource.metadata.videoInfo.title} 到撥放序列中]\`\`\``
@@ -93,10 +96,16 @@ ${i + 1}. ${Reaction.item} [${(searchResult.items[i] as any).title}](${
                     embed,
                     searchResult.items.length,
                     async (option: number) => {
+                        Logger.debug(
+                            `Creating resource from ${
+                                (searchResult.items[option] as any).url
+                            }`
+                        );
                         const resource = await MusicPlayer.createResource(
                             (searchResult.items[option] as any).url,
                             user as GuildMember
                         );
+                        Logger.debug("Resource created");
                         musicPlayer.add(resource);
                         await interaction.followUp(
                             `\`\`\`[已增加 ${

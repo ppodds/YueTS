@@ -1,4 +1,5 @@
 import { Collection, CommandInteraction, Guild } from "discord.js";
+import { Logger } from "../utils/Logger.js";
 import { MusicPlayer } from "./MusicPlayer.js";
 
 class PlayerManager {
@@ -15,11 +16,14 @@ class PlayerManager {
     public get(interaction: CommandInteraction): MusicPlayer {
         const musicPlayer = this.players.get(interaction.guildId);
         if (musicPlayer && !musicPlayer.destroyed) {
-            return this.players.get(interaction.guildId);
-        } else {
-            const musicPlayer = new MusicPlayer(interaction);
-            this.players.set(interaction.guildId, musicPlayer);
             return musicPlayer;
+        } else {
+            Logger.debug(
+                `Creating new music player for ${interaction.guild.name}`
+            );
+            const t = new MusicPlayer(interaction);
+            this.players.set(interaction.guildId, t);
+            return t;
         }
     }
     /**
