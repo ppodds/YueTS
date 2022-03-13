@@ -24,6 +24,18 @@
   "bugs": {
     "url": "https://github.com/ppodds/YueTS/issues"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js,cjs,mjs}": [
+      "prettier --write",
+      "npm run lint-fix",
+      "git add"
+    ]
+  },
   "homepage": "https://github.com/ppodds/YueTS#readme",
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
@@ -62,8 +74,11 @@
     "concurrently": "^7.0.0",
     "eslint": "^8.11.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^7.0.4",
     "jest": "^27.5.1",
+    "lint-staged": "^12.3.5",
     "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
     "ts-jest": "^27.1.3"
   }
 }
