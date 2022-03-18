@@ -31,7 +31,6 @@ async function save(
     if (filetype.mime.startsWith("image/")) {
         Logger.debug("Making phash of the image");
         const imagePhash = await imageManager.makePhash(imageData);
-        console.log(imagePhash);
         Logger.debug("Checking if image is already in database");
         const inDatabase = await imageManager.inDatabase(type, imagePhash);
         if (inDatabase) {
