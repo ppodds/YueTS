@@ -41,6 +41,7 @@ export class MusicPlayer {
     private readyLock: boolean;
     private np: Message;
     private volume: number;
+    private looping: boolean;
     private current: AudioResource<Metadata>;
     private connection: VoiceConnection;
     private player: AudioPlayer;
@@ -57,7 +58,7 @@ export class MusicPlayer {
         this.volume = 0.2;
         this.current = null;
         this.destroyed = false;
-        // this.looping = false
+        this.looping = false;
 
         this.connection = joinVoiceChannel({
             channelId: (interaction.member as GuildMember).voice.channelId,
@@ -163,6 +164,13 @@ export class MusicPlayer {
                     `${this.current.metadata.videoInfo.title} finished playing`
                 );
                 if (this.np.deletable) await this.np.delete();
+                if (this.looping)
+                    this.queue.push(
+                        await MusicPlayer.createResource(
+                            this.current.metadata.videoInfo.url,
+                            this.current.metadata.requester
+                        )
+                    );
                 this.np = null;
                 this.current = null;
                 this.processQueue();
@@ -318,5 +326,11 @@ export class MusicPlayer {
     }
     public getQueue() {
         return Array.from(this.queue);
+    }
+    public isLooping() {
+        return this.looping;
+    }
+    public switchLooping() {
+        this.looping = !this.looping;
     }
 }
