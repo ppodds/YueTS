@@ -14,7 +14,7 @@
     "clean": "rm -rf dist/*",
     "lint": "eslint -c .eslintrc.cjs 'src/**/*.ts' 'tests/**/*.test.ts'",
     "lint-fix": "eslint -c .eslintrc.cjs 'src/**/*.ts' 'tests/**/*.test.ts' --fix",
-    "prepare": "husky install && git config --global user.email $GIT_USER_EMAIL && git config --global user.name $GIT_USER_NAME"
+    "prepare": "./setup-githooks.sh"
   },
   "repository": {
     "type": "git",
