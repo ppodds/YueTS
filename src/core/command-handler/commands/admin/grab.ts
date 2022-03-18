@@ -25,13 +25,20 @@ async function save(
     type: ImageType,
     imageData: Buffer
 ): Promise<boolean> {
+    Logger.debug("checking if image is valid");
     // get image ext and mime
     const filetype = await fileTypeFromBuffer(imageData);
     if (filetype.mime.startsWith("image/")) {
+        Logger.debug("Making phash of the image");
         const imagePhash = await imageManager.makePhash(imageData);
+        console.log(imagePhash);
+        Logger.debug("Checking if image is already in database");
         const inDatabase = await imageManager.inDatabase(type, imagePhash);
-        if (inDatabase) return false;
-
+        if (inDatabase) {
+            Logger.debug("Image is already in database, skipped");
+            return false;
+        }
+        Logger.debug("Saving image to database");
         const image = await Image.add(
             type,
             message.author.id,
@@ -39,6 +46,7 @@ async function save(
             imageData,
             imagePhash
         );
+        Logger.debug("Updating user's contribution");
         // update contribution
         const user = await User.get(message.author.id);
 
@@ -53,6 +61,8 @@ async function save(
         imageManager.addPhash(type, image.id, imagePhash);
         return true;
     }
+    Logger.debug(`Image is not valid, skipped (${filetype.mime})`);
+    return false;
 }
 
 const command: CommandInterface = {
@@ -104,18 +114,27 @@ const command: CommandInterface = {
         );
 
         let done = false;
-        let before = null;
+        let before: string = null;
         let messageCount = 0;
         let imageCount = 0;
+
+        Logger.debug(`Grabing ${toString(type)} from ${channel.name}`);
         while (!done) {
+            Logger.debug(
+                `Fetching ${before ? "" : "latest "}messages ${
+                    before ? "sent before message which id is " + before : ""
+                }`
+            );
             const messages = await (channel as TextChannel).messages.fetch({
                 limit: 100,
                 before: before,
             });
-
+            Logger.debug(`Fetched ${messages.size} messages`);
             for (const [id, message] of messages) {
+                Logger.debug(`Checking message ${id}`);
                 before = id;
                 if (message.createdAt < time) {
+                    Logger.debug(`Message ${id} is too old, stop grabbing`);
                     done = true;
                     break;
                 }
@@ -130,6 +149,7 @@ const command: CommandInterface = {
                 if (message.attachments.size === 0 && !imgurResult) continue;
                 // save image
                 if (message.attachments.size !== 0) {
+                    Logger.debug(`Saving attachments of message ${id}`);
                     for (const attachmentPair of message.attachments) {
                         const attachment = attachmentPair[1];
 
@@ -141,6 +161,9 @@ const command: CommandInterface = {
                         if (await save(message, type, resp.data)) imageCount++;
                     }
                 } else if (imgurResult) {
+                    Logger.debug(
+                        `Message ${id} is a link to imgur, saving image from imgur`
+                    );
                     // get imgur website
                     const resp = await axios.get(imgurResult[0], {
                         responseType: "document",
@@ -158,36 +181,28 @@ const command: CommandInterface = {
                     if (await save(message, type, imageResp.data)) imageCount++;
                 }
             }
-
             // no more message!
-            if (messages.size !== 100) done = true;
+            if (messages.size !== 100) {
+                done = true;
+                Logger.debug("No more message, stop grabbing");
+            }
         }
         now = new Date();
+        const resultMessage = `Yue從${toDatetimeString(
+            new Date(
+                range || grabData
+                    ? range
+                        ? now.setDate(now.getDate() - range)
+                        : grabData.time
+                    : now.setDate(now.getDate() - 10)
+            )
+        )}以來的 ${messageCount} 則訊息中擷取了 ${imageCount} 張圖片，再繼續學習下去很快就會變得厲害了呢....`;
         try {
-            await interaction.editReply(
-                `Yue從${toDatetimeString(
-                    new Date(
-                        range || grabData
-                            ? range
-                                ? now.setDate(now.getDate() - range)
-                                : grabData.time
-                            : now.setDate(now.getDate() - 10)
-                    )
-                )}以來的 ${messageCount} 則訊息中擷取了 ${imageCount} 張圖片，再繼續學習下去很快就會變得厲害了呢....`
-            );
+            await interaction.editReply(resultMessage);
         } catch (error) {
-            await interaction.channel.send(
-                `Yue從${toDatetimeString(
-                    new Date(
-                        range || grabData
-                            ? range
-                                ? now.setDate(now.getDate() - range)
-                                : grabData.time
-                            : now.setDate(now.getDate() - 10)
-                    )
-                )}以來的 ${messageCount} 則訊息中擷取了 ${imageCount} 張圖片，再繼續學習下去很快就會變得厲害了呢....`
-            );
+            await interaction.channel.send(resultMessage);
         }
+        Logger.debug("Grab finished, updating grab time database");
         // update grab time
         if (grabData) {
             grabData.time = grabTime;
