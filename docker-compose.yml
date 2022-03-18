@@ -18,8 +18,12 @@ services:
       - ./tsconfig.json:/app/tsconfig.json
       - ./.eslintrc.cjs:/app/.eslintrc.cjs
       - ./jest.config.cjs:/app/jest.config.cjs
+      - ./.git:/app/.git
+      - ./.gitignore:/app/.gitignore
+      - ./.husky:/app/.husky
     env_file:
       - bot.env
+      - git.env
     depends_on:
       - database
   database:

@@ -13,7 +13,8 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "clean": "rm -rf dist/*",
     "lint": "eslint -c .eslintrc.cjs 'src/**/*.ts' 'tests/**/*.test.ts'",
-    "lint-fix": "eslint -c .eslintrc.cjs 'src/**/*.ts' 'tests/**/*.test.ts' --fix"
+    "lint-fix": "eslint -c .eslintrc.cjs 'src/**/*.ts' 'tests/**/*.test.ts' --fix",
+    "prepare": "husky install && git config --global user.email $GIT_USER_EMAIL && git config --global user.name $GIT_USER_NAME"
   },
   "repository": {
     "type": "git",
@@ -24,16 +25,10 @@
   "bugs": {
     "url": "https://github.com/ppodds/YueTS/issues"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{ts,js,cjs,mjs}": [
       "prettier --write",
-      "npm run lint-fix",
-      "git add"
+      "npm run lint-fix"
     ]
   },
   "homepage": "https://github.com/ppodds/YueTS#readme",
