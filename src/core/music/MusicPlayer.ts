@@ -209,6 +209,7 @@ export class MusicPlayer {
             };
             return { url: url, metadata: metadata };
         } catch (err) {
+            Logger.error("Error occur when getting video info", err);
             throw new Error("找不到指定的Youtube影片呢...");
         }
     }
