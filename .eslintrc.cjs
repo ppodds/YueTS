@@ -1,5 +1,8 @@
 module.exports = {
     root: true,
+    env: {
+        node: true,
+    },
     parser: "@typescript-eslint/parser",
     plugins: ["@typescript-eslint", "unused-imports"],
     extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
@@ -15,5 +18,8 @@ module.exports = {
                 argsIgnorePattern: "^_",
             },
         ],
+        "linebreak-style": ["error", "unix"],
+        quotes: ["error", "double"],
+        semi: ["error", "always"],
     },
 };
