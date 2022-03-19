@@ -12,6 +12,7 @@
     "prod": "npm run build && npm run deploy-cmd  && npm run start",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "clean": "rm -rf dist/*",
+    "format": "prettier --write 'src/**/*.{ts,js,json}' 'tests/**/*.{ts,js,json}'",
     "lint": "eslint -c .eslintrc.cjs 'src/**/*.ts' 'tests/**/*.test.ts'",
     "lint-fix": "eslint -c .eslintrc.cjs 'src/**/*.ts' 'tests/**/*.test.ts' --fix",
     "prepare": "./setup-githooks.sh"
@@ -28,7 +29,7 @@
   "lint-staged": {
     "*.{ts,js,cjs,mjs}": [
       "prettier --write",
-      "npm run lint-fix"
+      "eslint -c .eslintrc.cjs --fix"
     ]
   },
   "homepage": "https://github.com/ppodds/YueTS#readme",
