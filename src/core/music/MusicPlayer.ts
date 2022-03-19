@@ -164,7 +164,7 @@ export class MusicPlayer {
                     `${this.current.metadata.videoInfo.title} finished playing`
                 );
                 if (this.np.deletable) await this.np.delete();
-                if (this.looping)
+                if (this.looping && !this.destroyed)
                     this.queue.push(
                         await MusicPlayer.createResource(
                             this.current.metadata.videoInfo.url,
