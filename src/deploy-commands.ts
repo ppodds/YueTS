@@ -1,7 +1,5 @@
 import { REST } from "@discordjs/rest";
-import {
-    Routes,
-} from "discord-api-types/v9";
+import { Routes } from "discord-api-types/v9";
 import * as fs from "fs";
 import { CommandInterface } from "./core/command-handler/CommandInterface";
 import { SlashCommandBuilder } from "@discordjs/builders";
