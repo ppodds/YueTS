@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # check if this folder is a repository
-if [ -d "./.git" ]; then
+if [ -d "./.git" ] && [ $GIT_USER_EMAIL ] && [ $GIT_USER_NAME ]; then
     husky install
     git config --global auto.crlf true
     git config --global user.email $GIT_USER_EMAIL
