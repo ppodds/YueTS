@@ -6,15 +6,16 @@ import {
     ColorResolvable,
     CommandInteraction,
     ButtonInteraction,
+    MessageActionRow,
 } from "discord.js";
 import { Color } from "./Color.js";
-import {
-    ButtonPaginator,
-    PaginatorEvents,
-} from "@psibean/discord.js-pagination";
 import { Reaction } from "./Reaction.js";
 import { Logger } from "../utils/Logger.js";
 import configManager from "../../config/ConfigManager.js";
+import {
+    ActionRowMessageListener,
+    Paginator,
+} from "discord.js-message-listener";
 
 const author = (await configManager.getBotConfig()).author;
 
@@ -87,59 +88,24 @@ export async function paginationEmbed(
                 目前顯示的是第 ${page + 1} 頁的結果 共有 ${pages.length} 頁`
         );
     }
-
-    const identifiersResolver = async ({
-        interaction,
-        paginator,
-    }: {
-        interaction: ButtonInteraction;
-        paginator: ButtonPaginator;
-    }) => {
-        let { pageIdentifier } = paginator.currentIdentifiers;
-        switch (interaction.customId) {
-            case buttonList[0].customId:
-                pageIdentifier =
-                    pageIdentifier > 0 ? --pageIdentifier : pages.length - 1;
-                break;
-            case buttonList[1].customId:
-                pageIdentifier =
-                    pageIdentifier + 1 < pages.length ? ++pageIdentifier : 0;
-                break;
-            default:
-                break;
-        }
-        return { ...paginator.currentIdentifier, pageIdentifier };
-    };
-
-    const paginator = new ButtonPaginator(interaction, {
+    const message = (
+        interaction.replied || interaction.deferred
+            ? await interaction.editReply({ embeds: [pages[0]] })
+            : await interaction.reply({ embeds: [pages[0]], fetchReply: true })
+    ) as Message;
+    const messageActionRows = [new MessageActionRow()];
+    messageActionRows[0].addComponents(buttonList);
+    const listener = new ActionRowMessageListener(message, {
+        messageActionRows,
+    });
+    const paginator = new Paginator(listener, {
         pages,
-        buttons: buttonList,
-        identifiersResolver: identifiersResolver,
-    })
-        .on(PaginatorEvents.PAGINATION_READY, async (paginator) => {
-            for (const actionRow of paginator.messageActionRows) {
-                for (const button of actionRow.components) {
-                    button.disabled = false;
-                }
-            }
-            await paginator.message.edit(paginator.currentPage);
-        })
-        .on(PaginatorEvents.COLLECT_ERROR, ({ error }) => {
-            Logger.error("Paginator encounter collect error!", error);
-        })
-        .on(PaginatorEvents.PAGINATION_END, async ({ paginator }) => {
-            try {
-                if (paginator.message.deletable)
-                    await paginator.message.delete();
-            } catch (error) {
-                Logger.error(
-                    "There was an error when deleting the message!",
-                    error
-                );
-            }
-        });
-    await paginator.send();
-    return paginator.message;
+        nextPageFilter: (arg) =>
+            (arg as ButtonInteraction).customId === buttonList[1].customId,
+        previousPageFilter: (arg) =>
+            (arg as ButtonInteraction).customId === buttonList[0].customId,
+    });
+    await paginator.start();
 }
 /**
  * Send a select menu embed reply
@@ -156,7 +122,7 @@ export async function selectMenuEmbed(
     options: number,
     callback: (option: number) => void,
     timeout = 60000
-): Promise<Message> {
+): Promise<void> {
     if (options > 5 || options < 1)
         throw new Error("options amount need be a integer in 1~5.");
 
@@ -206,58 +172,49 @@ export async function selectMenuEmbed(
         }
     }
 
-    const identifiersResolver = async ({
-        interaction,
-        paginator,
-    }: {
-        interaction: ButtonInteraction;
-        paginator: ButtonPaginator;
-    }) => {
-        for (let i = 0; i < 5; i++) {
-            if (interaction.customId === buttonList[i].customId) {
-                callback(i);
-                break;
-            }
-        }
-        paginator.stop("USER_SELECTED");
-        return paginator.currentIdentifier;
-    };
-
-    const paginator = new ButtonPaginator(interaction, {
-        pages: [embed],
-        buttons: buttonList,
-        identifiersResolver: identifiersResolver,
-        timeout: timeout,
-    })
-        .on(
-            PaginatorEvents.PAGINATION_READY,
-            async (paginator: ButtonPaginator) => {
-                for (const actionRow of paginator.messageActionRows) {
-                    for (const button of actionRow.components) {
-                        button.disabled = false;
-                    }
+    const message = (
+        interaction.replied || interaction.deferred
+            ? await interaction.editReply({ embeds: [embed] })
+            : await interaction.reply({ embeds: [embed], fetchReply: true })
+    ) as Message;
+    const messageActionRows = [new MessageActionRow()];
+    messageActionRows[0].addComponents(buttonList);
+    const listener = new ActionRowMessageListener(message, {
+        messageActionRows,
+        collectorOptions: {
+            time: timeout,
+        },
+    });
+    listener
+        .on("collect", (arg) => {
+            for (let i = 0; i < 5; i++) {
+                if (
+                    (arg as ButtonInteraction).customId ===
+                    buttonList[i].customId
+                ) {
+                    callback(i);
+                    break;
                 }
-                await paginator.message.edit(paginator.currentPage);
             }
-        )
-        .on(PaginatorEvents.COLLECT_ERROR, ({ error }) => {
-            Logger.error("Paginator encounter collect error!", error);
+            listener.stop("USER_SELECTED");
         })
-        .on(PaginatorEvents.PAGINATION_END, async ({ reason, paginator }) => {
+        .on("end", async (_, reason) => {
             if (reason === "USER_SELECTED") {
-                for (const actionRow of paginator.messageActionRows) {
+                for (const actionRow of messageActionRows) {
                     for (const button of actionRow.components) {
                         button.disabled = true;
                     }
                 }
-                await paginator.message.edit(paginator.currentPage);
+                await listener.editMessage({ components: messageActionRows });
             }
-        });
-
-    if (!interaction.deferred) await interaction.deferReply();
-    await paginator.send();
-
-    return paginator.message;
+        })
+        .on("collectError", (error) =>
+            Logger.error(
+                "Button select menu encounter collect error!",
+                error.error as Error
+            )
+        );
+    await listener.start();
 }
 /**
  * Generate a button list for paginationEmbed
