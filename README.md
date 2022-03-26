@@ -1,4 +1,4 @@
-# YueJS
+# YueTS
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/7a9c92a6262142ea9711888e2e016d57)](https://www.codacy.com/gh/ppodds/YueTS/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ppodds/YueTS&utm_campaign=Badge_Grade)
 
