@@ -13,7 +13,7 @@ const command: CommandInterface = {
         );
         embed.addFields(
             {
-                name: "reply add 【全域】 【關鍵字】 【內容】",
+                name: "reply add 【全域】 【關鍵字】",
                 value: "讓Yue在下次聽到你說這句話時回應你",
                 inline: false,
             },

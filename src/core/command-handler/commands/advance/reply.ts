@@ -50,12 +50,6 @@ const command: CommandInterface = {
                         .setDescription("關鍵字")
                         .setRequired(true)
                 )
-                .addStringOption((option) =>
-                    option
-                        .setName("response")
-                        .setDescription("反應內容")
-                        .setRequired(true)
-                )
         )
         .addSubcommand((subcommand) =>
             subcommand
@@ -102,35 +96,46 @@ const command: CommandInterface = {
 
         if (interaction.options.getSubcommand() === "add") {
             const key = interaction.options.getString("key");
-            const response = interaction.options.getString("response");
 
-            // create reply if not exist
-            const [_, created] = await Reply.findOrCreate({
-                where: {
-                    key: key,
-                    dm: getDm(),
-                    scope: getScope(),
-                    formatted: false,
-                },
-                defaults: {
-                    response: response,
-                },
-            });
-
-            if (created) {
-                await interaction.reply("Yue記下來啦~ 下次會努力的~");
-                Logger.info(
-                    `${interaction.user.id} use reply add at ${
-                        interaction.inGuild()
-                            ? interaction.guildId
-                            : "dm channel"
-                    } key；{key} response: {value} ${
-                        interaction.inGuild() ? "global: " + isGlobal : ""
-                    }`
+            if (
+                await Reply.findOne({
+                    where: {
+                        key: key,
+                        dm: getDm(),
+                        scope: getScope(),
+                        formatted: false,
+                    },
+                    attributes: ["id"],
+                })
+            )
+                return await interaction.reply(
+                    "好像已經有人對Yue下過相同的指示了呢~"
                 );
-            } else {
-                await interaction.reply("好像已經有人對Yue下過相同的指示了呢~");
-            }
+
+            await interaction.reply("請輸入回應內容，若未輸入60秒後會自動取消");
+            const response = (
+                await interaction.channel.awaitMessages({
+                    filter: (message) =>
+                        message.author.id === interaction.user.id,
+                    maxProcessed: 1,
+                    time: 60000,
+                })
+            ).first();
+            await Reply.create({
+                key: key,
+                dm: getDm(),
+                scope: getScope(),
+                response: response.content,
+                formatted: false,
+            });
+            await interaction.followUp("Yue記下來啦~ 下次會努力的~");
+            Logger.info(
+                `${interaction.user.id} use reply add at ${
+                    interaction.inGuild() ? interaction.guildId : "dm channel"
+                } key；${key} response: ${response.content} ${
+                    interaction.inGuild() ? "global: " + isGlobal : ""
+                }`
+            );
         } else if (interaction.options.getSubcommand() === "del") {
             const key = interaction.options.getString("key");
 
