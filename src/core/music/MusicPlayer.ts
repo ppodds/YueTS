@@ -165,12 +165,10 @@ export class MusicPlayer {
                 );
                 if (this.np.deletable) await this.np.delete();
                 if (this.looping && !this.destroyed)
-                    this.queue.push(
-                        await MusicPlayer.createResource(
-                            this.current.metadata.videoInfo.url,
-                            this.current.metadata.requester
-                        )
-                    );
+                    this.queue.push({
+                        url: this.current.metadata.videoInfo.url,
+                        metadata: this.current.metadata,
+                    });
                 this.np = null;
                 this.current = null;
                 this.processQueue();
@@ -197,7 +195,7 @@ export class MusicPlayer {
      * @param requester requester guild member object
      * @returns youtube resource contains metadata
      */
-    public static async createResource(
+    public async createResource(
         url: string,
         requester: GuildMember
     ): Promise<Track> {
@@ -210,7 +208,9 @@ export class MusicPlayer {
             return { url: url, metadata: metadata };
         } catch (err) {
             Logger.error("Error occur when getting video info", err);
-            throw new Error("找不到指定的Youtube影片呢...");
+            await this.channel.send(
+                "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確"
+            );
         }
     }
 

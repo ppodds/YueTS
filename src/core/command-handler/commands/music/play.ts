@@ -6,7 +6,6 @@ import { info, selectMenuEmbed } from "../../../graphics/embeds.js";
 import { Reaction } from "../../../graphics/Reaction.js";
 import { CommandInterface } from "../../CommandInterface.js";
 import { GuildMember } from "discord.js";
-import { MusicPlayer } from "../../../music/MusicPlayer.js";
 import { Logger } from "../../../utils/Logger.js";
 
 const command: CommandInterface = {
@@ -38,7 +37,7 @@ const command: CommandInterface = {
             /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
         if (target.match(regex) ? true : false) {
             Logger.debug(`Creating resource from ${target}`);
-            const resource = await MusicPlayer.createResource(
+            const resource = await musicPlayer.createResource(
                 target,
                 user as GuildMember
             );
@@ -54,7 +53,7 @@ const command: CommandInterface = {
                 const tasks = [];
                 for (const item of playlist.items)
                     tasks.push(
-                        MusicPlayer.createResource(
+                        musicPlayer.createResource(
                             item.shortUrl,
                             user as GuildMember
                         )
@@ -101,7 +100,7 @@ ${i + 1}. ${Reaction.item} [${(searchResult.items[i] as any).title}](${
                                 (searchResult.items[option] as any).url
                             }`
                         );
-                        const resource = await MusicPlayer.createResource(
+                        const resource = await musicPlayer.createResource(
                             (searchResult.items[option] as any).url,
                             user as GuildMember
                         );
