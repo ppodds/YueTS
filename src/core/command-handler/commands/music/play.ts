@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import PlayerManager from "../../../music/PlayerManager.js";
 import ytpl from "ytpl";
-import ytsr from "ytsr";
+import ytsr, { Video } from "ytsr";
 import { info, selectMenuEmbed } from "../../../graphics/embeds.js";
 import { Reaction } from "../../../graphics/Reaction.js";
 import { CommandInterface } from "../../CommandInterface.js";
@@ -65,7 +65,7 @@ const command: CommandInterface = {
                 );
             } catch (err) {
                 // use key word search
-                const searchResult = await ytsr(target, { limit: 5 });
+                const searchResult = await ytsr(target, { limit: 10 });
                 if (searchResult.items.length === 0) {
                     await interaction.editReply(
                         "我找不到有這個關鍵字的歌曲呢..."
@@ -74,42 +74,36 @@ const command: CommandInterface = {
                 }
                 let description =
                     "「我找到了這些結果，在下面選一個吧!」(時限60秒)";
-                for (let i = 0; i < searchResult.items.length; i++) {
-                    description += `
-${i + 1}. ${Reaction.item} [${(searchResult.items[i] as any).title}](${
-                        (searchResult.items[i] as any).url
-                    }) `;
-                    if ((searchResult.items[i] as any).duration)
-                        description += `(${
-                            (searchResult.items[i] as any).duration
-                        })`;
-                    else if ((searchResult.items[i] as any).length)
-                        description += `數量: ${
-                            (searchResult.items[i] as any).length
-                        }`;
+                const result: Video[] = [];
+                for (
+                    let i = 0;
+                    result.length < 5 && i < searchResult.items.length;
+                    i++
+                ) {
+                    if (searchResult.items[i].type === "video") {
+                        const item = searchResult.items[i] as Video;
+                        result.push(item);
+                        description += `
+${result.length}. ${Reaction.item} [${item.title}](${item.url}) (${item.duration})`;
+                    }
                 }
 
                 const embed = info(interaction.client, description);
                 await selectMenuEmbed(
                     interaction,
                     embed,
-                    searchResult.items.length,
+                    result.length,
                     async (option: number) => {
-                        Logger.debug(
-                            `Creating resource from ${
-                                (searchResult.items[option] as any).url
-                            }`
-                        );
+                        const item = result[option];
+                        Logger.debug(`Creating resource from ${item.url}`);
                         const resource = await musicPlayer.createResource(
-                            (searchResult.items[option] as any).url,
+                            item.url,
                             user as GuildMember
                         );
                         Logger.debug("Resource created");
                         musicPlayer.add(resource);
                         await interaction.followUp(
-                            `\`\`\`[已增加 ${
-                                (searchResult.items[option] as any).title
-                            } 到撥放序列中]\`\`\``
+                            `\`\`\`[已增加 ${item.title} 到撥放序列中]\`\`\``
                         );
                     }
                 );
