@@ -5,8 +5,29 @@ import ytsr, { Video } from "ytsr";
 import { info, selectMenuEmbed } from "../../../graphics/embeds.js";
 import { Reaction } from "../../../graphics/Reaction.js";
 import { CommandInterface } from "../../CommandInterface.js";
-import { GuildMember } from "discord.js";
+import { CommandInteraction, GuildMember } from "discord.js";
 import { Logger } from "../../../utils/Logger.js";
+import { MusicPlayer } from "../../../music/MusicPlayer.js";
+
+async function createResourceFromUrl(
+    interaction: CommandInteraction,
+    musicPlayer: MusicPlayer,
+    requester,
+    url: string
+): Promise<void> {
+    Logger.debug(`Creating resource from ${url}`);
+    const resource = await musicPlayer.createResource(
+        url,
+        requester as GuildMember
+    );
+    if (resource) {
+        Logger.debug("Resource created");
+        await interaction.editReply(
+            `\`\`\`[已增加 ${resource.metadata.videoInfo.title} 到撥放序列中]\`\`\``
+        );
+        musicPlayer.add(resource);
+    }
+}
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()
@@ -35,18 +56,11 @@ const command: CommandInterface = {
 
         const regex =
             /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-        if (target.match(regex) ? true : false) {
-            Logger.debug(`Creating resource from ${target}`);
-            const resource = await musicPlayer.createResource(
-                target,
-                user as GuildMember
-            );
-            Logger.debug("Resource created");
-            musicPlayer.add(resource);
-            await interaction.editReply(
-                `\`\`\`[已增加 ${resource.metadata.videoInfo.title} 到撥放序列中]\`\`\``
-            );
-        } else {
+
+        // create resource
+        if (target.match(regex) ? true : false)
+            await createResourceFromUrl(interaction, musicPlayer, user, target);
+        else {
             try {
                 // playlist
                 const playlist = await ytpl(target, { limit: Infinity });
@@ -59,10 +73,11 @@ const command: CommandInterface = {
                         )
                     );
                 const resources = await Promise.all(tasks);
-                musicPlayer.addList(resources);
+                Logger.debug("Resources created");
                 await interaction.editReply(
                     `\`\`\`[已增加 ${playlist.title} 的所有歌曲到撥放序列中]\`\`\``
                 );
+                musicPlayer.addList(resources);
             } catch (err) {
                 // use key word search
                 const searchResult = await ytsr(target, { limit: 10 });
@@ -93,19 +108,13 @@ ${result.length}. ${Reaction.item} [${item.title}](${item.url}) (${item.duration
                     interaction,
                     embed,
                     result.length,
-                    async (option: number) => {
-                        const item = result[option];
-                        Logger.debug(`Creating resource from ${item.url}`);
-                        const resource = await musicPlayer.createResource(
-                            item.url,
-                            user as GuildMember
-                        );
-                        Logger.debug("Resource created");
-                        musicPlayer.add(resource);
-                        await interaction.followUp(
-                            `\`\`\`[已增加 ${item.title} 到撥放序列中]\`\`\``
-                        );
-                    }
+                    async (option: number) =>
+                        await createResourceFromUrl(
+                            interaction,
+                            musicPlayer,
+                            user,
+                            result[option].url
+                        )
                 );
             }
         }

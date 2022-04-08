@@ -20,18 +20,10 @@ import {
     NoSubscriberBehavior,
 } from "@discordjs/voice";
 import { Logger } from "../utils/Logger.js";
-import { stream, video_info, YouTubeVideo } from "play-dl";
+import { stream, video_info } from "play-dl";
 import { promisify } from "node:util";
-
-interface Metadata {
-    videoInfo: YouTubeVideo;
-    requester: GuildMember;
-}
-
-interface Track {
-    url: string;
-    metadata: Metadata;
-}
+import { Track } from "./Track.js";
+import { Metadata } from "./Metadata.js";
 
 export class MusicPlayer {
     private guild: Guild;
@@ -193,7 +185,7 @@ export class MusicPlayer {
      * Create a youtube resource by url
      * @param  url youtube url
      * @param requester requester guild member object
-     * @returns youtube resource contains metadata
+     * @returns youtube resource contains metadata, null if get an error
      */
     public async createResource(
         url: string,
@@ -207,23 +199,27 @@ export class MusicPlayer {
             };
             return { url: url, metadata: metadata };
         } catch (err) {
+            console.log(err);
             Logger.error("Error occur when getting video info", err);
             await this.channel.send(
                 "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確"
             );
+            return null;
         }
     }
 
     /**
-     * Add a track to music player queue
-     * @param resource youtube resource contains metadata
+     * Add tracks to music player queue
+     * @param resource youtube resources contains metadata
      */
     public add(resource: Track) {
         this.queue.push(resource);
         this.processQueue();
     }
     public addList(resources: Track[]) {
-        resources.forEach((resource) => this.queue.push(resource));
+        resources.forEach((resource) => {
+            if (resource) this.queue.push(resource);
+        });
         this.processQueue();
     }
     public skip() {
