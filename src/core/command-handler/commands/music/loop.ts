@@ -17,7 +17,7 @@ const command: CommandInterface = {
         const musicPlayer = PlayerManager.get(interaction);
         musicPlayer.switchLooping();
         await interaction.reply(
-            `${musicPlayer.isLooping ? "開啟" : "關閉"}歌曲循環撥放`
+            `${musicPlayer.isLooping() ? "開啟" : "關閉"}歌曲循環撥放`
         );
     },
 };
