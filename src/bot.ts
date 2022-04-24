@@ -36,7 +36,7 @@ async function preLaunch(client: Client) {
         await client.login((await configManager.getBotConfig()).token);
         Logger.info("Logged into Discord successfully");
     } catch (err) {
-        Logger.error("Error logging into Discord", <Error>err);
+        Logger.error("Error logging into Discord", err);
         process.exit();
     }
     client.user?.setActivity(

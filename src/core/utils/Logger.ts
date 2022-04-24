@@ -24,14 +24,13 @@ export class Logger {
         logger.warn(formatText(`${text}${warn ? "\n" + warn : ""}`));
     }
 
-    public static error(text: string, err: Error = null) {
-        const errorMessage = err
-            ? ""
-            : `${err.name}: ${err.message}
-            Stack: ${err.stack}`;
+    public static error(
+        text: string,
+        err: Record<string, unknown> | Error = null
+    ) {
         logger.error(
             formatText(`${text}
-        ${errorMessage}`)
+        ${err ? JSON.stringify(err, Object.getOwnPropertyNames(err), 2) : ""}`)
         );
     }
 }
