@@ -5,6 +5,7 @@ import {
     paginationButton,
 } from "../../../graphics/embeds.js";
 import PlayerManager from "../../../music/PlayerManager.js";
+import { Track } from "../../../music/Track.js";
 import { CommandInterface } from "../../CommandInterface.js";
 
 const command: CommandInterface = {
@@ -61,7 +62,7 @@ const command: CommandInterface = {
         } else {
             // generate pages
             let i = 0;
-            const pagesData = [];
+            const pagesData = [] as Track[][];
             while (i < queue.length) {
                 pagesData.push(queue.slice(i, (i += 22)));
             }
@@ -74,7 +75,7 @@ const command: CommandInterface = {
                 for (const track of pageData) {
                     embed.addField(
                         (count += 1).toString(),
-                        track.metadata.videoDetails.title
+                        track.metadata.videoInfo.title
                     );
                 }
 
