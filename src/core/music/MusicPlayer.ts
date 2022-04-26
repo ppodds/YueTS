@@ -18,6 +18,7 @@ import {
     AudioPlayer,
     AudioPlayerError,
     NoSubscriberBehavior,
+    DiscordGatewayAdapterCreator,
 } from "@discordjs/voice";
 import { Logger } from "../utils/Logger.js";
 import { stream, video_info } from "play-dl";
@@ -57,7 +58,8 @@ export class MusicPlayer {
             guildId: this.guild.id,
             selfMute: false,
             selfDeaf: true,
-            adapterCreator: this.guild.voiceAdapterCreator as any, // ¯\_(ツ)_/¯
+            adapterCreator: this.guild
+                .voiceAdapterCreator as unknown as DiscordGatewayAdapterCreator,
         });
 
         this.connection.on("stateChange", async (oldState, newState) => {

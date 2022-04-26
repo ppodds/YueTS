@@ -1,5 +1,8 @@
 import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
+import {
+    RESTPostAPIApplicationCommandsJSONBody,
+    Routes,
+} from "discord-api-types/v9";
 import * as fs from "fs";
 import { CommandInterface } from "./core/command-handler/CommandInterface";
 import { SlashCommandBuilder } from "@discordjs/builders";
@@ -7,7 +10,7 @@ import configManager from "./config/ConfigManager.js";
 
 process.chdir("dist");
 
-const commands: any[] = [];
+const commands: RESTPostAPIApplicationCommandsJSONBody[] = [];
 const commandFolders = fs.readdirSync("./core/command-handler/commands");
 
 const clientId = (await configManager.getBotConfig()).dev.clientId;
