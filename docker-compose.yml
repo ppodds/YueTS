@@ -9,6 +9,7 @@ services:
     tty: true
     volumes:
       - ./src:/app/src
+      - ./assets:/app/assets
       - ./config:/app/config
       - ./tests:/app/tests
       - ./node_modules:/app/node_modules
