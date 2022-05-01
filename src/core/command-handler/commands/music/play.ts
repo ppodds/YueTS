@@ -1,13 +1,13 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import PlayerManager from "../../../music/PlayerManager.js";
+import PlayerManager from "../../../music/PlayerManager";
 import ytpl from "ytpl";
 import ytsr, { Video } from "ytsr";
-import { info, selectMenuEmbed } from "../../../graphics/embeds.js";
-import { Reaction } from "../../../graphics/Reaction.js";
-import { CommandInterface } from "../../CommandInterface.js";
+import { info, selectMenuEmbed } from "../../../graphics/embeds";
+import { Reaction } from "../../../graphics/Reaction";
+import { CommandInterface } from "../../CommandInterface";
 import { CommandInteraction, GuildMember } from "discord.js";
-import { Logger } from "../../../utils/Logger.js";
-import { MusicPlayer } from "../../../music/MusicPlayer.js";
+import { Logger } from "../../../utils/Logger";
+import { MusicPlayer } from "../../../music/MusicPlayer";
 
 async function createResourceFromUrl(
     interaction: CommandInteraction,

@@ -1,9 +1,9 @@
 import { Client, Intents } from "discord.js";
-import configManager from "./config/ConfigManager.js";
-import { DatabaseManager } from "./core/database/DatabaseManager.js";
-import { EventHandler } from "./core/event-handler/EventHandler.js";
-import imageManager from "./core/image/ImageManager.js";
-import { Logger } from "./core/utils/Logger.js";
+import { ConfigManager } from "./config/ConfigManager";
+import { DatabaseManager } from "./core/database/DatabaseManager";
+import { EventHandler } from "./core/event-handler/EventHandler";
+import imageManager from "./core/image/ImageManager";
+import { Logger } from "./core/utils/Logger";
 
 const launchTimestamp = Date.now();
 
@@ -31,9 +31,11 @@ const client = new Client({
 });
 
 async function preLaunch(client: Client) {
+    // load config
+    const configManager = ConfigManager.instance;
     await DatabaseManager.init();
     try {
-        await client.login((await configManager.getBotConfig()).token);
+        await client.login(configManager.botConfig.token);
         Logger.info("Logged into Discord successfully");
     } catch (err) {
         Logger.error("Error logging into Discord", err);

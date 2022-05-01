@@ -1,6 +1,6 @@
 import { Collection, CommandInteraction, Guild } from "discord.js";
-import { Logger } from "../utils/Logger.js";
-import { MusicPlayer } from "./MusicPlayer.js";
+import { Logger } from "../utils/Logger";
+import { MusicPlayer } from "./MusicPlayer";
 
 class PlayerManager {
     /**
@@ -10,7 +10,7 @@ class PlayerManager {
     private players = new Collection<string, MusicPlayer>();
     /**
      * Get guild music player
-     * @param {CommandInteraction} interaction interaction object of discord.js
+     * @param {CommandInteraction} interaction interaction object of discord
      * @returns {MusicPlayer} guild's music player
      */
     public get(interaction: CommandInteraction): MusicPlayer {

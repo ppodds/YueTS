@@ -1,7 +1,7 @@
 import { CommandInterface } from "../../CommandInterface";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { User } from "../../../database/models/user.js";
+import { User } from "../../../database/models/user";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

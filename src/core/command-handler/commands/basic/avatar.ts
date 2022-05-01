@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds.js";
+import { info } from "../../../graphics/embeds";
 import { CommandInterface } from "../../CommandInterface";
 
 const command: CommandInterface = {

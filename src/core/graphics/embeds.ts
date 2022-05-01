@@ -8,16 +8,16 @@ import {
     ButtonInteraction,
     MessageActionRow,
 } from "discord.js";
-import { Color } from "./Color.js";
-import { Reaction } from "./Reaction.js";
-import { Logger } from "../utils/Logger.js";
-import configManager from "../../config/ConfigManager.js";
+import { Color } from "./Color";
+import { Reaction } from "./Reaction";
+import { Logger } from "../utils/Logger";
+import { ConfigManager } from "../../config/ConfigManager";
 import {
     ActionRowMessageListener,
     Paginator,
 } from "discord.js-message-listener";
 
-const author = (await configManager.getBotConfig()).author;
+const author = ConfigManager.instance.botConfig.author;
 
 export function info(
     client: Client,

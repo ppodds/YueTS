@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { GuildMember } from "discord.js";
-import playerManager from "../../../music/PlayerManager.js";
-import { CommandInterface } from "../../CommandInterface.js";
+import playerManager from "../../../music/PlayerManager";
+import { CommandInterface } from "../../CommandInterface";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

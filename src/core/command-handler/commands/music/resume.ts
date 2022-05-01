@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import PlayerManager from "../../../music/PlayerManager.js";
+import PlayerManager from "../../../music/PlayerManager";
 import { AudioPlayerStatus } from "@discordjs/voice";
-import { CommandInterface } from "../../CommandInterface.js";
+import { CommandInterface } from "../../CommandInterface";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

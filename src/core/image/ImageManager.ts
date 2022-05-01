@@ -1,8 +1,8 @@
 import { Collection } from "discord.js";
-import { Image } from "../database/models/image.js";
+import { Image } from "../database/models/image";
 import AsyncLock from "async-lock";
-import { Logger } from "../utils/Logger.js";
-import { ImageType, toString } from "./ImageType.js";
+import { Logger } from "../utils/Logger";
+import { ImageType, toString } from "./ImageType";
 import { StaticPool } from "node-worker-threads-pool";
 
 export interface PhashData {

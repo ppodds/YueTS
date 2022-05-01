@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Message } from "discord.js";
-import { info } from "../../graphics/embeds.js";
+import { info } from "../../graphics/embeds";
 import { EventInterface } from "../EventInterface";
 
 const event: EventInterface = {

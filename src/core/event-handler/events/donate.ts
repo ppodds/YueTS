@@ -1,13 +1,15 @@
-import { Donor } from "../../database/models/donor.js";
-import { Logger } from "../../utils/Logger.js";
+import { Donor } from "../../database/models/donor";
+import { Logger } from "../../utils/Logger";
 import { Message, TextChannel } from "discord.js";
 import axios from "axios";
-import { fileTypeFromBuffer } from "file-type";
-import { Image } from "../../database/models/image.js";
-import { send } from "../../graphics/message.js";
-import imageManager from "../../image/ImageManager.js";
-import { User } from "../../database/models/user.js";
+import filetype from "file-type";
+import { Image } from "../../database/models/image";
+import { send } from "../../graphics/message";
+import imageManager from "../../image/ImageManager";
+import { User } from "../../database/models/user";
 import { EventInterface } from "../EventInterface";
+const { fromBuffer } = filetype;
+
 /**
  * Save image to database. It will send hint message to user.
  * @param message Message object of event.
@@ -20,7 +22,7 @@ async function saveAndSendMessage(
     donor: Donor
 ) {
     // get image ext and mime
-    const filetype = await fileTypeFromBuffer(imageData);
+    const filetype = await fromBuffer(imageData);
     if (filetype.mime.startsWith("image/")) {
         const imagePhash = await imageManager.makePhash(imageData);
         const inDatabase = await imageManager.inDatabase(

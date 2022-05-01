@@ -1,5 +1,5 @@
 import sequelize from "sequelize";
-import { DatabaseManager } from "../DatabaseManager.js";
+import { DatabaseManager } from "../DatabaseManager";
 
 export class Reply extends sequelize.Model {
     id: number;

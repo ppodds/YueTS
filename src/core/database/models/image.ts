@@ -1,6 +1,6 @@
 import sequelize from "sequelize";
-import { ImageType } from "../../image/ImageType.js";
-import { DatabaseManager } from "../DatabaseManager.js";
+import { ImageType } from "../../image/ImageType";
+import { DatabaseManager } from "../DatabaseManager";
 
 export class Image extends sequelize.Model {
     id: number;

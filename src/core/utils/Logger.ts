@@ -1,11 +1,11 @@
 import log4js from "log4js";
-import configManager from "../../config/ConfigManager.js";
+import { ConfigManager } from "../../config/ConfigManager";
 
 const { configure, getLogger } = log4js;
 
-configure(await configManager.getLogConfig());
+configure(ConfigManager.instance.logConfig);
 const logger = getLogger();
-const BOTNAME = (await configManager.getBotConfig()).name;
+const BOTNAME = ConfigManager.instance.botConfig.name;
 
 function formatText(text: string) {
     return text.replace("BOTNAME", BOTNAME);

@@ -20,11 +20,11 @@ import {
     NoSubscriberBehavior,
     DiscordGatewayAdapterCreator,
 } from "@discordjs/voice";
-import { Logger } from "../utils/Logger.js";
+import { Logger } from "../utils/Logger";
 import { stream, video_info } from "play-dl";
 import { promisify } from "node:util";
-import { Track } from "./Track.js";
-import { Metadata } from "./Metadata.js";
+import { Track } from "./Track";
+import { Metadata } from "./Metadata";
 
 export class MusicPlayer {
     private guild: Guild;

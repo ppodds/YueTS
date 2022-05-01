@@ -6,46 +6,52 @@ import {
 import * as fs from "fs";
 import { CommandInterface } from "./core/command-handler/CommandInterface";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import configManager from "./config/ConfigManager.js";
+import { ConfigManager } from "./config/ConfigManager";
 
 process.chdir("dist");
 
-const commands: RESTPostAPIApplicationCommandsJSONBody[] = [];
-const commandFolders = fs.readdirSync("./core/command-handler/commands");
+(async () => {
+    const commands: RESTPostAPIApplicationCommandsJSONBody[] = [];
+    const commandFolders = fs.readdirSync(
+        `${process.env.BASE_PATH}/src/core/command-handler/commands`
+    );
 
-const clientId = (await configManager.getBotConfig()).dev.clientId;
-const guildId = (await configManager.getBotConfig()).dev.guildId;
+    const clientId = ConfigManager.instance.botConfig.dev.clientId;
+    const guildId = ConfigManager.instance.botConfig.dev.guildId;
 
-for (const folder of commandFolders) {
-    const commandFiles = fs
-        .readdirSync(`./core/command-handler/commands/${folder}`)
-        .filter((file) => file.endsWith(".js"));
-    for (const file of commandFiles) {
-        const command: CommandInterface = (
-            await import(`./core/command-handler/commands/${folder}/${file}`)
-        ).default;
-        commands.push((<SlashCommandBuilder>command.data).toJSON());
+    for (const folder of commandFolders) {
+        const commandFiles = fs
+            .readdirSync(`./core/command-handler/commands/${folder}`)
+            .filter((file) => file.endsWith(".js"));
+        for (const file of commandFiles) {
+            const command: CommandInterface = (
+                await import(
+                    `./core/command-handler/commands/${folder}/${file}`
+                )
+            ).default;
+            commands.push((<SlashCommandBuilder>command.data).toJSON());
+        }
     }
-}
 
-const rest = new REST({ version: "9" }).setToken(
-    (await configManager.getBotConfig()).token
-);
+    const rest = new REST({ version: "9" }).setToken(
+        ConfigManager.instance.botConfig.token
+    );
 
-try {
-    console.log("Started refreshing application (/) commands.");
+    try {
+        console.log("Started refreshing application (/) commands.");
 
-    if ((await configManager.getBotConfig()).env === "prod") {
-        await rest.put(Routes.applicationCommands(clientId), {
-            body: commands,
-        });
-    } else {
-        await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-            body: commands,
-        });
+        if (ConfigManager.instance.botConfig.env === "prod") {
+            await rest.put(Routes.applicationCommands(clientId), {
+                body: commands,
+            });
+        } else {
+            await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+                body: commands,
+            });
+        }
+        console.log("Successfully reloaded application (/) commands.");
+        process.exit(0);
+    } catch (error) {
+        console.error(error);
     }
-    console.log("Successfully reloaded application (/) commands.");
-    process.exit(0);
-} catch (error) {
-    console.error(error);
-}
+})();

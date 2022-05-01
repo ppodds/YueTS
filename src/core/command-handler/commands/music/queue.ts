@@ -3,10 +3,10 @@ import {
     paginationEmbed,
     info,
     paginationButton,
-} from "../../../graphics/embeds.js";
-import PlayerManager from "../../../music/PlayerManager.js";
-import { Track } from "../../../music/Track.js";
-import { CommandInterface } from "../../CommandInterface.js";
+} from "../../../graphics/embeds";
+import PlayerManager from "../../../music/PlayerManager";
+import { Track } from "../../../music/Track";
+import { CommandInterface } from "../../CommandInterface";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

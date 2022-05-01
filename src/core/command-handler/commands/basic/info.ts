@@ -2,9 +2,9 @@ import { CommandInteraction } from "discord.js";
 import { CommandInterface } from "../../CommandInterface";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds.js";
-import { Image } from "../../../database/models/image.js";
-import { ImageType } from "../../../image/ImageType.js";
+import { info } from "../../../graphics/embeds";
+import { Image } from "../../../database/models/image";
+import { ImageType } from "../../../image/ImageType";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

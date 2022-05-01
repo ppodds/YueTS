@@ -1,5 +1,5 @@
 import { isOwner } from "../../../src/core/utils/permission.js";
-import configManager from "../../../src/config/ConfigManager.js";
+import { ConfigManager } from "../../../src/config/ConfigManager.js";
 import { Client, Intents } from "discord.js";
 import { DatabaseManager } from "../../../src/core/database/DatabaseManager.js";
 
@@ -29,7 +29,7 @@ const client = new Client({
 async function preLaunch(client: Client) {
     await DatabaseManager.init();
     try {
-        await client.login((await configManager.getBotConfig()).token);
+        await client.login(ConfigManager.instance.botConfig.token);
     } catch (err) {
         process.exit();
     }
@@ -38,7 +38,7 @@ async function preLaunch(client: Client) {
 beforeAll(() => preLaunch(client));
 
 test("bot author should be owner of the bot", async () => {
-    const author = (await configManager.getBotConfig()).author;
+    const author = ConfigManager.instance.botConfig.author;
     const authorUser = await client.users.fetch(author.id);
     expect(authorUser).toBeDefined();
     expect(await isOwner(client, authorUser)).toBe(true);

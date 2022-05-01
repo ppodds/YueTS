@@ -18,14 +18,10 @@ services:
       - ./logs:/var/log/yue
       - ./tsconfig.json:/app/tsconfig.json
       - ./.editorconfig:/app/.editorconfig
-      - ./.eslintrc.cjs:/app/.eslintrc.cjs
-      - ./jest.config.cjs:/app/jest.config.cjs
-      - ./.git:/app/.git
-      - ./.gitignore:/app/.gitignore
-      - ./.husky:/app/.husky
+      - ./.eslintrc.js:/app/.eslintrc.js
+      - ./jest.config.js:/app/jest.config.js
     env_file:
       - bot.env
-      - git.env
     depends_on:
       - database
   database:

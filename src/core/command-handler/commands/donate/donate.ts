@@ -1,11 +1,11 @@
 import { CommandInterface } from "../../CommandInterface";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds.js";
-import { Donor } from "../../../database/models/donor.js";
-import { Logger } from "../../../utils/Logger.js";
+import { info } from "../../../graphics/embeds";
+import { Donor } from "../../../database/models/donor";
+import { Logger } from "../../../utils/Logger";
 import { TextChannel } from "discord.js";
-import { ImageType } from "../../../image/ImageType.js";
+import { ImageType } from "../../../image/ImageType";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

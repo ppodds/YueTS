@@ -1,18 +1,19 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import imageManager from "../../../image/ImageManager.js";
+import imageManager from "../../../image/ImageManager";
 import axios from "axios";
-import { Logger } from "../../../utils/Logger.js";
-import { Image } from "../../../database/models/image.js";
-import { ownerOnly, setPermission } from "../../../utils/permission.js";
-import { Grab } from "../../../database/models/grab.js";
-import { fileTypeFromBuffer } from "file-type";
-import { User } from "../../../database/models/user.js";
-import { Donor } from "../../../database/models/donor.js";
-import { toDatetimeString } from "../../../utils/time.js";
+import { Logger } from "../../../utils/Logger";
+import { Image } from "../../../database/models/image";
+import { ownerOnly, setPermission } from "../../../utils/permission";
+import { Grab } from "../../../database/models/grab";
+import filetype from "file-type";
+import { User } from "../../../database/models/user";
+import { Donor } from "../../../database/models/donor";
+import { toDatetimeString } from "../../../utils/time";
 import { Message, TextChannel } from "discord.js";
-import { ImageType, toString } from "../../../image/ImageType.js";
-import { CommandInterface } from "../../CommandInterface.js";
-import configManager from "../../../../config/ConfigManager.js";
+import { ImageType, toString } from "../../../image/ImageType";
+import { CommandInterface } from "../../CommandInterface";
+import { ConfigManager } from "../../../../config/ConfigManager";
+const { fromBuffer } = filetype;
 
 /**
  * Save image to database.
@@ -28,7 +29,8 @@ async function save(
 ): Promise<boolean> {
     Logger.debug("checking if image is valid");
     // get image ext and mime
-    const filetype = await fileTypeFromBuffer(imageData);
+
+    const filetype = await fromBuffer(imageData);
     if (filetype.mime.startsWith("image/")) {
         Logger.debug("Making phash of the image");
         const imagePhash = await imageManager.makePhash(imageData);
@@ -85,10 +87,7 @@ const command: CommandInterface = {
         await setPermission(client, name, permissions);
     },
     async execute(interaction) {
-        if (
-            interaction.user.id !==
-            (await configManager.getBotConfig()).author.id
-        )
+        if (interaction.user.id !== ConfigManager.instance.botConfig.author.id)
             return await interaction.reply("無此權限");
 
         const range = interaction.options.getInteger("range");

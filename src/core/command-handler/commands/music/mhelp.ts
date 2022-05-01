@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds.js";
-import { CommandInterface } from "../../CommandInterface.js";
+import { info } from "../../../graphics/embeds";
+import { CommandInterface } from "../../CommandInterface";
 
 const command: CommandInterface = {
     data: new SlashCommandBuilder()

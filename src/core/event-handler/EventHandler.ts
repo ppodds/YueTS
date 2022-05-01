@@ -1,6 +1,6 @@
-import { Logger } from "../utils/Logger.js";
-import configManager from "../../config/ConfigManager.js";
-import commands from "../command-handler/command-handler.js";
+import { Logger } from "../utils/Logger";
+import { ConfigManager } from "../../config/ConfigManager";
+import commands from "../command-handler/command-handler";
 import * as fs from "fs";
 import { Client, ExcludeEnum } from "discord.js";
 import { ActivityTypes } from "discord.js/typings/enums";
@@ -16,16 +16,16 @@ export class EventHandler {
         (async () => {
             const updateBotStatus = async () => {
                 this.client.user.setActivity(
-                    (await configManager.getBotConfig()).statusList[
+                    ConfigManager.instance.botConfig.statusList[
                         Math.floor(
                             Math.random() *
-                                (await configManager.getBotConfig()).statusList
+                                ConfigManager.instance.botConfig.statusList
                                     .length
                         )
                     ],
                     {
                         type: <ExcludeEnum<typeof ActivityTypes, "CUSTOM">>(
-                            (await configManager.getBotConfig()).statusType
+                            ConfigManager.instance.botConfig.statusType
                         ),
                     }
                 );
@@ -67,12 +67,12 @@ export class EventHandler {
                 await command.execute(interaction);
             } catch (error) {
                 Logger.error("Command threw an error", error);
-                if ((await configManager.getBotConfig()).env === "dev") {
+                if (ConfigManager.instance.botConfig.env === "dev") {
                     console.log(error);
                 }
                 const content = {
                     content:
-                        (await configManager.getBotConfig()).env === "dev"
+                        ConfigManager.instance.botConfig.env === "dev"
                             ? error.message
                             : "指令在執行階段出錯了!",
                     ephemeral: true,

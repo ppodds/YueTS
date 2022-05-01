@@ -5,7 +5,7 @@ import {
     Collection,
     User,
 } from "discord.js";
-import configManager from "../../config/ConfigManager.js";
+import { ConfigManager } from "../../config/ConfigManager";
 
 /**
  * Check if a user is one of bot owners.
@@ -70,7 +70,7 @@ export async function setPermission(
     permissions: ApplicationCommandPermissionData[]
 ) {
     let commands: Collection<string, ApplicationCommand>;
-    if ((await configManager.getBotConfig()).env === "prod") {
+    if (ConfigManager.instance.botConfig.env === "prod") {
         if (!client.application) await client.application?.fetch();
         commands = await client.application.commands.fetch();
         const command = commands.find((command) => command.name === name);
@@ -83,7 +83,7 @@ export async function setPermission(
         });
     } else {
         commands = await client.guilds.cache
-            .get((await configManager.getBotConfig()).dev.guildId)
+            .get(ConfigManager.instance.botConfig.dev.guildId)
             ?.commands.fetch();
         // await commands
         //     .find((command) => command.name === name)

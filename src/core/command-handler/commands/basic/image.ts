@@ -1,17 +1,17 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Image } from "../../../database/models/image.js";
-import { User } from "../../../database/models/user.js";
-import { Logger } from "../../../utils/Logger.js";
-import { info } from "../../../graphics/embeds.js";
+import { Image } from "../../../database/models/image";
+import { User } from "../../../database/models/user";
+import { Logger } from "../../../utils/Logger";
+import { info } from "../../../graphics/embeds";
 import {
     CommandInteraction,
     DMChannel,
     MessageAttachment,
     TextChannel,
 } from "discord.js";
-import { toDatetimeString } from "../../../utils/time.js";
-import { CommandInterface } from "../../CommandInterface.js";
-import { ImageType } from "../../../image/ImageType.js";
+import { toDatetimeString } from "../../../utils/time";
+import { CommandInterface } from "../../CommandInterface";
+import { ImageType } from "../../../image/ImageType";
 
 enum MinimumDemand {
     PIC = 20,

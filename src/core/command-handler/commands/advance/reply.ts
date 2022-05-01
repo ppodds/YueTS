@@ -1,12 +1,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Reply } from "../../../database/models/reply.js";
-import { Logger } from "../../../utils/Logger.js";
+import { Reply } from "../../../database/models/reply";
+import { Logger } from "../../../utils/Logger";
 import { CommandInterface } from "../../CommandInterface";
 import {
     info,
     paginationEmbed,
     paginationButton,
-} from "../../../graphics/embeds.js";
+} from "../../../graphics/embeds";
 import { CommandInteraction } from "discord.js";
 
 function generateEmbed(interaction: CommandInteraction) {
