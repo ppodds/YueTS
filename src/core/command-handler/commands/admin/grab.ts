@@ -12,6 +12,7 @@ import { toDatetimeString } from "../../../utils/time.js";
 import { Message, TextChannel } from "discord.js";
 import { ImageType, toString } from "../../../image/ImageType.js";
 import { CommandInterface } from "../../CommandInterface.js";
+import configManager from "../../../../config/ConfigManager.js";
 
 /**
  * Save image to database.
@@ -84,6 +85,12 @@ const command: CommandInterface = {
         await setPermission(client, name, permissions);
     },
     async execute(interaction) {
+        if (
+            interaction.user.id !==
+            (await configManager.getBotConfig()).author.id
+        )
+            return await interaction.reply("無此權限");
+
         const range = interaction.options.getInteger("range");
         const type =
             ImageType[interaction.options.getString("type").toUpperCase()];

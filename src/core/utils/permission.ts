@@ -79,14 +79,14 @@ export async function setPermission(
                 guild: guild,
                 permissions: permissions,
             };
-            await command.permissions.set(options);
+            // await command.permissions.set(options);
         });
     } else {
         commands = await client.guilds.cache
             .get((await configManager.getBotConfig()).dev.guildId)
             ?.commands.fetch();
-        await commands
-            .find((command) => command.name === name)
-            .permissions.set({ permissions });
+        // await commands
+        //     .find((command) => command.name === name)
+        //     .permissions.set({ permissions });
     }
 }

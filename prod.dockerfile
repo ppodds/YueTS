@@ -15,6 +15,7 @@ RUN npm install -g node-gyp
 
 COPY ./setup-githooks.sh /app/setup-githooks.sh
 COPY ./src /app/src
+COPY ./assets /app/assets
 COPY ./config /app/config
 COPY ./package.json /app
 COPY ./package-lock.json /app
