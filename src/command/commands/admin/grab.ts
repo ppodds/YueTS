@@ -1,18 +1,17 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import imageManager from "../../../image/ImageManager";
+import imageManager from "../../../core/image/ImageManager";
 import axios from "axios";
-import { Logger } from "../../../utils/Logger";
-import { Image } from "../../../database/models/image";
-import { ownerOnly, setPermission } from "../../../utils/permission";
-import { Grab } from "../../../database/models/grab";
+import { Logger } from "../../../core/utils/Logger";
+import { Image } from "../../../core/database/models/image";
+import { Grab } from "../../../core/database/models/grab";
 import filetype from "file-type";
-import { User } from "../../../database/models/user";
-import { Donor } from "../../../database/models/donor";
-import { toDatetimeString } from "../../../utils/time";
+import { User } from "../../../core/database/models/user";
+import { Donor } from "../../../core/database/models/donor";
+import { toDatetimeString } from "../../../core/utils/time";
 import { Message, TextChannel } from "discord.js";
-import { ImageType, toString } from "../../../image/ImageType";
-import { CommandInterface } from "../../CommandInterface";
-import { ConfigManager } from "../../../../config/ConfigManager";
+import { ImageType, toString } from "../../../core/image/ImageType";
+import { ConfigManager } from "../../../config/ConfigManager";
+import { Command } from "../../Command";
 const { fromBuffer } = filetype;
 
 /**
@@ -67,7 +66,7 @@ async function save(
     return false;
 }
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("grab")
         .setDescription("從指定頻道收集圖片進對應的資料庫")
@@ -80,12 +79,8 @@ const command: CommandInterface = {
         .addIntegerOption((option) =>
             option.setName("range").setDescription("時機範圍")
         )
-        .setDefaultPermission(false),
-    async init(client, name) {
-        // This command is owner only
-        const permissions = await ownerOnly(client);
-        await setPermission(client, name, permissions);
-    },
+        .setDefaultPermission(false)
+        .toJSON(),
     async execute(interaction) {
         if (interaction.user.id !== ConfigManager.instance.botConfig.author.id)
             return await interaction.reply("無此權限");
@@ -219,6 +214,4 @@ const command: CommandInterface = {
                 time: grabTime,
             });
     },
-};
-
-export default command;
+} as Command;

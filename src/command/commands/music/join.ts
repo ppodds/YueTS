@@ -1,12 +1,13 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { GuildMember } from "discord.js";
-import playerManager from "../../../music/PlayerManager";
-import { CommandInterface } from "../../CommandInterface";
+import playerManager from "../../../core/music/PlayerManager";
+import { Command } from "../../Command";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("join")
-        .setDescription("讓Yue加入你所在的頻道"),
+        .setDescription("讓Yue加入你所在的頻道")
+        .toJSON(),
     async execute(interaction) {
         const user = interaction.member as GuildMember;
 
@@ -21,6 +22,4 @@ const command: CommandInterface = {
         musicPlayer.changeChannel(user.voice.channel);
         await interaction.reply("我來了哦~");
     },
-};
-
-export default command;
+} as Command;

@@ -1,11 +1,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import PlayerManager from "../../../music/PlayerManager";
-import { CommandInterface } from "../../CommandInterface";
+import PlayerManager from "../../../core/music/PlayerManager";
+import { Command } from "../../Command";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
-        .setName("stop")
-        .setDescription("讓Yue離開 並清空預計要唱的歌曲"),
+        .setName("skip")
+        .setDescription("讓Yue跳過當前正在唱的歌")
+        .toJSON(),
     async execute(interaction) {
         const user = interaction.member;
 
@@ -14,9 +15,8 @@ const command: CommandInterface = {
         else if (!PlayerManager.exist(interaction.guild))
             return await interaction.reply("嗯? 我沒有在唱歌喔~");
 
-        PlayerManager.cleanup(interaction.guild);
-        await interaction.reply("表演結束! 下次也請多多支持!");
+        const musicPlayer = PlayerManager.get(interaction);
+        musicPlayer.skip();
+        await interaction.reply("欸? 不想聽這首嗎? 那好吧....");
     },
-};
-
-export default command;
+} as Command;

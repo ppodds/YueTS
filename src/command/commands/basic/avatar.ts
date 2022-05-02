@@ -1,14 +1,15 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds";
-import { CommandInterface } from "../../CommandInterface";
+import { info } from "../../../core/graphics/embeds";
+import { Command } from "../../Command";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("avatar")
         .setDescription("取得目標的Discord頭像(無目標則獲得自己的頭像)")
         .addUserOption((option) =>
             option.setName("target").setDescription("目標使用者")
-        ),
+        )
+        .toJSON(),
     async execute(interaction) {
         const embed = info(interaction.client, "「看來這就是你要的呢...」");
         const target = interaction.options.getUser("target");
@@ -26,6 +27,4 @@ const command: CommandInterface = {
             );
         await interaction.reply({ embeds: [embed] });
     },
-};
-
-export default command;
+} as Command;

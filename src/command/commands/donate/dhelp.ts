@@ -1,12 +1,13 @@
-import { CommandInterface } from "../../CommandInterface";
+import { Command } from "../../Command";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds";
+import { info } from "../../../core/graphics/embeds";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("dhelp")
-        .setDescription("觀看Yue的貢獻指令說明"),
+        .setDescription("觀看Yue的貢獻指令說明")
+        .toJSON(),
     async execute(interaction) {
         const embed = info(
             interaction.client,
@@ -36,6 +37,4 @@ const command: CommandInterface = {
         );
         await interaction.reply({ embeds: [embed] });
     },
-};
-
-export default command;
+} as Command;

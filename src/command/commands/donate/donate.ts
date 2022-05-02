@@ -1,13 +1,12 @@
-import { CommandInterface } from "../../CommandInterface";
-
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds";
-import { Donor } from "../../../database/models/donor";
-import { Logger } from "../../../utils/Logger";
+import { info } from "../../../core/graphics/embeds";
+import { Donor } from "../../../core/database/models/donor";
+import { Logger } from "../../../core/utils/Logger";
 import { TextChannel } from "discord.js";
-import { ImageType } from "../../../image/ImageType";
+import { ImageType } from "../../../core/image/ImageType";
+import { Command } from "../../Command";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("donate")
         .setDescription("貢獻相關指令")
@@ -29,7 +28,8 @@ const command: CommandInterface = {
             subcommand
                 .setName("list")
                 .setDescription("檢視可以貢獻給Yue的類別清單")
-        ),
+        )
+        .toJSON(),
     async execute(interaction) {
         if (interaction.options.getSubcommand() === "start") {
             const typeText = interaction.options.getString("type");
@@ -123,6 +123,4 @@ const command: CommandInterface = {
             await interaction.reply({ embeds: [embed] });
         }
     },
-};
-
-export default command;
+} as Command;

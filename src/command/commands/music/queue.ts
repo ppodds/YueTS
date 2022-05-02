@@ -3,15 +3,16 @@ import {
     paginationEmbed,
     info,
     paginationButton,
-} from "../../../graphics/embeds";
-import PlayerManager from "../../../music/PlayerManager";
-import { Track } from "../../../music/Track";
-import { CommandInterface } from "../../CommandInterface";
+} from "../../../core/graphics/embeds";
+import PlayerManager from "../../../core/music/PlayerManager";
+import { Track } from "../../../core/music/Track";
+import { Command } from "../../Command";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("queue")
-        .setDescription("觀看接下來歌曲的順序"),
+        .setDescription("觀看接下來歌曲的順序")
+        .toJSON(),
     async execute(interaction) {
         const user = interaction.member;
 
@@ -85,6 +86,4 @@ const command: CommandInterface = {
             await paginationEmbed(interaction, pages, paginationButton());
         }
     },
-};
-
-export default command;
+} as Command;

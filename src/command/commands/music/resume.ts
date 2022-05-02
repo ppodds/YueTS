@@ -1,12 +1,13 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import PlayerManager from "../../../music/PlayerManager";
+import PlayerManager from "../../../core/music/PlayerManager";
 import { AudioPlayerStatus } from "@discordjs/voice";
-import { CommandInterface } from "../../CommandInterface";
+import { Command } from "../../Command";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("resume")
-        .setDescription("讓Yue繼續唱歌"),
+        .setDescription("讓Yue繼續唱歌")
+        .toJSON(),
     async execute(interaction) {
         const user = interaction.member;
 
@@ -24,6 +25,4 @@ const command: CommandInterface = {
         musicPlayer.resume();
         await interaction.reply("那我就繼續唱哦....");
     },
-};
-
-export default command;
+} as Command;

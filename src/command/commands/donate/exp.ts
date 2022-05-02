@@ -1,15 +1,16 @@
-import { CommandInterface } from "../../CommandInterface";
+import { Command } from "../../Command";
 
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { User } from "../../../database/models/user";
+import { User } from "../../../core/database/models/user";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("exp")
         .setDescription("檢視Yue對目標的好感度，若無目標則顯示自己的好感度")
         .addUserOption((option) =>
             option.setName("target").setDescription("目標使用者")
-        ),
+        )
+        .toJSON(),
     async execute(interaction) {
         const target = interaction.options.getUser("target");
 
@@ -27,6 +28,4 @@ const command: CommandInterface = {
                   }點喔!`
               );
     },
-};
-
-export default command;
+} as Command;

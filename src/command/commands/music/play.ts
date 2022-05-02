@@ -1,13 +1,13 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import PlayerManager from "../../../music/PlayerManager";
+import PlayerManager from "../../../core/music/PlayerManager";
 import ytpl from "ytpl";
 import ytsr, { Video } from "ytsr";
-import { info, selectMenuEmbed } from "../../../graphics/embeds";
-import { Reaction } from "../../../graphics/Reaction";
-import { CommandInterface } from "../../CommandInterface";
+import { info, selectMenuEmbed } from "../../../core/graphics/embeds";
+import { Reaction } from "../../../core/graphics/Reaction";
+import { Command } from "../../Command";
 import { CommandInteraction, GuildMember } from "discord.js";
-import { Logger } from "../../../utils/Logger";
-import { MusicPlayer } from "../../../music/MusicPlayer";
+import { Logger } from "../../../core/utils/Logger";
+import { MusicPlayer } from "../../../core/music/MusicPlayer";
 
 async function createResourceFromUrl(
     interaction: CommandInteraction,
@@ -29,7 +29,7 @@ async function createResourceFromUrl(
     }
 }
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("play")
         .setDescription("讓Yue唱Youtube有的歌曲")
@@ -38,7 +38,8 @@ const command: CommandInterface = {
                 .setName("target")
                 .setDescription("youtube連結或搜尋關鍵字")
                 .setRequired(true)
-        ),
+        )
+        .toJSON(),
     async execute(interaction) {
         const user = interaction.member;
         const target = interaction.options.getString("target");
@@ -119,6 +120,4 @@ ${result.length}. ${Reaction.item} [${item.title}](${item.url}) (${item.duration
             }
         }
     },
-};
-
-export default command;
+} as Command;

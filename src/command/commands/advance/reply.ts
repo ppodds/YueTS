@@ -1,12 +1,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Reply } from "../../../database/models/reply";
-import { Logger } from "../../../utils/Logger";
-import { CommandInterface } from "../../CommandInterface";
+import { Reply } from "../../../core/database/models/reply";
+import { Logger } from "../../../core/utils/Logger";
+import { Command } from "../../Command";
 import {
     info,
     paginationEmbed,
     paginationButton,
-} from "../../../graphics/embeds";
+} from "../../../core/graphics/embeds";
 import { CommandInteraction } from "discord.js";
 
 function generateEmbed(interaction: CommandInteraction) {
@@ -30,7 +30,7 @@ function generateEmbed(interaction: CommandInteraction) {
     return embed;
 }
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("reply")
         .setDescription("設定對話回應")
@@ -78,7 +78,8 @@ const command: CommandInterface = {
                         .setDescription("是否全域")
                         .setRequired(true)
                 )
-        ),
+        )
+        .toJSON(),
     async execute(interaction) {
         const isGlobal = interaction.options.getBoolean("global");
         function getDm() {
@@ -192,6 +193,4 @@ const command: CommandInterface = {
             }
         }
     },
-};
-
-export default command;
+} as Command;

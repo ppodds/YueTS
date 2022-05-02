@@ -1,17 +1,17 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Image } from "../../../database/models/image";
-import { User } from "../../../database/models/user";
-import { Logger } from "../../../utils/Logger";
-import { info } from "../../../graphics/embeds";
+import { Image } from "../../../core/database/models/image";
+import { User } from "../../../core/database/models/user";
+import { Logger } from "../../../core/utils/Logger";
+import { info } from "../../../core/graphics/embeds";
 import {
     CommandInteraction,
     DMChannel,
     MessageAttachment,
     TextChannel,
 } from "discord.js";
-import { toDatetimeString } from "../../../utils/time";
-import { CommandInterface } from "../../CommandInterface";
-import { ImageType } from "../../../image/ImageType";
+import { toDatetimeString } from "../../../core/utils/time";
+import { Command } from "../../Command";
+import { ImageType } from "../../../core/image/ImageType";
 
 enum MinimumDemand {
     PIC = 20,
@@ -67,7 +67,7 @@ async function replyImageEmbed(
     await interaction.reply({ embeds: [embed], files: [file] });
 }
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("image")
         .setDescription("從貢獻的圖庫抽一張圖片")
@@ -138,6 +138,4 @@ const command: CommandInterface = {
                 userPicked ? userPicked : await Image.random(type)
             );
     },
-};
-
-export default command;
+} as Command;

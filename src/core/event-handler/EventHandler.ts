@@ -1,9 +1,9 @@
 import { Logger } from "../utils/Logger";
 import { ConfigManager } from "../../config/ConfigManager";
-import commands from "../command-handler/command-handler";
 import * as fs from "fs";
 import { Client, ExcludeEnum } from "discord.js";
 import { ActivityTypes } from "discord.js/typings/enums";
+import { CommandManager } from "../../command/CommandManager";
 
 export class EventHandler {
     private static client: Client;
@@ -36,17 +36,17 @@ export class EventHandler {
             setInterval(() => updateBotStatus(), 60000);
 
             // init command permission
-            const tasks: Promise<void>[] = [];
-            commands.forEach((command, name) => {
-                if (command.init) {
-                    tasks.push(
-                        new Promise<void>((resolve) =>
-                            command.init(this.client, name).then(resolve)
-                        )
-                    );
-                }
-            });
-            await Promise.all(tasks);
+            // const tasks: Promise<void>[] = [];
+            // commands.forEach((command, name) => {
+            //     if (command.init) {
+            //         tasks.push(
+            //             new Promise<void>((resolve) =>
+            //                 command.init(this.client, name).then(resolve)
+            //             )
+            //         );
+            //     }
+            // });
+            // await Promise.all(tasks);
 
             Logger.info(
                 `Successfully launched in ${
@@ -59,7 +59,9 @@ export class EventHandler {
         this.client.on("interactionCreate", async (interaction) => {
             if (!interaction.isCommand()) return;
 
-            const command = commands.get(interaction.commandName);
+            const command = CommandManager.instance.getCommand(
+                interaction.commandName
+            );
 
             if (!command) return;
 

@@ -1,11 +1,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds";
-import { CommandInterface } from "../../CommandInterface";
+import { info } from "../../../core/graphics/embeds";
+import { Command } from "../../Command";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("help")
-        .setDescription("觀看Yue的基本指令說明"),
+        .setDescription("觀看Yue的基本指令說明")
+        .toJSON(),
     async execute(interaction) {
         const embed = info(
             interaction.client,
@@ -80,6 +81,4 @@ const command: CommandInterface = {
         );
         await interaction.reply({ embeds: [embed] });
     },
-};
-
-export default command;
+} as Command;

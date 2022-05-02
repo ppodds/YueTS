@@ -1,15 +1,15 @@
 import { CommandInteraction } from "discord.js";
-import { CommandInterface } from "../../CommandInterface";
-
+import { Command } from "../../Command";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../graphics/embeds";
-import { Image } from "../../../database/models/image";
-import { ImageType } from "../../../image/ImageType";
+import { info } from "../../../core/graphics/embeds";
+import { Image } from "../../../core/database/models/image";
+import { ImageType } from "../../../core/image/ImageType";
 
-const command: CommandInterface = {
+export = {
     data: new SlashCommandBuilder()
         .setName("info")
-        .setDescription("查看系統狀況"),
+        .setDescription("查看系統狀況")
+        .toJSON(),
     async execute(interaction: CommandInteraction) {
         const embed = info(
             interaction.client,
@@ -39,6 +39,4 @@ const command: CommandInterface = {
         );
         await interaction.reply({ embeds: [embed] });
     },
-};
-
-export default command;
+} as Command;
