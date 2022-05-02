@@ -58,6 +58,6 @@ export function init() {
                 allowNull: false,
             },
         },
-        { sequelize: DatabaseManager.sequelize }
+        { sequelize: DatabaseManager.instance.sequelize }
     );
 }

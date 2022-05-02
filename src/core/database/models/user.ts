@@ -28,7 +28,7 @@ export function init() {
             },
         },
         {
-            sequelize: DatabaseManager.sequelize,
+            sequelize: DatabaseManager.instance.sequelize,
         }
     );
 }

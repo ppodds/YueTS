@@ -8,9 +8,11 @@ import * as reply from "./models/reply";
 import * as donor from "./models/donor";
 
 export class DatabaseManager {
-    public static sequelize: Sequelize;
-    public static async init() {
-        this.sequelize = new Sequelize(
+    private static _instance: DatabaseManager;
+    private readonly _sequelize: Sequelize;
+
+    private constructor() {
+        this._sequelize = new Sequelize(
             ConfigManager.instance.dbConfig.database,
             ConfigManager.instance.dbConfig.user,
             ConfigManager.instance.dbConfig.password,
@@ -30,13 +32,30 @@ export class DatabaseManager {
                 },
             }
         );
+    }
+
+    private initModels() {
         user.init();
         grab.init();
         image.init();
         reply.init();
         donor.init();
+    }
 
-        await this.sequelize.sync();
+    public static get instance() {
+        if (!DatabaseManager._instance) {
+            DatabaseManager._instance = new DatabaseManager();
+        }
+        return DatabaseManager._instance;
+    }
+
+    public get sequelize() {
+        return this._sequelize;
+    }
+
+    public static async init() {
+        DatabaseManager.instance.initModels();
+        await DatabaseManager.instance.sequelize.sync();
         Logger.info("Database initialized!");
     }
 }
