@@ -30,7 +30,7 @@ export class EventManager {
         this.registerSlashCommands();
         this.registerEvents();
         // Updates the bot status every minute
-        setInterval(EventManager._instance.updateBotStatus, 60000);
+        setInterval(() => EventManager._instance.updateBotStatus(), 60000);
 
         // Some other somewhat important events that the bot should listen to
         this._client.on("error", (err) =>
