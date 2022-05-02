@@ -1,5 +1,5 @@
 import { GuildMember, MessageAttachment } from "discord.js";
-import { EventInterface } from "../EventInterface";
+import { Event } from "../Event";
 import pkg from "canvas";
 const { registerFont, createCanvas, loadImage } = pkg;
 
@@ -76,7 +76,7 @@ function fillText(canvas: pkg.Canvas, member: GuildMember): pkg.Canvas {
     return canvas;
 }
 
-const event: EventInterface = {
+export = {
     name: "guildMemberAdd",
     once: false,
     async execute(member: GuildMember) {
@@ -107,6 +107,4 @@ const event: EventInterface = {
             files: [new MessageAttachment(canvas.toBuffer(), "card.png")],
         });
     },
-};
-
-export default event;
+} as Event;

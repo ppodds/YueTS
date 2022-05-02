@@ -1,9 +1,9 @@
 import axios from "axios";
 import { Message } from "discord.js";
-import { info } from "../../graphics/embeds";
-import { EventInterface } from "../EventInterface";
+import { info } from "../../core/graphics/embeds";
+import { Event } from "../Event";
 
-const event: EventInterface = {
+export = {
     name: "messageCreate",
     once: false,
     async execute(message: Message) {
@@ -101,6 +101,4 @@ const event: EventInterface = {
             await message.channel.send({ embeds: [embed] });
         }
     },
-};
-
-export default event;
+} as Event;

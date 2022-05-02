@@ -1,8 +1,8 @@
-import { Reply } from "../../database/models/reply";
-import { Logger } from "../../utils/Logger";
+import { Reply } from "../../core/database/models/reply";
+import { Logger } from "../../core/utils/Logger";
 import { Collection, Message, TextChannel } from "discord.js";
-import { EventInterface } from "../EventInterface";
-import { ConfigManager } from "../../../config/ConfigManager";
+import { Event } from "../Event";
+import { ConfigManager } from "../../config/ConfigManager";
 
 const cooldown = new Collection();
 
@@ -29,7 +29,7 @@ async function sendReply(message: Message, reply: Reply) {
     }
 }
 
-const event: EventInterface = {
+export = {
     name: "messageCreate",
     once: false,
     async execute(message: Message<boolean>) {
@@ -80,6 +80,4 @@ const event: EventInterface = {
             }
         }
     },
-};
-
-export default event;
+} as Event;

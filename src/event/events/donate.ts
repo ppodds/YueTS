@@ -1,13 +1,13 @@
-import { Donor } from "../../database/models/donor";
-import { Logger } from "../../utils/Logger";
+import { Donor } from "../../core/database/models/donor";
+import { Logger } from "../../core/utils/Logger";
 import { Message, TextChannel } from "discord.js";
 import axios from "axios";
 import filetype from "file-type";
-import { Image } from "../../database/models/image";
-import { send } from "../../graphics/message";
-import imageManager from "../../image/ImageManager";
-import { User } from "../../database/models/user";
-import { EventInterface } from "../EventInterface";
+import { Image } from "../../core/database/models/image";
+import { send } from "../../core/graphics/message";
+import imageManager from "../../core/image/ImageManager";
+import { User } from "../../core/database/models/user";
+import { Event } from "../Event";
 const { fromBuffer } = filetype;
 
 /**
@@ -65,7 +65,7 @@ async function saveAndSendMessage(
     }
 }
 
-const event: EventInterface = {
+export = {
     name: "messageCreate",
     once: false,
     async execute(message) {
@@ -121,6 +121,4 @@ const event: EventInterface = {
             await saveAndSendMessage(message, imageResp.data, donor);
         }
     },
-};
-
-export default event;
+} as Event;
