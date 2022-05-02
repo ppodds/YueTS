@@ -14,10 +14,13 @@ export class ConfigManager {
     private _dbConfig: DBConfig;
     private _logConfig: Configuration;
 
+    private constructor() {
+        this.load();
+    }
+
     public static get instance(): ConfigManager {
         if (!ConfigManager._instance) {
             ConfigManager._instance = new ConfigManager();
-            ConfigManager._instance.load();
         }
         return ConfigManager._instance;
     }
