@@ -73,16 +73,10 @@ export class EventManager {
     private registerSlashCommands() {
         this._client.on("interactionCreate", async (interaction) => {
             if (!interaction.isCommand()) return;
-
-            const command = CommandManager.instance.getCommand(
-                interaction.commandName
-            );
-
-            if (!command) return;
-
             try {
-                await command.execute(interaction);
+                await CommandManager.instance.executeCommand(interaction);
             } catch (error) {
+                console.log(error);
                 Logger.error("Command threw an error", error);
                 const content = {
                     content:

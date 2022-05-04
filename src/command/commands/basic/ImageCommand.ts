@@ -10,24 +10,15 @@ import {
     TextChannel,
 } from "discord.js";
 import { toDatetimeString } from "../../../core/utils/time";
-import { Command } from "../../Command";
 import { ImageType } from "../../../core/image/ImageType";
+import { subcommandGroup } from "../../../decorator/command/subcommand-group";
+import { subcommand } from "../../../decorator/command/subcommand";
 
-enum MinimumDemand {
-    PIC = 20,
-    HPIC = 30,
-    WTFPIC = 0,
-}
-
-async function validateContribution(interaction, user, minimumDemand) {
-    if (user.contribution < minimumDemand) {
-        await interaction.reply(
-            "你跟Yue還不夠熟呢... 他有跟我說不要隨便幫陌生人忙的..."
-        );
-        return false;
-    }
-    return true;
-}
+const MinimumDemand = new Map<ImageType, number>([
+    [ImageType.PIC, 20],
+    [ImageType.HPIC, 30],
+    [ImageType.WTFPIC, 0],
+]);
 
 async function replyImageEmbed(
     interaction: CommandInteraction,
@@ -67,8 +58,8 @@ async function replyImageEmbed(
     await interaction.reply({ embeds: [embed], files: [file] });
 }
 
-export = {
-    data: new SlashCommandBuilder()
+@subcommandGroup(
+    new SlashCommandBuilder()
         .setName("image")
         .setDescription("從貢獻的圖庫抽一張圖片")
         .addSubcommand((subcommand) =>
@@ -96,46 +87,80 @@ export = {
                 .addIntegerOption((option) =>
                     option.setName("id").setDescription("圖片的編號")
                 )
-        ),
-    async execute(interaction) {
-        const imageId = interaction.options.getInteger("id");
+        )
+)
+export class ImageCommand {
+    private async validate(interaction: CommandInteraction): Promise<boolean> {
         const user = await User.get(interaction.user.id);
-        const type: ImageType =
-            ImageType[interaction.options.getSubcommand().toUpperCase()];
+        const imageID = interaction.options.getInteger("id");
+        const type: ImageType = this.getImageType(interaction);
+
+        if (user.contribution < MinimumDemand.get(type)) {
+            await interaction.reply(
+                "你跟Yue還不夠熟呢... 他有跟我說不要隨便幫陌生人忙的..."
+            );
+            return false;
+        }
 
         if (type === undefined) {
-            return await interaction.reply("不是支援的圖片類型呢...");
-        } else if (imageId !== null && imageId <= 0)
-            return await interaction.reply("號碼需要大於0才行呢...");
-        else if (
+            await interaction.reply("不是支援的圖片類型呢...");
+            return false;
+        }
+
+        if (imageID && imageID <= 0) {
+            await interaction.reply("號碼需要大於0才行呢...");
+            return false;
+        }
+
+        if (
             type === ImageType.HPIC &&
             !(interaction.channel instanceof DMChannel) &&
             !(interaction.channel as TextChannel).nsfw
-        )
-            return await interaction.reply("在這邊h是不可以的!");
+        ) {
+            await interaction.reply("在這邊h是不可以的!");
+            return false;
+        }
 
+        return true;
+    }
+
+    private getImageType(
+        interaction: CommandInteraction
+    ): ImageType | undefined {
+        return ImageType[interaction.options.getSubcommand().toUpperCase()];
+    }
+
+    private async pickImage(interaction: CommandInteraction): Promise<Image> {
         // user picked image (null if user doesn't assign)
-        let userPicked: Image;
-        if (imageId !== null) {
-            userPicked = await Image.findOne({ where: { id: imageId } });
-            if (!userPicked)
-                return await interaction.reply("找不到這張圖呢...");
-            else if (type !== userPicked.type)
-                return await interaction.reply(
-                    "這張圖不是你選擇的圖片類型呢..."
-                );
-        } else userPicked = null;
+        const imageID = interaction.options.getInteger("id");
+        const type = this.getImageType(interaction);
+        let picked: Image;
+        if (imageID) {
+            picked = await Image.findOne({ where: { id: imageID } });
 
-        const check = await validateContribution(
-            interaction,
-            user,
-            MinimumDemand[type]
-        );
+            if (type !== picked.type) {
+                await interaction.reply("這張圖不是你選擇的圖片類型呢...");
+                return null;
+            }
+        } else {
+            picked = await Image.random(type);
+        }
+        if (!picked) {
+            await interaction.reply("找不到這張圖呢...");
+            return null;
+        }
+        return picked;
+    }
 
-        if (check)
-            await replyImageEmbed(
-                interaction,
-                userPicked ? userPicked : await Image.random(type)
-            );
-    },
-} as Command;
+    @subcommand("image", "wtfpic")
+    @subcommand("image", "hpic")
+    @subcommand("image", "pic")
+    async pic(interaction: CommandInteraction) {
+        if (!(await this.validate(interaction))) return;
+
+        const picked = await this.pickImage(interaction);
+        if (!picked) return;
+
+        await replyImageEmbed(interaction, picked);
+    }
+}

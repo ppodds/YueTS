@@ -1,13 +1,16 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
 import { info } from "../../../core/graphics/embeds";
-import { Command } from "../../Command";
+import { command } from "../../../decorator/command/command";
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("xhelp")
-        .setDescription("觀看Yue的特殊指令說明")
-        .toJSON(),
-    async execute(interaction) {
+export class XhelpCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("xhelp")
+            .setDescription("觀看Yue的特殊指令說明")
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         const embed = info(
             interaction.client,
             "「有些事情 Yue是指跟喜歡的人才做喔~ :heart:」"
@@ -46,5 +49,5 @@ export = {
             // }
         );
         await interaction.reply({ embeds: [embed] });
-    },
-} as Command;
+    }
+}

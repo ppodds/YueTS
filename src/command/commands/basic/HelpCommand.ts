@@ -1,13 +1,16 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
 import { info } from "../../../core/graphics/embeds";
-import { Command } from "../../Command";
+import { command } from "../../../decorator/command/command";
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("help")
-        .setDescription("觀看Yue的基本指令說明")
-        .toJSON(),
-    async execute(interaction) {
+export class HelpCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("help")
+            .setDescription("觀看Yue的基本指令說明")
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         const embed = info(
             interaction.client,
             "「這麼想跟Yue說話嗎? 也...也不是不可以啦~」"
@@ -80,5 +83,5 @@ export = {
             }
         );
         await interaction.reply({ embeds: [embed] });
-    },
-} as Command;
+    }
+}

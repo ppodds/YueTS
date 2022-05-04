@@ -1,4 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
 import {
     paginationEmbed,
     info,
@@ -6,14 +7,16 @@ import {
 } from "../../../core/graphics/embeds";
 import PlayerManager from "../../../core/music/PlayerManager";
 import { Track } from "../../../core/music/Track";
-import { Command } from "../../Command";
+import { command } from "../../../decorator/command/command";
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("queue")
-        .setDescription("觀看接下來歌曲的順序")
-        .toJSON(),
-    async execute(interaction) {
+export class QueueCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("queue")
+            .setDescription("觀看接下來歌曲的順序")
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         const user = interaction.member;
 
         if (!user)
@@ -85,5 +88,5 @@ export = {
 
             await paginationEmbed(interaction, pages, paginationButton());
         }
-    },
-} as Command;
+    }
+}

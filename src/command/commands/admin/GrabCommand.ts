@@ -8,10 +8,10 @@ import filetype from "file-type";
 import { User } from "../../../core/database/models/user";
 import { Donor } from "../../../core/database/models/donor";
 import { toDatetimeString } from "../../../core/utils/time";
-import { Message, TextChannel } from "discord.js";
+import { CommandInteraction, Message, TextChannel } from "discord.js";
 import { ImageType, toString } from "../../../core/image/ImageType";
 import { ConfigManager } from "../../../config/ConfigManager";
-import { Command } from "../../Command";
+import { command } from "../../../decorator/command/command";
 const { fromBuffer } = filetype;
 
 /**
@@ -66,22 +66,30 @@ async function save(
     return false;
 }
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("grab")
-        .setDescription("從指定頻道收集圖片進對應的資料庫")
-        .addChannelOption((option) =>
-            option.setName("channel").setDescription("頻道").setRequired(true)
-        )
-        .addStringOption((option) =>
-            option.setName("type").setDescription("圖片類型").setRequired(true)
-        )
-        .addIntegerOption((option) =>
-            option.setName("range").setDescription("時機範圍")
-        )
-        .setDefaultPermission(false)
-        .toJSON(),
-    async execute(interaction) {
+export class GrabCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("grab")
+            .setDescription("從指定頻道收集圖片進對應的資料庫")
+            .addChannelOption((option) =>
+                option
+                    .setName("channel")
+                    .setDescription("頻道")
+                    .setRequired(true)
+            )
+            .addStringOption((option) =>
+                option
+                    .setName("type")
+                    .setDescription("圖片類型")
+                    .setRequired(true)
+            )
+            .addIntegerOption((option) =>
+                option.setName("range").setDescription("時機範圍")
+            )
+            .setDefaultPermission(false)
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         if (interaction.user.id !== ConfigManager.instance.botConfig.author.id)
             return await interaction.reply("無此權限");
 
@@ -213,5 +221,5 @@ export = {
                 channel: channel.id,
                 time: grabTime,
             });
-    },
-} as Command;
+    }
+}

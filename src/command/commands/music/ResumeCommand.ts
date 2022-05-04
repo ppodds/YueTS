@@ -1,14 +1,17 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import PlayerManager from "../../../core/music/PlayerManager";
 import { AudioPlayerStatus } from "@discordjs/voice";
-import { Command } from "../../Command";
+import { command } from "../../../decorator/command/command";
+import { CommandInteraction } from "discord.js";
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("resume")
-        .setDescription("讓Yue繼續唱歌")
-        .toJSON(),
-    async execute(interaction) {
+export class ResumeCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("resume")
+            .setDescription("讓Yue繼續唱歌")
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         const user = interaction.member;
 
         if (!user)
@@ -24,5 +27,5 @@ export = {
 
         musicPlayer.resume();
         await interaction.reply("那我就繼續唱哦....");
-    },
-} as Command;
+    }
+}

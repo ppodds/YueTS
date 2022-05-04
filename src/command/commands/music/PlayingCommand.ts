@@ -1,13 +1,16 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
+import { CommandInteraction } from "discord.js";
 import PlayerManager from "../../../core/music/PlayerManager";
-import { Command } from "../../Command";
+import { command } from "../../../decorator/command/command";
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("loop")
-        .setDescription("開關歌曲循環撥放")
-        .toJSON(),
-    async execute(interaction) {
+export class PlayingCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("playing")
+            .setDescription("觀看正在撥放中的歌曲資訊")
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         const user = interaction.member;
 
         if (!user)
@@ -16,9 +19,6 @@ export = {
             return await interaction.reply("嗯? 我沒有在唱歌喔~");
 
         const musicPlayer = PlayerManager.get(interaction);
-        musicPlayer.switchLooping();
-        await interaction.reply(
-            `${musicPlayer.isLooping() ? "開啟" : "關閉"}歌曲循環撥放`
-        );
-    },
-} as Command;
+        await interaction.reply(musicPlayer.getNowPlayingMessageContent());
+    }
+}

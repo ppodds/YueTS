@@ -1,17 +1,19 @@
-import { Command } from "../../Command";
-
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { User } from "../../../core/database/models/user";
+import { command } from "../../../decorator/command/command";
+import { CommandInteraction } from "discord.js";
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("exp")
-        .setDescription("檢視Yue對目標的好感度，若無目標則顯示自己的好感度")
-        .addUserOption((option) =>
-            option.setName("target").setDescription("目標使用者")
-        )
-        .toJSON(),
-    async execute(interaction) {
+export class ExpCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("exp")
+            .setDescription("檢視Yue對目標的好感度，若無目標則顯示自己的好感度")
+            .addUserOption((option) =>
+                option.setName("target").setDescription("目標使用者")
+            )
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         const target = interaction.options.getUser("target");
 
         const donor = target
@@ -27,5 +29,5 @@ export = {
                       donor.contribution
                   }點喔!`
               );
-    },
-} as Command;
+    }
+}

@@ -1,20 +1,20 @@
 import { REST } from "@discordjs/rest";
 import { ConfigManager } from "./config/ConfigManager";
-import { Command } from "./command/Command";
 import { CommandManager } from "./command/CommandManager";
 import {
     RESTPostAPIApplicationCommandsJSONBody,
     Routes,
 } from "discord-api-types/v10";
+import { CommandData } from "./command/CommandData";
 
 class CommandDeployer {
     private readonly _rest: REST;
-    private readonly _commands: IterableIterator<Command>;
+    private readonly _commandsData: IterableIterator<CommandData>;
     constructor() {
         this._rest = new REST({ version: "10" }).setToken(
             ConfigManager.instance.botConfig.token
         );
-        this._commands = CommandManager.instance.getCommands();
+        this._commandsData = CommandManager.instance.getCommandsData();
     }
 
     public async run() {
@@ -30,7 +30,7 @@ class CommandDeployer {
                           ConfigManager.instance.botConfig.dev.guildId
                       );
             const body: RESTPostAPIApplicationCommandsJSONBody[] = [];
-            for (const command of this._commands) body.push(command.data);
+            for (const command of this._commandsData) body.push(command.data);
             await this._rest.put(route, { body });
             console.log("Successfully reloaded application (/) commands.");
             process.exit(0);

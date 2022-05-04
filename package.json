@@ -28,7 +28,7 @@
   "lint-staged": {
     "*.{ts,js,cjs,mjs}": [
       "prettier --write",
-      "eslint -c .eslintrc.cjs --fix"
+      "eslint --fix"
     ]
   },
   "homepage": "https://github.com/ppodds/YueTS#readme",

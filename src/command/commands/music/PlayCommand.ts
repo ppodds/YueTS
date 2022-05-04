@@ -4,10 +4,10 @@ import ytpl from "ytpl";
 import ytsr, { Video } from "ytsr";
 import { info, selectMenuEmbed } from "../../../core/graphics/embeds";
 import { Reaction } from "../../../core/graphics/Reaction";
-import { Command } from "../../Command";
 import { CommandInteraction, GuildMember } from "discord.js";
 import { Logger } from "../../../core/utils/Logger";
 import { MusicPlayer } from "../../../core/music/MusicPlayer";
+import { command } from "../../../decorator/command/command";
 
 async function createResourceFromUrl(
     interaction: CommandInteraction,
@@ -29,18 +29,20 @@ async function createResourceFromUrl(
     }
 }
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("play")
-        .setDescription("讓Yue唱Youtube有的歌曲")
-        .addStringOption((option) =>
-            option
-                .setName("target")
-                .setDescription("youtube連結或搜尋關鍵字")
-                .setRequired(true)
-        )
-        .toJSON(),
-    async execute(interaction) {
+export class PlayCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("play")
+            .setDescription("讓Yue唱Youtube有的歌曲")
+            .addStringOption((option) =>
+                option
+                    .setName("target")
+                    .setDescription("youtube連結或搜尋關鍵字")
+                    .setRequired(true)
+            )
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         const user = interaction.member;
         const target = interaction.options.getString("target");
 
@@ -119,5 +121,5 @@ ${result.length}. ${Reaction.item} [${item.title}](${item.url}) (${item.duration
                 );
             }
         }
-    },
-} as Command;
+    }
+}

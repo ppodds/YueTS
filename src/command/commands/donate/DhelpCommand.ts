@@ -1,14 +1,16 @@
-import { Command } from "../../Command";
-
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { info } from "../../../core/graphics/embeds";
+import { command } from "../../../decorator/command/command";
+import { CommandInteraction } from "discord.js";
 
-export = {
-    data: new SlashCommandBuilder()
-        .setName("dhelp")
-        .setDescription("觀看Yue的貢獻指令說明")
-        .toJSON(),
-    async execute(interaction) {
+export class DhelpCommand {
+    @command(
+        new SlashCommandBuilder()
+            .setName("dhelp")
+            .setDescription("觀看Yue的貢獻指令說明")
+            .toJSON()
+    )
+    async execute(interaction: CommandInteraction) {
         const embed = info(
             interaction.client,
             "「想為Yue做些什麼? 可以呦....」\n貢獻說明:貢獻完會獲得Yue的喜愛，Yue會願意為你做更多事(不同貢獻類別獲取量不同)\n詳細請看dlist"
@@ -36,5 +38,5 @@ export = {
             }
         );
         await interaction.reply({ embeds: [embed] });
-    },
-} as Command;
+    }
+}
