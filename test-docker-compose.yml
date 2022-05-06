@@ -3,14 +3,12 @@ services:
   app:
     build:
       context: .
-      dockerfile: dev.dockerfile
+      dockerfile: test.dockerfile
     container_name: yue
     stdin_open: true
     tty: true
     depends_on:
       - database
-    volumes:
-      - ./:/app
   database:
     image: mariadb:latest
     restart: always
