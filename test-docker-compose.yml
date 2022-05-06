@@ -9,6 +9,8 @@ services:
     tty: true
     depends_on:
       - database
+    volumes:
+      - ./:/app
   database:
     image: mariadb:latest
     restart: always
