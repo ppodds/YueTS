@@ -1,12 +1,12 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import PlayerManager from "../../../core/music/PlayerManager";
+import PlayerManager from "../../../music/PlayerManager";
 import ytpl from "ytpl";
 import ytsr, { Video } from "ytsr";
-import { info, selectMenuEmbed } from "../../../core/graphics/embeds";
-import { Reaction } from "../../../core/graphics/Reaction";
+import { info, selectMenuEmbed } from "../../../graphics/embeds";
+import { Reaction } from "../../../graphics/Reaction";
 import { CommandInteraction, GuildMember } from "discord.js";
-import { Logger } from "../../../core/utils/Logger";
-import { MusicPlayer } from "../../../core/music/MusicPlayer";
+import { Logger } from "../../../utils/Logger";
+import { MusicPlayer } from "../../../music/MusicPlayer";
 import { command } from "../../../decorator/command/command";
 
 async function createResourceFromUrl(

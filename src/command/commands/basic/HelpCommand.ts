@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { info } from "../../../core/graphics/embeds";
+import { info } from "../../../graphics/embeds";
 import { command } from "../../../decorator/command/command";
 
 export class HelpCommand {

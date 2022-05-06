@@ -1,5 +1,5 @@
-import { Reply } from "../../core/database/models/reply";
-import { Logger } from "../../core/utils/Logger";
+import { Reply } from "../../database/models/reply";
+import { Logger } from "../../utils/Logger";
 import { Collection, Message, TextChannel } from "discord.js";
 import { ConfigManager } from "../../config/ConfigManager";
 import { event } from "../../decorator/event/event";

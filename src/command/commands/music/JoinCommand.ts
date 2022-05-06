@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction, GuildMember } from "discord.js";
-import playerManager from "../../../core/music/PlayerManager";
+import playerManager from "../../../music/PlayerManager";
 import { command } from "../../../decorator/command/command";
 
 export class JoinCommand {

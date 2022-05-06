@@ -4,7 +4,7 @@ import { readdirSync } from "fs";
 import { CommandManager } from "../command/CommandManager";
 import { Executer } from "../command/Executer";
 import { ConfigManager } from "../config/ConfigManager";
-import { Logger } from "../core/utils/Logger";
+import { Logger } from "../utils/Logger";
 import { Event } from "./Event";
 
 export class EventManager {

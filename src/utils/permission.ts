@@ -5,7 +5,7 @@ import {
     Collection,
     User,
 } from "discord.js";
-import { ConfigManager } from "../../config/ConfigManager";
+import { ConfigManager } from "../config/ConfigManager";
 
 /**
  * Check if a user is one of bot owners.

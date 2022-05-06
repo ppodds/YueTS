@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../core/graphics/embeds";
+import { info } from "../../../graphics/embeds";
 import { command } from "../../../decorator/command/command";
 import { CommandInteraction } from "discord.js";
 

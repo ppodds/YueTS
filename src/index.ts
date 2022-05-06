@@ -1,6 +1,6 @@
 import { ShardingManager } from "discord.js";
 import { ConfigManager } from "./config/ConfigManager";
-import { Logger } from "./core/utils/Logger";
+import { Logger } from "./utils/Logger";
 
 process.chdir(`${process.env.BASE_PATH}/dist`);
 

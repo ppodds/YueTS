@@ -11,7 +11,7 @@ import {
 import { Color } from "./Color";
 import { Reaction } from "./Reaction";
 import { Logger } from "../utils/Logger";
-import { ConfigManager } from "../../config/ConfigManager";
+import { ConfigManager } from "../config/ConfigManager";
 import {
     ActionRowMessageListener,
     Paginator,

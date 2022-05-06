@@ -1,9 +1,9 @@
 import { Client, Intents } from "discord.js";
 import { ConfigManager } from "./config/ConfigManager";
-import { DatabaseManager } from "./core/database/DatabaseManager";
+import { DatabaseManager } from "./database/DatabaseManager";
 import { EventManager } from "./event/EventManager";
-import { ImageManager } from "./core/image/ImageManager";
-import { Logger } from "./core/utils/Logger";
+import { ImageManager } from "./image/ImageManager";
+import { Logger } from "./utils/Logger";
 
 const launchTimestamp = Date.now();
 

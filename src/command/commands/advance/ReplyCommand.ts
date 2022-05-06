@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Reply } from "../../../core/database/models/reply";
-import { Logger } from "../../../core/utils/Logger";
-import { info, paginationEmbed } from "../../../core/graphics/embeds";
+import { Reply } from "../../../database/models/reply";
+import { Logger } from "../../../utils/Logger";
+import { info, paginationEmbed } from "../../../graphics/embeds";
 import { CommandInteraction } from "discord.js";
 import { subcommandGroup } from "../../../decorator/command/subcommand-group";
 import { subcommand } from "../../../decorator/command/subcommand";

@@ -12,7 +12,7 @@ export class ImageManager {
     private readonly _lock = new AsyncLock();
     private readonly _staticPool = new StaticPool({
         size: 4,
-        task: `${process.env.BASE_PATH}/src/core/image/phash.js`,
+        task: `${process.env.BASE_PATH}/src/image/phash.js`,
     });
 
     private constructor() {

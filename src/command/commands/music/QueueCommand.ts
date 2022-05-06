@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { paginationEmbed, info } from "../../../core/graphics/embeds";
-import PlayerManager from "../../../core/music/PlayerManager";
-import { Track } from "../../../core/music/Track";
+import { paginationEmbed, info } from "../../../graphics/embeds";
+import PlayerManager from "../../../music/PlayerManager";
+import { Track } from "../../../music/Track";
 import { command } from "../../../decorator/command/command";
 
 export class QueueCommand {

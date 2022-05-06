@@ -1,16 +1,16 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Image } from "../../../core/database/models/image";
-import { User } from "../../../core/database/models/user";
-import { Logger } from "../../../core/utils/Logger";
-import { info } from "../../../core/graphics/embeds";
+import { Image } from "../../../database/models/image";
+import { User } from "../../../database/models/user";
+import { Logger } from "../../../utils/Logger";
+import { info } from "../../../graphics/embeds";
 import {
     CommandInteraction,
     DMChannel,
     MessageAttachment,
     TextChannel,
 } from "discord.js";
-import { toDatetimeString } from "../../../core/utils/time";
-import { ImageType } from "../../../core/image/ImageType";
+import { toDatetimeString } from "../../../utils/time";
+import { ImageType } from "../../../image/ImageType";
 import { subcommandGroup } from "../../../decorator/command/subcommand-group";
 import { subcommand } from "../../../decorator/command/subcommand";
 

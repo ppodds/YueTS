@@ -1,5 +1,5 @@
 import log4js from "log4js";
-import { ConfigManager } from "../../config/ConfigManager";
+import { ConfigManager } from "../config/ConfigManager";
 const { configure, getLogger } = log4js;
 
 export class Logger {

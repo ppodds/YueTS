@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { User } from "../../../core/database/models/user";
+import { User } from "../../../database/models/user";
 import { command } from "../../../decorator/command/command";
 import { CommandInteraction } from "discord.js";
 

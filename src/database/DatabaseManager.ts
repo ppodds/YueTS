@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import { ConfigManager } from "../../config/ConfigManager";
+import { ConfigManager } from "../config/ConfigManager";
 import { Logger } from "../utils/Logger";
 import * as user from "./models/user";
 import * as grab from "./models/grab";

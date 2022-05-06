@@ -1,8 +1,8 @@
 import { CommandInteraction } from "discord.js";
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../core/graphics/embeds";
-import { Image } from "../../../core/database/models/image";
-import { ImageType } from "../../../core/image/ImageType";
+import { info } from "../../../graphics/embeds";
+import { Image } from "../../../database/models/image";
+import { ImageType } from "../../../image/ImageType";
 import { command } from "../../../decorator/command/command";
 
 export class InfoCommand {

@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import PlayerManager from "../../../core/music/PlayerManager";
+import PlayerManager from "../../../music/PlayerManager";
 import { command } from "../../../decorator/command/command";
 
 export class PlayingCommand {

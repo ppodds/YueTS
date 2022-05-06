@@ -1,12 +1,12 @@
-import { Donor } from "../../core/database/models/donor";
-import { Logger } from "../../core/utils/Logger";
+import { Donor } from "../../database/models/donor";
+import { Logger } from "../../utils/Logger";
 import { Message, TextChannel } from "discord.js";
 import axios from "axios";
 import filetype from "file-type";
-import { Image } from "../../core/database/models/image";
-import { send } from "../../core/graphics/message";
-import { ImageManager } from "../../core/image/ImageManager";
-import { User } from "../../core/database/models/user";
+import { Image } from "../../database/models/image";
+import { send } from "../../graphics/message";
+import { ImageManager } from "../../image/ImageManager";
+import { User } from "../../database/models/user";
 import { event } from "../../decorator/event/event";
 const { fromBuffer } = filetype;
 

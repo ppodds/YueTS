@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { info } from "../../../core/graphics/embeds";
-import { Donor } from "../../../core/database/models/donor";
-import { Logger } from "../../../core/utils/Logger";
+import { info } from "../../../graphics/embeds";
+import { Donor } from "../../../database/models/donor";
+import { Logger } from "../../../utils/Logger";
 import { CommandInteraction, TextChannel } from "discord.js";
-import { ImageType } from "../../../core/image/ImageType";
+import { ImageType } from "../../../image/ImageType";
 import { subcommandGroup } from "../../../decorator/command/subcommand-group";
 import { subcommand } from "../../../decorator/command/subcommand";
 

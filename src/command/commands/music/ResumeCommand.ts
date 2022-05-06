@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import PlayerManager from "../../../core/music/PlayerManager";
+import PlayerManager from "../../../music/PlayerManager";
 import { AudioPlayerStatus } from "@discordjs/voice";
 import { command } from "../../../decorator/command/command";
 import { CommandInteraction } from "discord.js";

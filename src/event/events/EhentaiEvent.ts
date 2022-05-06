@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Message } from "discord.js";
-import { info } from "../../core/graphics/embeds";
+import { info } from "../../graphics/embeds";
 import { event } from "../../decorator/event/event";
 
 export class EhentaiEvent {
