@@ -11,7 +11,8 @@
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "experimentalDecorators": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts", "node_modules"]

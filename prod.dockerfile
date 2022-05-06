@@ -13,7 +13,6 @@ RUN npm install -g typescript
 # general package
 RUN npm install -g node-gyp
 
-COPY ./setup-githooks.sh /app/setup-githooks.sh
 COPY ./src /app/src
 COPY ./assets /app/assets
 COPY ./config /app/config

@@ -7,12 +7,6 @@ WORKDIR /app
 # update npm
 RUN npm install -g npm
 
-# install TypeScript
-RUN npm install -g typescript
-
-# general package
-RUN npm install -g node-gyp
-
-COPY ./setup-githooks.sh /app/setup-githooks.sh
+RUN npm config set cache /tmp --global
 
 CMD ["/bin/bash"]

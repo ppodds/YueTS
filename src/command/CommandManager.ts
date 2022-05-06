@@ -1,96 +1,98 @@
-import { Collection } from "discord.js";
+import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
+import { Awaitable, Collection, CommandInteraction } from "discord.js";
+import { readdirSync } from "fs";
 import { Command } from "./Command";
-import grab from "./commands/admin/grab";
-import reply from "./commands/advance/reply";
-import xhelp from "./commands/advance/xhelp";
-import avatar from "./commands/basic/avatar";
-import choose from "./commands/basic/choose";
-import help from "./commands/basic/help";
-import image from "./commands/basic/image";
-import info from "./commands/basic/info";
-import dhelp from "./commands/donate/dhelp";
-import donate from "./commands/donate/donate";
-import exp from "./commands/donate/exp";
-import join from "./commands/music/join";
-import loop from "./commands/music/loop";
-import mhelp from "./commands/music/mhelp";
-import pause from "./commands/music/pause";
-import play from "./commands/music/play";
-import playing from "./commands/music/playing";
-import queue from "./commands/music/queue";
-import resume from "./commands/music/resume";
-import skip from "./commands/music/skip";
-import stop from "./commands/music/stop";
+import { CommandData } from "./CommandData";
+import { CommandDataType } from "./CommandDataType";
+import { Executer } from "./Executer";
+import { Subcommand } from "./SubCommand";
+import { SubcommandGroup } from "./SubcommandGroup";
 
 export class CommandManager {
     private static _instance: CommandManager;
-    private readonly _commands: Collection<string, Command>;
+    private readonly _commandsData: Collection<
+        string,
+        Command | SubcommandGroup
+    >;
 
     private constructor() {
-        this._commands = new Collection<string, Command>();
-        this.loadCommands();
+        this._commandsData = new Collection<
+            string,
+            Command | SubcommandGroup
+        >();
     }
 
     public static get instance(): CommandManager {
         if (!CommandManager._instance) {
             CommandManager._instance = new CommandManager();
+            CommandManager._instance.loadCommands();
         }
         return CommandManager._instance;
     }
 
-    public getCommands(): IterableIterator<Command> {
-        return this._commands.values();
+    public getCommandsData(): IterableIterator<CommandData> {
+        return this._commandsData.values();
     }
 
-    public getCommand(name: string): Command | undefined {
-        return this._commands.get(name);
+    public getCommandData(name: string): CommandData | undefined {
+        return this._commandsData.get(name);
     }
 
     private loadCommands() {
-        this.loadAdminCommands();
-        this.loadAdvanceCommands();
-        this.loadBasicCommands();
-        this.loadDonateCommands();
-        this.loadMusicCommands();
+        const commandFolders = readdirSync(`${__dirname}/commands`);
+        for (const folder of commandFolders) {
+            const commandFiles = readdirSync(
+                `${__dirname}/commands/${folder}`
+            ).filter((file) => file.endsWith(".js") || file.endsWith(".ts"));
+            for (const file of commandFiles) {
+                require(`${__dirname}/commands/${folder}/${
+                    file.split(".")[0]
+                }`);
+            }
+        }
     }
 
-    private loadCommand(command: Command) {
-        this._commands.set(command.data.name, command);
+    public registerCommand(command: Command) {
+        this._commandsData.set(command.data.name, command);
     }
 
-    private loadMusicCommands() {
-        this.loadCommand(join);
-        this.loadCommand(loop);
-        this.loadCommand(mhelp);
-        this.loadCommand(pause);
-        this.loadCommand(play);
-        this.loadCommand(playing);
-        this.loadCommand(queue);
-        this.loadCommand(resume);
-        this.loadCommand(skip);
-        this.loadCommand(stop);
+    public registerSubcommandGroup(
+        data: RESTPostAPIApplicationCommandsJSONBody
+    ) {
+        // we have already created a place holder for this
+        const tmp = this._commandsData.get(data.name);
+        (tmp as SubcommandGroup).data = data;
+        this._commandsData.set(data.name, tmp);
     }
 
-    private loadDonateCommands() {
-        this.loadCommand(dhelp);
-        this.loadCommand(donate);
-        this.loadCommand(exp);
+    public registerSubCommand(root: string, subcommand: Subcommand) {
+        // if root command is not exist, we need to create a place holder
+        if (!this._commandsData.has(root)) {
+            this._commandsData.set(root, {
+                type: CommandDataType.SUBCOMMAND_GROUP,
+                data: null,
+                subCommands: new Collection<string, Subcommand>(),
+            });
+        }
+        const tmp = this._commandsData.get(root);
+        tmp.subCommands.set(subcommand.name, subcommand);
+        this._commandsData.set(root, tmp);
     }
 
-    private loadBasicCommands() {
-        this.loadCommand(avatar);
-        this.loadCommand(choose);
-        this.loadCommand(help);
-        this.loadCommand(image);
-        this.loadCommand(info);
-    }
-
-    private loadAdvanceCommands() {
-        this.loadCommand(reply);
-        this.loadCommand(xhelp);
-    }
-
-    private loadAdminCommands() {
-        this.loadCommand(grab);
+    public executeCommand(interaction: CommandInteraction): Awaitable<void> {
+        const commandData = this._commandsData.get(interaction.commandName);
+        if (!commandData) return;
+        let executer: Executer;
+        switch (commandData.type) {
+            case CommandDataType.COMMAND:
+                executer = commandData.executer;
+                break;
+            case CommandDataType.SUBCOMMAND_GROUP:
+                executer = commandData.subCommands.get(
+                    interaction.options.getSubcommand()
+                )?.executer;
+                break;
+        }
+        return executer.classRef[executer.methodName](interaction);
     }
 }

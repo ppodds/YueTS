@@ -1,7 +1,10 @@
 import { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
-import { Awaitable, CommandInteraction } from "discord.js";
+import { CommandData } from "./CommandData";
+import { CommandDataType } from "./CommandDataType";
+import { Executer } from "./Executer";
 
-export interface Command {
+export interface Command extends CommandData {
+    type: CommandDataType.COMMAND;
     data: RESTPostAPIApplicationCommandsJSONBody;
-    execute(interaction: CommandInteraction): Awaitable<void>;
+    executer: Executer;
 }

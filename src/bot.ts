@@ -46,7 +46,7 @@ async function preLaunch(client: Client) {
         { type: "LISTENING" }
     );
     await imageManager.init();
-    EventManager.init(client);
+    EventManager.instance.init(client);
     Logger.info(`Launched in ${Date.now() - launchTimestamp}ms`);
 }
 
