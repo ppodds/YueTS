@@ -4,12 +4,7 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
-# update npm
-RUN npm install -g npm
-
 ARG USERNAME=node
-
-# Create the user
 RUN apt-get update \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
