@@ -7,12 +7,12 @@ WORKDIR /app
 # update npm
 RUN npm install -g npm
 
-# install TypeScript
-RUN npm install -g typescript
+ARG USERNAME=node
 
-# general package
-RUN npm install -g node-gyp
-
-COPY ./setup-githooks.sh /app/setup-githooks.sh
+# Create the user
+RUN apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
 
 CMD ["/bin/bash"]

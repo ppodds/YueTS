@@ -1,57 +1,49 @@
-import { ActivityTypes } from "discord.js/typings/enums";
-import { promises as fs } from "fs";
+import { readFileSync } from "fs";
 import { Configuration } from "log4js";
+import { BotConfig } from "./BotConfig";
+import { DBConfig } from "./DBConfig";
 
 const botConfigPath = `${process.env.BASE_PATH}/config/bot.json`;
 const dbConfigPath = `${process.env.BASE_PATH}/config/db.json`;
 const logConfigPath = `${process.env.BASE_PATH}/config/log.json`;
 
-export interface BotConfig {
-    name: string;
-    statusList: string[];
-    statusType: ActivityTypes;
-    token: string;
-    env: string;
-    dev: {
-        clientId: string;
-        guildId: string;
-    };
-    author: {
-        id: string;
-        avatar: string;
-    };
-}
-export interface DBConfig {
-    host: string;
-    port: number;
-    user: string;
-    password: string;
-    database: string;
-}
+export class ConfigManager {
+    private static _instance: ConfigManager;
 
-class ConfigManager {
-    private botConfig: BotConfig;
-    private dbConfig: DBConfig;
-    private logConfig: Configuration;
-    async getBotConfig(): Promise<BotConfig> {
-        if (!this.botConfig)
-            this.botConfig = JSON.parse(
-                await fs.readFile(botConfigPath, "utf8")
-            );
-        return this.botConfig;
+    private _botConfig: BotConfig;
+    private _dbConfig: DBConfig;
+    private _logConfig: Configuration;
+
+    private constructor() {
+        this.load();
     }
-    async getDBConfig(): Promise<DBConfig> {
-        if (!this.dbConfig)
-            this.dbConfig = JSON.parse(await fs.readFile(dbConfigPath, "utf8"));
-        return this.dbConfig;
+
+    public static get instance(): ConfigManager {
+        if (!ConfigManager._instance) {
+            ConfigManager._instance = new ConfigManager();
+        }
+        return ConfigManager._instance;
     }
-    async getLogConfig(): Promise<Configuration> {
-        if (!this.logConfig)
-            this.logConfig = JSON.parse(
-                await fs.readFile(logConfigPath, "utf8")
-            );
-        return this.logConfig;
+
+    private load() {
+        this._botConfig = JSON.parse(this.loadFile(botConfigPath));
+        this._dbConfig = JSON.parse(this.loadFile(dbConfigPath));
+        this._logConfig = JSON.parse(this.loadFile(logConfigPath));
+    }
+
+    private loadFile(path: string): string {
+        return readFileSync(path, "utf8");
+    }
+
+    public get botConfig(): BotConfig {
+        return this._botConfig;
+    }
+
+    public get dbConfig(): DBConfig {
+        return this._dbConfig;
+    }
+
+    public get logConfig(): Configuration {
+        return this._logConfig;
     }
 }
-const configManager = new ConfigManager();
-export default configManager;

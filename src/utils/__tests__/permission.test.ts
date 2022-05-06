@@ -1,11 +1,7 @@
+import { isOwner } from "../permission";
+import { ConfigManager } from "../../config/ConfigManager.js";
 import { Client, Intents } from "discord.js";
-import { ConfigManager } from "./config/ConfigManager";
-import { DatabaseManager } from "./database/DatabaseManager";
-import { EventManager } from "./event/EventManager";
-import { ImageManager } from "./image/ImageManager";
-import { Logger } from "./utils/Logger";
-
-const launchTimestamp = Date.now();
+import { DatabaseManager } from "../../database/DatabaseManager";
 
 // Create the Discord client with the appropriate options
 const client = new Client({
@@ -31,23 +27,23 @@ const client = new Client({
 });
 
 async function preLaunch(client: Client) {
-    // load config
-    const configManager = ConfigManager.instance;
     await DatabaseManager.init();
     try {
-        await client.login(configManager.botConfig.token);
-        Logger.instance.info("Logged into Discord successfully");
+        await client.login(ConfigManager.instance.botConfig.token);
     } catch (err) {
-        Logger.instance.error("Error logging into Discord", err);
         process.exit();
     }
-    client.user?.setActivity(
-        "「現在剛起床還沒搞清楚狀況... 等一下再叫我吧...」",
-        { type: "LISTENING" }
-    );
-    await ImageManager.instance.init();
-    EventManager.instance.init(client);
-    Logger.instance.info(`Launched in ${Date.now() - launchTimestamp}ms`);
 }
 
-preLaunch(client);
+beforeAll(() => preLaunch(client));
+afterAll(async () => {
+    client.destroy();
+    await DatabaseManager.instance.sequelize.close();
+});
+
+test("bot author should be owner of the bot", async () => {
+    const author = ConfigManager.instance.botConfig.author;
+    const authorUser = await client.users.fetch(author.id);
+    expect(authorUser).toBeDefined();
+    expect(await isOwner(client, authorUser)).toBe(true);
+});

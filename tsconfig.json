@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "module": "esnext",
+    "target": "es2021",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
@@ -11,7 +11,8 @@
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
-    "declaration": true
+    "declaration": true,
+    "experimentalDecorators": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.spec.ts", "node_modules"]
