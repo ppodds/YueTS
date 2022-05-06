@@ -1,6 +1,9 @@
 FROM node:16.14.0-bullseye
 
 RUN mkdir -p /app
+RUN chown -R node:node /app
+
+USER node
 
 WORKDIR /app
 
