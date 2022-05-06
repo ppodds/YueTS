@@ -1,8 +1,8 @@
 import { Reply } from "../../core/database/models/reply";
 import { Logger } from "../../core/utils/Logger";
 import { Collection, Message, TextChannel } from "discord.js";
-import { Event } from "../Event";
 import { ConfigManager } from "../../config/ConfigManager";
+import { event } from "../../decorator/event/event";
 
 const cooldown = new Collection();
 
@@ -29,9 +29,8 @@ async function sendReply(message: Message, reply: Reply) {
     }
 }
 
-export = {
-    name: "messageCreate",
-    once: false,
+export class ReplyEvent {
+    @event("messageCreate", false)
     async execute(message: Message<boolean>) {
         if (message.author.bot) return;
         // TODO formatted message response
@@ -79,5 +78,5 @@ export = {
                 await message.channel.send(globalReply.response);
             }
         }
-    },
-} as Event;
+    }
+}

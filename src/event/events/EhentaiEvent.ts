@@ -1,11 +1,10 @@
 import axios from "axios";
 import { Message } from "discord.js";
 import { info } from "../../core/graphics/embeds";
-import { Event } from "../Event";
+import { event } from "../../decorator/event/event";
 
-export = {
-    name: "messageCreate",
-    once: false,
+export class EhentaiEvent {
+    @event("messageCreate", false)
     async execute(message: Message) {
         if (message.author.bot) return;
         const result = message.content.match(
@@ -100,5 +99,5 @@ export = {
 
             await message.channel.send({ embeds: [embed] });
         }
-    },
-} as Event;
+    }
+}

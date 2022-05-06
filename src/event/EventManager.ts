@@ -1,29 +1,31 @@
 import { Client, ExcludeEnum } from "discord.js";
 import { ActivityTypes } from "discord.js/typings/enums";
+import { readdirSync } from "fs";
 import { CommandManager } from "../command/CommandManager";
+import { Executer } from "../command/Executer";
 import { ConfigManager } from "../config/ConfigManager";
 import { Logger } from "../core/utils/Logger";
 import { Event } from "./Event";
-import donate from "./events/donate";
-import ehentai from "./events/ehentai";
-import reply from "./events/reply";
-import welcome from "./events/welcome";
 
 export class EventManager {
     private static _instance: EventManager;
-    private readonly _client: Client;
+    private _client: Client;
+    private _events: Event[];
 
-    private constructor(client: Client) {
-        this._client = client;
+    private constructor() {
+        this._events = [];
     }
 
     public static get instance(): EventManager {
+        if (!EventManager._instance) {
+            EventManager._instance = new EventManager();
+        }
         return EventManager._instance;
     }
 
-    public static init(client: Client) {
-        EventManager._instance = new EventManager(client);
-        EventManager._instance.registerAll();
+    public init(client: Client) {
+        this._client = client;
+        this.registerAll();
     }
 
     private registerAll() {
@@ -44,30 +46,39 @@ export class EventManager {
         );
     }
 
-    private registerEvent(event: Event) {
-        if (event.once)
-            this._client.once(
-                event.name,
-                async (...args) => await this.executeEvent(event, args)
-            );
-        else
-            this._client.on(
-                event.name,
-                async (...args) => await this.executeEvent(event, args)
-            );
-    }
-
-    private async executeEvent(event: any, args: any[]) {
-        try {
-            await event.execute(...args);
-        } catch (error) {
-            Logger.error("Event threw an error", error);
+    private registerEvents() {
+        const eventFiles = readdirSync(`${__dirname}/events`).filter(
+            (file) => file.endsWith(".js") || file.endsWith(".ts")
+        );
+        for (const file of eventFiles) {
+            require(`${__dirname}/events/${file.split(".")[0]}`);
+        }
+        for (const event of this._events) {
+            const executer = event.executer;
+            if (event.once) {
+                this._client.once(
+                    event.name,
+                    async (...args) => await this.executeEvent(executer, args)
+                );
+            } else {
+                this._client.on(
+                    event.name,
+                    async (...args) => await this.executeEvent(executer, args)
+                );
+            }
         }
     }
 
-    private registerEvents() {
-        const list = [donate, ehentai, reply, welcome];
-        for (const event of list) this.registerEvent(event);
+    public registerEvent(event: Event) {
+        this._events.push(event);
+    }
+
+    private async executeEvent(executer: Executer, args: any[]) {
+        try {
+            await executer.classRef[executer.methodName](...args);
+        } catch (error) {
+            Logger.error("Event threw an error", error);
+        }
     }
 
     private registerSlashCommands() {

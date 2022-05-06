@@ -7,7 +7,7 @@ import { Image } from "../../core/database/models/image";
 import { send } from "../../core/graphics/message";
 import imageManager from "../../core/image/ImageManager";
 import { User } from "../../core/database/models/user";
-import { Event } from "../Event";
+import { event } from "../../decorator/event/event";
 const { fromBuffer } = filetype;
 
 /**
@@ -65,10 +65,9 @@ async function saveAndSendMessage(
     }
 }
 
-export = {
-    name: "messageCreate",
-    once: false,
-    async execute(message) {
+export class DonateEvent {
+    @event("messageCreate", false)
+    async execute(message: Message) {
         if (message.author.bot) return;
 
         // imgur match
@@ -120,5 +119,5 @@ export = {
             });
             await saveAndSendMessage(message, imageResp.data, donor);
         }
-    },
-} as Event;
+    }
+}

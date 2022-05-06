@@ -1,6 +1,6 @@
 import { GuildMember, MessageAttachment } from "discord.js";
-import { Event } from "../Event";
 import pkg from "canvas";
+import { event } from "../../decorator/event/event";
 const { registerFont, createCanvas, loadImage } = pkg;
 
 function clipRoundedRect(canvas: pkg.Canvas, radius: number) {
@@ -76,9 +76,8 @@ function fillText(canvas: pkg.Canvas, member: GuildMember): pkg.Canvas {
     return canvas;
 }
 
-export = {
-    name: "guildMemberAdd",
-    once: false,
+export class WelcomeEvent {
+    @event("guildMemberAdd", false)
     async execute(member: GuildMember) {
         const bg = await loadImage(
             `${process.env.BASE_PATH}/assets/images/welcome.jpg`
@@ -106,5 +105,5 @@ export = {
         await member.guild.systemChannel.send({
             files: [new MessageAttachment(canvas.toBuffer(), "card.png")],
         });
-    },
-} as Event;
+    }
+}
