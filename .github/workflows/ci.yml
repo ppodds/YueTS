@@ -11,13 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      BASE_PATH: /app
-      DEBUG: true
-      MYSQL_DATABASE: Yue
-      MYSQL_USER: Yue
-      MYSQL_PASSWORD: test
-      MARIADB_ROOT_PASSWORD: test
     steps:
       - uses: actions/checkout@v2
       - name: Start containers
