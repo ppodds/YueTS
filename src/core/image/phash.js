@@ -1,4 +1,3 @@
-// Access the workerData by requiring it.
 const { parentPort } = require("worker_threads");
 const sharp = require("sharp");
 

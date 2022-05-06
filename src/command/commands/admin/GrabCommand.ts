@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import imageManager from "../../../core/image/ImageManager";
+import { ImageManager } from "../../../core/image/ImageManager";
 import axios from "axios";
 import { Logger } from "../../../core/utils/Logger";
 import { Image } from "../../../core/database/models/image";
@@ -32,9 +32,12 @@ async function save(
     const filetype = await fromBuffer(imageData);
     if (filetype.mime.startsWith("image/")) {
         Logger.debug("Making phash of the image");
-        const imagePhash = await imageManager.makePhash(imageData);
+        const imagePhash = await ImageManager.instance.makePhash(imageData);
         Logger.debug("Checking if image is already in database");
-        const inDatabase = await imageManager.inDatabase(type, imagePhash);
+        const inDatabase = await ImageManager.instance.inDatabase(
+            type,
+            imagePhash
+        );
         if (inDatabase) {
             Logger.debug("Image is already in database, skipped");
             return false;
@@ -59,7 +62,7 @@ async function save(
                 type
             )} database. author: ${message.author.username}`
         );
-        imageManager.addPhash(type, image.id, imagePhash);
+        ImageManager.instance.addPhash(type, image.id, imagePhash);
         return true;
     }
     Logger.debug(`Image is not valid, skipped (${filetype.mime})`);

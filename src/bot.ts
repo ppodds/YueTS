@@ -2,7 +2,7 @@ import { Client, Intents } from "discord.js";
 import { ConfigManager } from "./config/ConfigManager";
 import { DatabaseManager } from "./core/database/DatabaseManager";
 import { EventManager } from "./event/EventManager";
-import imageManager from "./core/image/ImageManager";
+import { ImageManager } from "./core/image/ImageManager";
 import { Logger } from "./core/utils/Logger";
 
 const launchTimestamp = Date.now();
@@ -45,7 +45,7 @@ async function preLaunch(client: Client) {
         "「現在剛起床還沒搞清楚狀況... 等一下再叫我吧...」",
         { type: "LISTENING" }
     );
-    await imageManager.init();
+    await ImageManager.instance.init();
     EventManager.instance.init(client);
     Logger.info(`Launched in ${Date.now() - launchTimestamp}ms`);
 }

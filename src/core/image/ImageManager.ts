@@ -4,39 +4,48 @@ import AsyncLock from "async-lock";
 import { Logger } from "../utils/Logger";
 import { ImageType, toString } from "./ImageType";
 import { StaticPool } from "node-worker-threads-pool";
+import { PhashData } from "./PhashData";
 
-export interface PhashData {
-    id: number;
-    data: string;
-}
-
-class ImageManager {
+export class ImageManager {
+    private static _instance: ImageManager;
     public readonly imagePhashs = new Collection<ImageType, PhashData[]>();
-    private readonly lock = new AsyncLock();
-    private readonly staticPool = new StaticPool({
+    private readonly _lock = new AsyncLock();
+    private readonly _staticPool = new StaticPool({
         size: 4,
-        task: `${process.env.BASE_PATH}/src/core/image/phash.cjs`,
+        task: `${process.env.BASE_PATH}/src/core/image/phash.js`,
     });
+
+    private constructor() {
+        this.imagePhashs.set(ImageType.PIC, []);
+        this.imagePhashs.set(ImageType.HPIC, []);
+        this.imagePhashs.set(ImageType.WTFPIC, []);
+    }
+
+    public static get instance() {
+        if (!ImageManager._instance) {
+            ImageManager._instance = new ImageManager();
+        }
+        return ImageManager._instance;
+    }
 
     /**
      * init ImageManager
      */
     public async init() {
-        this.imagePhashs.set(ImageType.PIC, []);
-        this.imagePhashs.set(ImageType.HPIC, []);
-        this.imagePhashs.set(ImageType.WTFPIC, []);
         await this.loadAll();
     }
+
     /**
      * Add a phash data to memory cache.
-     * @param {string} type image type
-     * @param {Number} imageId image id
-     * @param {string} phash phash string
+     * @param type image type
+     * @param imageID image id
+     * @param phash phash string
      */
-    public addPhash(type: ImageType, imageId: number, phash: string) {
-        this.imagePhashs.get(type).push({ id: imageId, data: phash });
+    public addPhash(type: ImageType, imageID: number, phash: string) {
+        this.imagePhashs.get(type).push({ id: imageID, data: phash });
         Logger.debug("Added phash data to memory cache");
     }
+
     /**
      * load image id and phash form database, and save it into memory.
      * @param type image type
@@ -59,18 +68,20 @@ class ImageManager {
         } while (images.length !== 0);
         Logger.info(`type ${toString(type)} load complete!`);
     }
+
     /**
      * load function's wrapper. Check all type of image.
      */
     private async loadAll() {
         Logger.info("Loading image data...");
-        await this.lock.acquire("image", async () => {
+        await this._lock.acquire("image", async () => {
             await this.load(ImageType.PIC);
             await this.load(ImageType.HPIC);
             await this.load(ImageType.WTFPIC);
         });
         Logger.info("Image data load complete!");
     }
+
     /**
      * Check if the picture is already in the database
      * @param type image type
@@ -86,14 +97,16 @@ class ImageManager {
             resolve(false);
         });
     }
+
     /**
      * Get phash from image binary (Buffer), if error occur, return null
-     * @param image image binary
+     * @param buffer image binary
      * @returns phash string
      */
     public async makePhash(buffer: Buffer): Promise<string> {
-        return await this.staticPool.exec(buffer);
+        return await this._staticPool.exec(buffer);
     }
+
     /**
      * Get hamming distance
      * @param phash1 64 bits perceptual hash
@@ -103,12 +116,11 @@ class ImageManager {
     private static distance(phash1: string, phash2: string) {
         let count = 0;
         for (let i = 0; i < phash1.length; i++) {
-            if (phash1[i] !== phash2[i]) {
-                count++;
-            }
+            if (phash1[i] !== phash2[i]) count++;
         }
         return count / 64;
     }
+
     /**
      * Check if the two pictures are similar
      * @param phash1 image1's phash
@@ -121,7 +133,3 @@ class ImageManager {
         return this.distance(phash1, phash2) < LEVEL;
     }
 }
-
-const imageManager = new ImageManager();
-
-export default imageManager;

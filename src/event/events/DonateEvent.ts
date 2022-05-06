@@ -5,7 +5,7 @@ import axios from "axios";
 import filetype from "file-type";
 import { Image } from "../../core/database/models/image";
 import { send } from "../../core/graphics/message";
-import imageManager from "../../core/image/ImageManager";
+import { ImageManager } from "../../core/image/ImageManager";
 import { User } from "../../core/database/models/user";
 import { event } from "../../decorator/event/event";
 const { fromBuffer } = filetype;
@@ -24,8 +24,8 @@ async function saveAndSendMessage(
     // get image ext and mime
     const filetype = await fromBuffer(imageData);
     if (filetype.mime.startsWith("image/")) {
-        const imagePhash = await imageManager.makePhash(imageData);
-        const inDatabase = await imageManager.inDatabase(
+        const imagePhash = await ImageManager.instance.makePhash(imageData);
+        const inDatabase = await ImageManager.instance.inDatabase(
             donor.type,
             imagePhash
         );
@@ -54,7 +54,7 @@ async function saveAndSendMessage(
         Logger.info(
             `${message.author.username} uploaded ${image.id}.${image.ext} type: ${image.type}`
         );
-        imageManager.addPhash(donor.type, image.id, imagePhash);
+        ImageManager.instance.addPhash(donor.type, image.id, imagePhash);
         if (!message.deleted && message.deletable) await message.delete();
     } else {
         await send(
