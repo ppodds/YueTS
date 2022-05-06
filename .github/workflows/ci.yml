@@ -22,8 +22,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Start containers
         run: docker-compose -f "test-docker-compose.yml" up -d --build
-      - run: docker exec yue mkdir /root/.npm
-      - run: docker exec yue npm i
       - run: docker exec yue npm run lint
       - run: docker exec yue npm run build
       - run: docker exec yue npm test
