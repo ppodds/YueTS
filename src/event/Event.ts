@@ -1,4 +1,4 @@
-import { Awaitable, ClientEvents } from "discord.js";
+import { ClientEvents } from "discord.js";
 import { Executer } from "../command/Executer";
 
 export interface Event {
