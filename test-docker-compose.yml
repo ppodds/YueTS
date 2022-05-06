@@ -1,0 +1,14 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+    container_name: yue
+    stdin_open: true
+    tty: true
+    depends_on:
+      - database
+  database:
+    image: mariadb:latest
+    restart: always
