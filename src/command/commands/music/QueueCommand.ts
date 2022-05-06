@@ -1,10 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import {
-    paginationEmbed,
-    info,
-    paginationButton,
-} from "../../../core/graphics/embeds";
+import { paginationEmbed, info } from "../../../core/graphics/embeds";
 import PlayerManager from "../../../core/music/PlayerManager";
 import { Track } from "../../../core/music/Track";
 import { command } from "../../../decorator/command/command";
@@ -86,7 +82,7 @@ export class QueueCommand {
                 pages.push(embed);
             });
 
-            await paginationEmbed(interaction, pages, paginationButton());
+            await paginationEmbed(interaction, pages);
         }
     }
 }

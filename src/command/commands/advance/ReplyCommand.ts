@@ -1,11 +1,7 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { Reply } from "../../../core/database/models/reply";
 import { Logger } from "../../../core/utils/Logger";
-import {
-    info,
-    paginationEmbed,
-    paginationButton,
-} from "../../../core/graphics/embeds";
+import { info, paginationEmbed } from "../../../core/graphics/embeds";
 import { CommandInteraction } from "discord.js";
 import { subcommandGroup } from "../../../decorator/command/subcommand-group";
 import { subcommand } from "../../../decorator/command/subcommand";
@@ -199,7 +195,7 @@ export class ReplyCommand {
                 pages.push(embed);
             });
             await interaction.deferReply();
-            await paginationEmbed(interaction, pages, paginationButton());
+            await paginationEmbed(interaction, pages);
         }
     }
 }

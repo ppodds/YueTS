@@ -31,55 +31,32 @@ export function info(
             iconURL: client.user.displayAvatarURL(),
         })
         .setDescription(description)
-
         .setFooter({
             text: "由ppodds親手調教",
             iconURL: author.avatar,
         });
 }
 
-export function warn(client: Client, description: string) {
-    return new MessageEmbed()
-        .setColor(Color.WARN)
-        .setAuthor({
-            name: client.user.username,
-            iconURL: client.user.displayAvatarURL(),
-        })
-        .setDescription(description)
-        .setFooter({
-            text: "由ppodds親手調教",
-            iconURL: author.avatar,
-        });
-}
-
-export function error(client: Client, description: string) {
-    return new MessageEmbed()
-        .setColor(Color.ERROR)
-        .setAuthor({
-            name: client.user.username,
-            iconURL: client.user.displayAvatarURL(),
-        })
-        .setDescription(description)
-        .setFooter({
-            text: "由ppodds親手調教",
-            iconURL: author.avatar,
-        });
-}
 /**
  * Send a pagination embed reply
- * @param {CommandInteraction} interaction interaction object of interaction event
- * @param {MessageEmbed[]} pages an array of MessageEmbed, each one is a page of paginationEmbed
- * @param {MessageButton[]} buttonList an array of MessageButton which length is 2
- * @returns {Promise<Message>} reply message
+ * @param interaction interaction object of interaction event
+ * @param pages an array of MessageEmbed, each one is a page of paginationEmbed
+ * @returns reply message
  */
 export async function paginationEmbed(
     interaction: CommandInteraction,
-    pages: MessageEmbed[],
-    buttonList: MessageButton[]
+    pages: MessageEmbed[]
 ): Promise<void> {
-    if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
-        throw new Error("Link buttons are not supported");
-    if (buttonList.length !== 2) throw new Error("Need two buttons.");
+    const buttonList = [
+        new MessageButton()
+            .setCustomId("prevPage")
+            .setLabel("上一頁")
+            .setStyle("PRIMARY"),
+        new MessageButton()
+            .setCustomId("nextPage")
+            .setLabel("下一頁")
+            .setStyle("PRIMARY"),
+    ];
 
     for (let page = 0; page < pages.length; page++) {
         pages[page].setDescription(
@@ -114,7 +91,7 @@ export async function paginationEmbed(
  * @param options options amount (1~5)
  * @param callback option callback function Ex: function foo(option) {}
  * @param timeout timeout(ms)
- * @returns {Promise<Message>} reply message
+ * @returns reply message
  */
 export async function selectMenuEmbed(
     interaction: CommandInteraction,
@@ -215,21 +192,4 @@ export async function selectMenuEmbed(
             )
         );
     await listener.start();
-}
-/**
- * Generate a button list for paginationEmbed
- * @returns {MessageButton[]} a button list for paginationEmbed
- */
-export function paginationButton(): MessageButton[] {
-    const buttonList = [
-        new MessageButton()
-            .setCustomId("prevPage")
-            .setLabel("上一頁")
-            .setStyle("PRIMARY"),
-        new MessageButton()
-            .setCustomId("nextPage")
-            .setLabel("下一頁")
-            .setStyle("PRIMARY"),
-    ];
-    return buttonList;
 }
