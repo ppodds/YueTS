@@ -1,7 +1,7 @@
-import { isOwner } from "../../../src/core/utils/permission.js";
-import { ConfigManager } from "../../../src/config/ConfigManager.js";
+import { isOwner } from "../permission";
+import { ConfigManager } from "../../config/ConfigManager.js";
 import { Client, Intents } from "discord.js";
-import { DatabaseManager } from "../../../src/core/database/DatabaseManager.js";
+import { DatabaseManager } from "../../database/DatabaseManager";
 
 // Create the Discord client with the appropriate options
 const client = new Client({
@@ -36,6 +36,10 @@ async function preLaunch(client: Client) {
 }
 
 beforeAll(() => preLaunch(client));
+afterAll(async () => {
+    client.destroy();
+    await DatabaseManager.instance.sequelize.close();
+});
 
 test("bot author should be owner of the bot", async () => {
     const author = ConfigManager.instance.botConfig.author;

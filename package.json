@@ -11,9 +11,9 @@
     "prod": "npm run build && npm run deploy-cmd  && npm run start",
     "test": "jest",
     "clean": "rm -rf dist/*",
-    "format": "prettier --write src/**/*.{ts,js,json} tests/**/*.{ts,js,json}",
-    "lint": "eslint src/**/*.ts tests/**/*.ts",
-    "lint-fix": "eslint src/**/*.ts tests/**/*.ts --fix ",
+    "format": "prettier --write src/**/*.{ts,js,json}",
+    "lint": "eslint src/**/*.ts",
+    "lint-fix": "eslint src/**/*.ts --fix",
     "prepare": "husky install"
   },
   "repository": {

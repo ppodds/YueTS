@@ -35,6 +35,10 @@ export class ImageManager {
         await this.loadAll();
     }
 
+    public async close() {
+        await this._staticPool.destroy();
+    }
+
     /**
      * Add a phash data to memory cache.
      * @param type image type
