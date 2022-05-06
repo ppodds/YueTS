@@ -11,7 +11,7 @@ services:
       - database
     environment:
       BASE_PATH: /app
-      DEBUG: true
+      DEBUG: "true"
   database:
     image: mariadb:latest
     restart: always
