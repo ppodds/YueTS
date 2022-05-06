@@ -6,7 +6,7 @@ RUN chown -R node:node /app
 WORKDIR /app
 
 # update npm
-RUN sudo npm install -g npm
+RUN npm install -g npm
 
 ARG USERNAME=node
 RUN apt-get update \
