@@ -43,7 +43,7 @@ export class ImageManager {
      */
     public addPhash(type: ImageType, imageID: number, phash: string) {
         this.imagePhashs.get(type).push({ id: imageID, data: phash });
-        Logger.debug("Added phash data to memory cache");
+        Logger.instance.debug("Added phash data to memory cache");
     }
 
     /**
@@ -51,7 +51,9 @@ export class ImageManager {
      * @param type image type
      */
     private async load(type: ImageType) {
-        Logger.info(`Loading image phashs which type is ${toString(type)}...`);
+        Logger.instance.info(
+            `Loading image phashs which type is ${toString(type)}...`
+        );
         const LIMIT = 100;
         let offset = 0;
         let images: Image[];
@@ -66,20 +68,20 @@ export class ImageManager {
             for (const image of images)
                 this.addPhash(type, image.id, image.phash);
         } while (images.length !== 0);
-        Logger.info(`type ${toString(type)} load complete!`);
+        Logger.instance.info(`type ${toString(type)} load complete!`);
     }
 
     /**
      * load function's wrapper. Check all type of image.
      */
     private async loadAll() {
-        Logger.info("Loading image data...");
+        Logger.instance.info("Loading image data...");
         await this._lock.acquire("image", async () => {
             await this.load(ImageType.PIC);
             await this.load(ImageType.HPIC);
             await this.load(ImageType.WTFPIC);
         });
-        Logger.info("Image data load complete!");
+        Logger.instance.info("Image data load complete!");
     }
 
     /**

@@ -128,7 +128,7 @@ export class ReplyCommand {
             formatted: false,
         });
         await interaction.followUp("Yue記下來啦~ 下次會努力的~");
-        Logger.info(
+        Logger.instance.info(
             `${interaction.user.id} use reply add at ${
                 interaction.inGuild() ? interaction.guildId : "dm channel"
             } key；${key} response: ${response.content} ${

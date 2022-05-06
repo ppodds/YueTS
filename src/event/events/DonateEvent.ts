@@ -51,7 +51,7 @@ async function saveAndSendMessage(
         });
 
         await send(message.channel as TextChannel, "已收到! 請繼續上傳!", 5000);
-        Logger.info(
+        Logger.instance.info(
             `${message.author.username} uploaded ${image.id}.${image.ext} type: ${image.type}`
         );
         ImageManager.instance.addPhash(donor.type, image.id, imagePhash);

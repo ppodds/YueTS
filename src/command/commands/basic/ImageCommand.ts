@@ -36,7 +36,10 @@ async function replyImageEmbed(
         const t = await interaction.client.users.fetch(imageData.uploader);
         uploader = t ? t.username : "窩不知道";
     } catch (err) {
-        Logger.error("Got an error while trying to fetch user data", err);
+        Logger.instance.error(
+            "Got an error while trying to fetch user data",
+            err
+        );
     }
 
     const embed = info(interaction.client, "「我找到了這個...」");

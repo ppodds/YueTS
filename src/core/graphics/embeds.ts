@@ -186,7 +186,7 @@ export async function selectMenuEmbed(
             }
         })
         .on("collectError", (error) =>
-            Logger.error(
+            Logger.instance.error(
                 "Button select menu encounter collect error!",
                 error.error as Error
             )

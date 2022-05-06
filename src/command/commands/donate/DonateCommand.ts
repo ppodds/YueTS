@@ -70,7 +70,7 @@ export class DonateCommand {
                 ephemeral: true,
             });
         }
-        Logger.info(
+        Logger.instance.info(
             `${interaction.user.username} start donate ${typeText} at ${
                 interaction.inGuild()
                     ? interaction.guild.name + "-" + interaction.channel.name

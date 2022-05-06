@@ -15,13 +15,13 @@ async function createResourceFromUrl(
     requester,
     url: string
 ): Promise<void> {
-    Logger.debug(`Creating resource from ${url}`);
+    Logger.instance.debug(`Creating resource from ${url}`);
     const resource = await musicPlayer.createResource(
         url,
         requester as GuildMember
     );
     if (resource) {
-        Logger.debug("Resource created");
+        Logger.instance.debug("Resource created");
         await interaction.editReply(
             `\`\`\`[已增加 ${resource.metadata.videoInfo.title} 到撥放序列中]\`\`\``
         );
@@ -76,7 +76,7 @@ export class PlayCommand {
                         )
                     );
                 const resources = await Promise.all(tasks);
-                Logger.debug("Resources created");
+                Logger.instance.debug("Resources created");
                 await interaction.editReply(
                     `\`\`\`[已增加 ${playlist.title} 的所有歌曲到撥放序列中]\`\`\``
                 );

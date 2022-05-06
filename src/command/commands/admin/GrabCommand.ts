@@ -26,23 +26,23 @@ async function save(
     type: ImageType,
     imageData: Buffer
 ): Promise<boolean> {
-    Logger.debug("checking if image is valid");
+    Logger.instance.debug("checking if image is valid");
     // get image ext and mime
 
     const filetype = await fromBuffer(imageData);
     if (filetype.mime.startsWith("image/")) {
-        Logger.debug("Making phash of the image");
+        Logger.instance.debug("Making phash of the image");
         const imagePhash = await ImageManager.instance.makePhash(imageData);
-        Logger.debug("Checking if image is already in database");
+        Logger.instance.debug("Checking if image is already in database");
         const inDatabase = await ImageManager.instance.inDatabase(
             type,
             imagePhash
         );
         if (inDatabase) {
-            Logger.debug("Image is already in database, skipped");
+            Logger.instance.debug("Image is already in database, skipped");
             return false;
         }
-        Logger.debug("Saving image to database");
+        Logger.instance.debug("Saving image to database");
         const image = await Image.add(
             type,
             message.author.id,
@@ -50,14 +50,14 @@ async function save(
             imageData,
             imagePhash
         );
-        Logger.debug("Updating user's contribution");
+        Logger.instance.debug("Updating user's contribution");
         // update contribution
         const user = await User.get(message.author.id);
 
         await user.increment("contribution", {
             by: Donor.contributionRatio(type),
         });
-        Logger.info(
+        Logger.instance.info(
             `Collect ${image.id}.${image.ext} to ${toString(
                 type
             )} database. author: ${message.author.username}`
@@ -65,7 +65,7 @@ async function save(
         ImageManager.instance.addPhash(type, image.id, imagePhash);
         return true;
     }
-    Logger.debug(`Image is not valid, skipped (${filetype.mime})`);
+    Logger.instance.debug(`Image is not valid, skipped (${filetype.mime})`);
     return false;
 }
 
@@ -129,9 +129,9 @@ export class GrabCommand {
         let messageCount = 0;
         let imageCount = 0;
 
-        Logger.debug(`Grabing ${toString(type)} from ${channel.name}`);
+        Logger.instance.debug(`Grabing ${toString(type)} from ${channel.name}`);
         while (!done) {
-            Logger.debug(
+            Logger.instance.debug(
                 `Fetching ${before ? "" : "latest "}messages ${
                     before ? "sent before message which id is " + before : ""
                 }`
@@ -140,12 +140,14 @@ export class GrabCommand {
                 limit: 100,
                 before: before,
             });
-            Logger.debug(`Fetched ${messages.size} messages`);
+            Logger.instance.debug(`Fetched ${messages.size} messages`);
             for (const [id, message] of messages) {
-                Logger.debug(`Checking message ${id}`);
+                Logger.instance.debug(`Checking message ${id}`);
                 before = id;
                 if (message.createdAt < time) {
-                    Logger.debug(`Message ${id} is too old, stop grabbing`);
+                    Logger.instance.debug(
+                        `Message ${id} is too old, stop grabbing`
+                    );
                     done = true;
                     break;
                 }
@@ -160,7 +162,9 @@ export class GrabCommand {
                 if (message.attachments.size === 0 && !imgurResult) continue;
                 // save image
                 if (message.attachments.size !== 0) {
-                    Logger.debug(`Saving attachments of message ${id}`);
+                    Logger.instance.debug(
+                        `Saving attachments of message ${id}`
+                    );
                     for (const attachmentPair of message.attachments) {
                         const attachment = attachmentPair[1];
 
@@ -172,7 +176,7 @@ export class GrabCommand {
                         if (await save(message, type, resp.data)) imageCount++;
                     }
                 } else if (imgurResult) {
-                    Logger.debug(
+                    Logger.instance.debug(
                         `Message ${id} is a link to imgur, saving image from imgur`
                     );
                     // get imgur website
@@ -195,7 +199,7 @@ export class GrabCommand {
             // no more message!
             if (messages.size !== 100) {
                 done = true;
-                Logger.debug("No more message, stop grabbing");
+                Logger.instance.debug("No more message, stop grabbing");
             }
         }
         now = new Date();
@@ -213,7 +217,7 @@ export class GrabCommand {
         } catch (error) {
             await interaction.channel.send(resultMessage);
         }
-        Logger.debug("Grab finished, updating grab time database");
+        Logger.instance.debug("Grab finished, updating grab time database");
         // update grab time
         if (grabData) {
             grabData.time = grabTime;

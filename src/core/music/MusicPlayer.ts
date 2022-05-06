@@ -145,7 +145,7 @@ export class MusicPlayer {
 
         // Configure audio player
         this.player.on("stateChange", async (oldState, newState) => {
-            Logger.debug(
+            Logger.instance.debug(
                 `State Changed: from ${oldState.status} to ${newState.status}`
             );
             if (
@@ -154,7 +154,7 @@ export class MusicPlayer {
             ) {
                 // If the Idle state is entered from a non-Idle state, it means that an audio resource has finished playing.
                 // The queue is then processed to start playing the next track, if one is available.
-                Logger.debug(
+                Logger.instance.debug(
                     `${this.current.metadata.videoInfo.title} finished playing`
                 );
                 if (this.np.deletable) await this.np.delete();
@@ -172,7 +172,7 @@ export class MusicPlayer {
         });
 
         this.player.on("error", async (error: AudioPlayerError) => {
-            Logger.error(
+            Logger.instance.error(
                 `${error.name}: ${error.message} with resource ${
                     (error.resource as AudioResource<Metadata>).metadata
                         .videoInfo.title
@@ -202,7 +202,7 @@ export class MusicPlayer {
             return { url: url, metadata: metadata };
         } catch (err) {
             console.log(err);
-            Logger.error("Error occur when getting video info", err);
+            Logger.instance.error("Error occur when getting video info", err);
             await this.channel.send(
                 "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確"
             );
@@ -237,9 +237,9 @@ export class MusicPlayer {
      * Attempts to play a Track from the queue
      */
     private async processQueue() {
-        Logger.debug(`Processing queue of ${this.guild.name}`);
+        Logger.instance.debug(`Processing queue of ${this.guild.name}`);
         if (this.destroyed) {
-            Logger.warn(
+            Logger.instance.warn(
                 `Music player of ${this.guild.name} has already been destroyed`
             );
             return;
@@ -255,13 +255,13 @@ export class MusicPlayer {
                 );
                 this.destroy();
             }
-            Logger.debug(
+            Logger.instance.debug(
                 `Queue of ${this.guild.name} locked or player is busy, skipping`
             );
             return;
         }
 
-        Logger.debug("Preparing next song");
+        Logger.instance.debug("Preparing next song");
 
         this.queueLock = true;
 
@@ -278,11 +278,11 @@ export class MusicPlayer {
             );
             this.player.play(resource);
             this.queueLock = false;
-            Logger.debug(
+            Logger.instance.debug(
                 `${this.current.metadata.videoInfo.title} started playing`
             );
         } catch (err) {
-            Logger.error("Error occurs when preparing next song", err);
+            Logger.instance.error("Error occurs when preparing next song", err);
             this.queueLock = false;
             return this.processQueue();
         }
@@ -292,15 +292,15 @@ export class MusicPlayer {
      * Disconnect and cleanup the player.
      */
     public destroy() {
-        Logger.info("Destroying player");
+        Logger.instance.info("Destroying player");
         if (this.connection.state.status !== VoiceConnectionStatus.Destroyed) {
             this.connection.destroy();
-            Logger.info("Voice connection destroyed");
+            Logger.instance.info("Voice connection destroyed");
         }
         this.player.stop(true);
         this.queue = null;
         this.destroyed = true;
-        Logger.info("Player destroyed");
+        Logger.instance.info("Player destroyed");
     }
     /**
      * Change connected voice channel

@@ -23,7 +23,8 @@ export class DatabaseManager {
                 logging:
                     ConfigManager.instance.botConfig.env === "prod"
                         ? false
-                        : (sql: string, _?: number) => Logger.info(sql),
+                        : (sql: string, _?: number) =>
+                              Logger.instance.info(sql),
                 pool: {
                     max: 50,
                     min: 10,
@@ -56,6 +57,6 @@ export class DatabaseManager {
     public static async init() {
         DatabaseManager.instance.initModels();
         await DatabaseManager.instance.sequelize.sync();
-        Logger.info("Database initialized!");
+        Logger.instance.info("Database initialized!");
     }
 }

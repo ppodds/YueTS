@@ -50,7 +50,7 @@ export class ReplyEvent {
                 ),
             ]);
 
-            Logger.info(
+            Logger.instance.info(
                 `${message.guild.name}-${
                     (message.channel as TextChannel).name
                 }-${message.author.username}: ${message.content}`

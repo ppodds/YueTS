@@ -18,7 +18,7 @@ class PlayerManager {
         if (musicPlayer && !musicPlayer.destroyed) {
             return musicPlayer;
         } else {
-            Logger.debug(
+            Logger.instance.debug(
                 `Creating new music player for ${interaction.guild.name}`
             );
             const t = new MusicPlayer(interaction);

@@ -36,9 +36,9 @@ async function preLaunch(client: Client) {
     await DatabaseManager.init();
     try {
         await client.login(configManager.botConfig.token);
-        Logger.info("Logged into Discord successfully");
+        Logger.instance.info("Logged into Discord successfully");
     } catch (err) {
-        Logger.error("Error logging into Discord", err);
+        Logger.instance.error("Error logging into Discord", err);
         process.exit();
     }
     client.user?.setActivity(
@@ -47,7 +47,7 @@ async function preLaunch(client: Client) {
     );
     await ImageManager.instance.init();
     EventManager.instance.init(client);
-    Logger.info(`Launched in ${Date.now() - launchTimestamp}ms`);
+    Logger.instance.info(`Launched in ${Date.now() - launchTimestamp}ms`);
 }
 
 preLaunch(client);

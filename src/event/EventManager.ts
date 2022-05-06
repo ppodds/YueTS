@@ -36,13 +36,13 @@ export class EventManager {
 
         // Some other somewhat important events that the bot should listen to
         this._client.on("error", (err) =>
-            Logger.error("The client threw an error", err)
+            Logger.instance.error("The client threw an error", err)
         );
         this._client.on("shardError", (err) =>
-            Logger.error("A shard threw an error", err)
+            Logger.instance.error("A shard threw an error", err)
         );
         this._client.on("warn", (warn) =>
-            Logger.warn("The client received a warning", warn)
+            Logger.instance.warn("The client received a warning", warn)
         );
     }
 
@@ -77,7 +77,7 @@ export class EventManager {
         try {
             await executer.classRef[executer.methodName](...args);
         } catch (error) {
-            Logger.error("Event threw an error", error);
+            Logger.instance.error("Event threw an error", error);
         }
     }
 
@@ -88,7 +88,7 @@ export class EventManager {
                 await CommandManager.instance.executeCommand(interaction);
             } catch (error) {
                 console.log(error);
-                Logger.error("Command threw an error", error);
+                Logger.instance.error("Command threw an error", error);
                 const content = {
                     content:
                         ConfigManager.instance.botConfig.env === "dev"
