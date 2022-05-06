@@ -9,6 +9,4 @@ RUN npm install -g npm
 
 RUN npm config set cache /tmp --global
 
-COPY ./setup-githooks.sh /app/setup-githooks.sh
-
 CMD ["/bin/bash"]
