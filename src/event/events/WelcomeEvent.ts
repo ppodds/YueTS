@@ -45,6 +45,7 @@ async function createAvatar(member: GuildMember): Promise<pkg.Canvas> {
     );
     ctx.drawImage(avatar, 0, 0, canvas.width, canvas.height);
     ctx.strokeStyle = "rgb(90,207,245)";
+    ctx.lineWidth = 15;
     ctx.beginPath();
     ctx.arc(
         avatar.width / 2,
@@ -59,7 +60,7 @@ async function createAvatar(member: GuildMember): Promise<pkg.Canvas> {
 
 function fillText(canvas: pkg.Canvas, member: GuildMember): pkg.Canvas {
     const ctx = canvas.getContext("2d");
-    ctx.font = "24pt 'Microsoft JhengHei'";
+    ctx.font = "30pt 'Microsoft JhengHei'";
     ctx.fillStyle = "rgb(90,207,245)";
     ctx.textAlign = "center";
     ctx.fillText(
@@ -67,11 +68,11 @@ function fillText(canvas: pkg.Canvas, member: GuildMember): pkg.Canvas {
         canvas.width / 2,
         canvas.height * 0.75
     );
-    ctx.font = "18pt 'Microsoft JhengHei'";
+    ctx.font = "lighter 26pt 'Microsoft JhengHei'";
     ctx.fillText(
         `第 ${member.guild.memberCount} 位成員！`,
         canvas.width / 2,
-        canvas.height * 0.75 + 35
+        canvas.height * 0.75 + 50
     );
     return canvas;
 }
@@ -82,8 +83,13 @@ export class WelcomeEvent {
         const bg = await loadImage(
             `${process.env.BASE_PATH}/assets/images/welcome.jpg`
         );
+        registerFont(`${process.env.BASE_PATH}/assets/fonts/msjh.ttc`, {
+            family: "Microsoft JhengHei",
+            weight: "normal",
+        });
         registerFont(`${process.env.BASE_PATH}/assets/fonts/msjhl.ttc`, {
             family: "Microsoft JhengHei",
+            weight: "lighter",
         });
         const canvas = createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");
@@ -99,7 +105,7 @@ export class WelcomeEvent {
         ctx.drawImage(
             avatar,
             (canvas.width - avatar.width) / 2,
-            (canvas.height - avatar.height) / 2 - 50
+            (canvas.height - avatar.height) / 2 - 60
         );
         fillText(canvas, member);
         await member.guild.systemChannel.send({
