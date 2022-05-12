@@ -2,7 +2,7 @@ import axios from "axios";
 import { Message } from "discord.js";
 import { ehentaiBookPreviewEmbed } from "../../graphics/embeds";
 import { event } from "../../decorator/event/event";
-import { GalleryMetadata } from "ehentai-api";
+import { GalleryMetadata, GDataResponse } from "ehentai-api";
 
 export class EhentaiEvent {
     @event("messageCreate", false)
@@ -24,7 +24,9 @@ export class EhentaiEvent {
                 namespace: 1,
             });
 
-            const galleryMetadata: GalleryMetadata = resp.data.gmetadata[0];
+            const galleryMetadata: GalleryMetadata = (
+                resp.data as GDataResponse
+            ).gmetadata[0];
             const embed = ehentaiBookPreviewEmbed(
                 message.client,
                 galleryMetadata
