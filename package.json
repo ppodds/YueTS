@@ -48,7 +48,7 @@
     "ehentai-api": "^0.0.4",
     "ffmpeg-static": "^5.0.0",
     "file-type": "^16.5.3",
-    "log4js": "^6.4.2",
+    "log4js": "^6.5.1",
     "mariadb": "^3.0.0",
     "node-worker-threads-pool": "^1.5.1",
     "play-dl": "^1.9.4",
