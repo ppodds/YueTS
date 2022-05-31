@@ -16,6 +16,8 @@ import {
     ActionRowMessageListener,
     Paginator,
 } from "discord.js-message-listener";
+import { GalleryMetadata } from "ehentai-api";
+import { GalleryResponse, URLBuilder } from "@ppodds/nhentai-api";
 
 const author = ConfigManager.instance.botConfig.author;
 
@@ -192,4 +194,138 @@ export async function selectMenuEmbed(
             )
         );
     await listener.start();
+}
+
+export function ehentaiBookPreviewEmbed(
+    client: Client,
+    galleryMetadata: GalleryMetadata
+) {
+    const embed = info(client, "「以下是這本魔法書的相關資訊...」");
+    embed.setImage(galleryMetadata.thumb);
+
+    // resolve tags and translate
+    const translateTags = [];
+    galleryMetadata.tags.forEach((element) =>
+        translateTags.push(
+            // tag translate is welcome
+            element
+                .replace("parody:", "二創:")
+                .replace("character:", "角色:")
+                .replace("group:", "社團:")
+                .replace("artist:", "畫師:")
+                .replace("language:", "語言:")
+                .replace("female:", "女性:")
+                .replace("male:", "男性:")
+                .replace("originl", "原創")
+        )
+    );
+
+    embed.addFields(
+        {
+            name: "標題",
+            value: galleryMetadata.title,
+            inline: false,
+        },
+        {
+            name: "類別",
+            value: galleryMetadata.category,
+            inline: true,
+        },
+        {
+            name: "評分",
+            value: galleryMetadata.rating,
+            inline: true,
+        },
+        {
+            name: "上傳者",
+            value: galleryMetadata.uploader,
+            inline: true,
+        },
+        {
+            name: "標籤",
+            value: translateTags.join("\n"),
+            inline: false,
+        },
+        {
+            name: "檔案數量",
+            value: galleryMetadata.filecount,
+            inline: true,
+        },
+        {
+            name: "已清除",
+            value: galleryMetadata.expunged ? "是" : "否",
+            inline: true,
+        },
+        {
+            name: "id",
+            value: `${galleryMetadata.gid}`,
+            inline: true,
+        },
+        {
+            name: "token",
+            value: galleryMetadata.token,
+            inline: true,
+        }
+    );
+
+    return embed;
+}
+
+export function nhentaiBookPreviewEmbed(
+    client: Client,
+    galleryResponse: GalleryResponse
+) {
+    const embed = info(client, "「以下是這本魔法書的相關資訊...」");
+
+    const builder = new URLBuilder(galleryResponse);
+    const category = galleryResponse.tags.find(
+        (tag) => tag.type === "category"
+    );
+    const tags: string[] = [];
+
+    for (const tag of galleryResponse.tags) {
+        tags.push(tag.name);
+    }
+
+    embed.setImage(builder.getCover());
+
+    embed.addFields(
+        {
+            name: "標題",
+            value: galleryResponse.title.pretty,
+            inline: false,
+        },
+        {
+            name: "類別",
+            value: category.name,
+            inline: true,
+        },
+        {
+            name: "收藏數",
+            value: `${galleryResponse.num_favorites}`,
+            inline: true,
+        },
+        {
+            name: "標籤",
+            value: tags.join("\n"),
+            inline: false,
+        },
+        {
+            name: "檔案數量",
+            value: `${galleryResponse.num_pages}`,
+            inline: true,
+        },
+        {
+            name: "id",
+            value: `${galleryResponse.id}`,
+            inline: true,
+        },
+        {
+            name: "media id",
+            value: `${galleryResponse.media_id}`,
+            inline: true,
+        }
+    );
+
+    return embed;
 }

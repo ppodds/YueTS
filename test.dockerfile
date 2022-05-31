@@ -8,4 +8,6 @@ COPY . /app
 
 RUN npm ci
 
+ENV TEST=true
+
 CMD ["/bin/bash"]

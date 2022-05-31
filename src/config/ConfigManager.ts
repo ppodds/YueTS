@@ -26,9 +26,21 @@ export class ConfigManager {
     }
 
     private load() {
-        this._botConfig = JSON.parse(this.loadFile(botConfigPath));
-        this._dbConfig = JSON.parse(this.loadFile(dbConfigPath));
-        this._logConfig = JSON.parse(this.loadFile(logConfigPath));
+        if (process.env.TEST === "true") {
+            // TODO: load test config
+            this._botConfig = {} as BotConfig;
+            this._dbConfig = {} as DBConfig;
+            this._logConfig = {
+                appenders: {
+                    bot: { type: "stdout" },
+                },
+                categories: { default: { appenders: ["bot"], level: "debug" } },
+            };
+        } else {
+            this._botConfig = JSON.parse(this.loadFile(botConfigPath));
+            this._dbConfig = JSON.parse(this.loadFile(dbConfigPath));
+            this._logConfig = JSON.parse(this.loadFile(logConfigPath));
+        }
     }
 
     private loadFile(path: string): string {
