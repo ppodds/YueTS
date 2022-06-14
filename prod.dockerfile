@@ -13,14 +13,15 @@ RUN npm install -g typescript
 # general package
 RUN npm install -g node-gyp
 
+COPY ./package.json /app
+COPY ./package-lock.json /app
+
+RUN npm install
+
+COPY ./tsconfig.json /app
 COPY ./src /app/src
 COPY ./assets /app/assets
 COPY ./config /app/config
-COPY ./package.json /app
-COPY ./package-lock.json /app
-COPY ./tsconfig.json /app
-
-RUN npm install
 
 ENV BASE_PATH="/app"
 ENV TZ="Asia/Taipei"
