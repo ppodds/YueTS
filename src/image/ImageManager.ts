@@ -138,13 +138,15 @@ export class ImageManager {
 
     public async isInDatabase(type: ImageType, phash: string) {
         Logger.instance.debug("Checking if image is already in database");
-        const inDatabase = await new Promise<boolean>((resolve) => {
-            for (const imagePhash of this.imagePhashs.get(type)) {
-                if (ImageManager.isSimilar(imagePhash.data, phash))
-                    resolve(true);
-            }
-            resolve(false);
-        });
+        const inDatabase = await new Promise<boolean>(
+            ((resolve) => {
+                for (const imagePhash of this.imagePhashs.get(type)) {
+                    if (ImageManager.isSimilar(imagePhash.data, phash))
+                        resolve(true);
+                }
+                resolve(false);
+            }).bind(this)
+        );
 
         if (inDatabase) {
             Logger.instance.debug("Image is already in database");
