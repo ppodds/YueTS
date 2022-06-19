@@ -335,6 +335,9 @@ export class MusicPlayer {
     public isLooping() {
         return this.looping;
     }
+    public isRandom() {
+        return this.random;
+    }
     public switchLooping() {
         this.looping = !this.looping;
     }

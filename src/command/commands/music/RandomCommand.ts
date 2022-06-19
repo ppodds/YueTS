@@ -21,7 +21,7 @@ export class RandomCommand {
         const musicPlayer = PlayerManager.get(interaction);
         musicPlayer.switchRandom();
         await interaction.reply(
-            `${musicPlayer.isLooping() ? "開啟" : "關閉"}歌曲隨機撥放`
+            `${musicPlayer.isRandom() ? "開啟" : "關閉"}歌曲隨機撥放`
         );
     }
 }
