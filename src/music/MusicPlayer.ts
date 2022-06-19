@@ -35,6 +35,7 @@ export class MusicPlayer {
     private np: Message;
     private volume: number;
     private looping: boolean;
+    private random: boolean;
     private current: AudioResource<Metadata>;
     private connection: VoiceConnection;
     private player: AudioPlayer;
@@ -52,6 +53,7 @@ export class MusicPlayer {
         this.current = null;
         this.destroyed = false;
         this.looping = false;
+        this.random = false;
 
         this.connection = joinVoiceChannel({
             channelId: (interaction.member as GuildMember).voice.channelId,
@@ -265,7 +267,11 @@ export class MusicPlayer {
 
         this.queueLock = true;
 
-        const nextTrack = this.queue.shift();
+        const picked = Math.floor(Math.random() * this.queue.length);
+        const nextTrack = this.random
+            ? this.queue.splice(picked, 1)[0]
+            : this.queue.shift();
+
         try {
             const s = await stream(nextTrack.url);
             const resource = createAudioResource(s.stream, {
@@ -331,5 +337,8 @@ export class MusicPlayer {
     }
     public switchLooping() {
         this.looping = !this.looping;
+    }
+    public switchRandom() {
+        this.random = !this.random;
     }
 }
