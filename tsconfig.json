@@ -12,7 +12,8 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "declaration": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts", "node_modules"]

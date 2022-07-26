@@ -33,11 +33,10 @@ function getDm(interaction: CommandInteraction, isGlobal: boolean) {
         else return false;
     } else return true;
 }
+
 function getScope(interaction: CommandInteraction, isGlobal: boolean) {
-    if (interaction.inGuild()) {
-        if (isGlobal) return interaction.user.id;
-        else return interaction.guildId;
-    } else return interaction.user.id;
+    if (isGlobal) return interaction.user.id;
+    else return interaction.guildId;
 }
 
 @subcommandGroup(
