@@ -46,7 +46,7 @@
     "discord.js": "^13.9.1",
     "discord.js-message-listener": "^2.0.1",
     "ehentai-api": "^0.0.4",
-    "ffmpeg-static": "^5.0.0",
+    "ffmpeg-static": "^5.1.0",
     "file-type": "^16.5.4",
     "log4js": "^6.6.0",
     "mariadb": "^3.0.0",
