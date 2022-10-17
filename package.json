@@ -52,7 +52,7 @@
     "mariadb": "^3.0.1",
     "node-worker-threads-pool": "^1.5.1",
     "play-dl": "^1.9.5",
-    "sequelize": "^6.25.1",
+    "sequelize": "^6.25.2",
     "sharp": "^0.30.7",
     "sodium": "^3.0.2",
     "utf-8-validate": "^5.0.9",
