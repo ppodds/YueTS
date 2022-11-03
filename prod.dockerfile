@@ -10,7 +10,7 @@ RUN npm install -g pnpm
 COPY --chown=node:node ./package.json /app
 COPY --chown=node:node ./pnpm-lock.yaml /app
 
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 COPY ./tsconfig.json /app
 COPY ./src /app/src
