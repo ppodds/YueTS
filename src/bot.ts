@@ -30,12 +30,13 @@ const client = new Client({
     partials: ["CHANNEL"],
 });
 
-async function preLaunch(client: Client) {
+async function bootstrap(client: Client) {
     // load config
     const configManager = ConfigManager.instance;
     await DatabaseManager.init();
     try {
         await client.login(configManager.botConfig.token);
+        console.log(`Logged in as ${client.user?.tag}!`);
         Logger.instance.info("Logged into Discord successfully");
     } catch (err) {
         Logger.instance.error("Error logging into Discord", err);
@@ -50,4 +51,4 @@ async function preLaunch(client: Client) {
     Logger.instance.info(`Launched in ${Date.now() - launchTimestamp}ms`);
 }
 
-preLaunch(client);
+bootstrap(client);

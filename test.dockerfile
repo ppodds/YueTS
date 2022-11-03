@@ -1,12 +1,12 @@
 FROM node:16.14.0-bullseye
 
-RUN mkdir -p /app
-
 WORKDIR /app
+
+RUN npm i -g pnpm
 
 COPY . /app
 
-RUN npm ci
+RUN pnpm i
 
 ENV TEST=true
 
