@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@types/async-lock": "^1.1.5",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^29.2.2",
     "@types/node": "^18.6.1",
     "@types/sequelize": "^4.28.11",
     "@types/sharp": "^0.30.2",
