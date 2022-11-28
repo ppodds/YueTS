@@ -2,8 +2,8 @@ import sequelize from "sequelize";
 import { DatabaseManager } from "../DatabaseManager";
 
 export class User extends sequelize.Model {
-    id: string;
-    contribution: number;
+    declare id: string;
+    declare contribution: number;
     static async get(id: string) {
         const [user, _] = await User.findOrCreate({
             where: {

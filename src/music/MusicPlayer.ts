@@ -32,19 +32,22 @@ export class MusicPlayer {
     private queue: Track[];
     private queueLock: boolean;
     private readyLock: boolean;
-    private np: Message;
+    private np: Message | null;
     private volume: number;
     private looping: boolean;
     private random: boolean;
-    private current: AudioResource<Metadata>;
+    private current: AudioResource<Metadata> | null;
     private connection: VoiceConnection;
     private player: AudioPlayer;
     public destroyed: boolean;
 
     constructor(interaction: CommandInteraction) {
+        if (!interaction.guild)
+            throw new Error("Guild not found in interaction");
         this.guild = interaction.guild;
+        if (!interaction.channel)
+            throw new Error("Channel not found in interaction");
         this.channel = interaction.channel;
-
         this.queue = [];
         this.queueLock = false;
         this.readyLock = false;
@@ -55,8 +58,10 @@ export class MusicPlayer {
         this.looping = false;
         this.random = false;
 
+        const channelId = (interaction.member as GuildMember).voice.channelId;
+        if (!channelId) throw new Error("User not in voice channel");
         this.connection = joinVoiceChannel({
-            channelId: (interaction.member as GuildMember).voice.channelId,
+            channelId: channelId,
             guildId: this.guild.id,
             selfMute: false,
             selfDeaf: true,
@@ -154,6 +159,7 @@ export class MusicPlayer {
                 newState.status === AudioPlayerStatus.Idle &&
                 oldState.status !== AudioPlayerStatus.Idle
             ) {
+                if (!this.current || !this.np) return;
                 // If the Idle state is entered from a non-Idle state, it means that an audio resource has finished playing.
                 // The queue is then processed to start playing the next track, if one is available.
                 Logger.instance.debug(
@@ -208,7 +214,7 @@ export class MusicPlayer {
             await this.channel.send(
                 "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確"
             );
-            return null;
+            throw err;
         }
     }
 
@@ -271,6 +277,8 @@ export class MusicPlayer {
         const nextTrack = this.random
             ? this.queue.splice(picked, 1)[0]
             : this.queue.shift();
+        if (!nextTrack)
+            throw new Error("Next track is undefined, this should not happen");
 
         try {
             const s = await stream(nextTrack.url);
@@ -304,7 +312,7 @@ export class MusicPlayer {
             Logger.instance.info("Voice connection destroyed");
         }
         this.player.stop(true);
-        this.queue = null;
+        this.queue = [];
         this.destroyed = true;
         Logger.instance.info("Player destroyed");
     }
@@ -327,7 +335,7 @@ export class MusicPlayer {
         return this.player.state.status;
     }
     public getNowPlayingMessageContent() {
-        return this.np.content;
+        return this.np?.content;
     }
     public getQueue() {
         return Array.from(this.queue);

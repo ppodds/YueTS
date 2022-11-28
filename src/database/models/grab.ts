@@ -2,10 +2,10 @@ import sequelize from "sequelize";
 import { DatabaseManager } from "../DatabaseManager";
 
 export class Grab extends sequelize.Model {
-    id: number;
-    guild: string;
-    channel: string;
-    time: Date;
+    declare id: number;
+    declare guild: string;
+    declare channel: string;
+    declare time: Date;
 }
 
 export function init() {

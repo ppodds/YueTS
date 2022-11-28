@@ -1,4 +1,4 @@
-import { Collection, MessageAttachment } from "discord.js";
+import { Collection, Attachment } from "discord.js";
 import { Image } from "../database/models/image";
 import AsyncLock from "async-lock";
 import { Logger } from "../utils/Logger";
@@ -17,7 +17,7 @@ export class ImageManager {
     private readonly _lock = new AsyncLock();
     private readonly _staticPool = new StaticPool({
         size: 4,
-        task: `${process.env.BASE_PATH}/src/image/phash.js`,
+        task: "./src/image/phash.js",
     });
 
     private constructor() {
@@ -51,7 +51,10 @@ export class ImageManager {
      * @param phash phash string
      */
     public addPhash(type: ImageType, imageID: number, phash: string) {
-        this.imagePhashs.get(type).push({ id: imageID, data: phash });
+        (this.imagePhashs.get(type) as PhashData[]).push({
+            id: imageID,
+            data: phash,
+        });
         Logger.instance.debug("Added phash data to memory cache");
     }
 
@@ -140,7 +143,9 @@ export class ImageManager {
         Logger.instance.debug("Checking if image is already in database");
         const inDatabase = await new Promise<boolean>(
             ((resolve) => {
-                for (const imagePhash of this.imagePhashs.get(type)) {
+                for (const imagePhash of this.imagePhashs.get(
+                    type
+                ) as PhashData[]) {
                     if (ImageManager.isSimilar(imagePhash.data, phash))
                         resolve(true);
                 }
@@ -203,7 +208,7 @@ export class ImageManager {
      * @param url imgur url
      * @returns image data, or null if url is not valid
      */
-    public static async getImgurImage(url: string): Promise<Buffer> {
+    public static async getImgurImage(url: string): Promise<Buffer | null> {
         // imgur match
         const imgurResult = url.match(/https:\/\/imgur\.com\/([0-9a-zA-Z]+)/);
         if (!imgurResult) return null;
@@ -230,7 +235,7 @@ export class ImageManager {
      * @returns image data
      */
     public static async getAttachmentImage(
-        attachment: MessageAttachment
+        attachment: Attachment
     ): Promise<Buffer> {
         return (
             await axios.get(attachment.url, {

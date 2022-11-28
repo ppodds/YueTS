@@ -3,12 +3,12 @@ import { ImageType } from "../../image/ImageType";
 import { DatabaseManager } from "../DatabaseManager";
 
 export class Donor extends sequelize.Model {
-    id: number;
-    guild: string;
-    channel: string;
-    user: string;
-    type: number;
-    amount: number;
+    declare id: number;
+    declare guild: string;
+    declare channel: string;
+    declare user: string;
+    declare type: number;
+    declare amount: number;
     /**
      * Get contribution ratio according donate type
      * @param {string} type donate type

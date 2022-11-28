@@ -26,11 +26,11 @@ export class Logger {
         this._logger.debug(text);
     }
 
-    public warn(text: string, warn: string = null) {
+    public warn(text: string, warn: string | null = null) {
         this._logger.warn(`${text}${warn ? "\n" + warn : ""}`);
     }
 
-    public error(text: string, err: Record<string, unknown> | Error = null) {
+    public error(text: string, err: unknown = null) {
         this._logger.error(
             `${text}
         ${err ? JSON.stringify(err, Object.getOwnPropertyNames(err), 2) : ""}`

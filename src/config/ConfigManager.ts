@@ -3,9 +3,9 @@ import { Configuration } from "log4js";
 import { BotConfig } from "./BotConfig";
 import { DBConfig } from "./DBConfig";
 
-const botConfigPath = `${process.env.BASE_PATH}/config/bot.json`;
-const dbConfigPath = `${process.env.BASE_PATH}/config/db.json`;
-const logConfigPath = `${process.env.BASE_PATH}/config/log.json`;
+const botConfigPath = "config/bot.json";
+const dbConfigPath = "config/db.json";
+const logConfigPath = "config/log.json";
 
 export class ConfigManager {
     private static _instance: ConfigManager;
@@ -15,17 +15,6 @@ export class ConfigManager {
     private _logConfig: Configuration;
 
     private constructor() {
-        this.load();
-    }
-
-    public static get instance(): ConfigManager {
-        if (!ConfigManager._instance) {
-            ConfigManager._instance = new ConfigManager();
-        }
-        return ConfigManager._instance;
-    }
-
-    private load() {
         if (process.env.TEST === "true") {
             // TODO: load test config
             this._botConfig = {} as BotConfig;
@@ -41,6 +30,13 @@ export class ConfigManager {
             this._dbConfig = JSON.parse(this.loadFile(dbConfigPath));
             this._logConfig = JSON.parse(this.loadFile(logConfigPath));
         }
+    }
+
+    public static get instance(): ConfigManager {
+        if (!ConfigManager._instance) {
+            ConfigManager._instance = new ConfigManager();
+        }
+        return ConfigManager._instance;
     }
 
     private loadFile(path: string): string {

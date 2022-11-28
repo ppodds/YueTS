@@ -18,10 +18,11 @@ export class DatabaseManager {
             ConfigManager.instance.dbConfig.password,
             {
                 host: ConfigManager.instance.dbConfig.host,
+                port: ConfigManager.instance.dbConfig.port,
                 dialect: "mariadb",
-                timezone: "+08:00",
+                timezone: ConfigManager.instance.dbConfig.timezone,
                 logging:
-                    ConfigManager.instance.botConfig.env === "prod"
+                    process.env.NODE_ENV === "production"
                         ? false
                         : (sql: string, _?: number) =>
                               Logger.instance.info(sql),

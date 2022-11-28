@@ -2,12 +2,12 @@ import sequelize from "sequelize";
 import { DatabaseManager } from "../DatabaseManager";
 
 export class Reply extends sequelize.Model {
-    id: number;
-    dm: boolean;
-    scope: string;
-    key: string;
-    response: string;
-    formatted: boolean;
+    declare id: number;
+    declare dm: boolean;
+    declare scope: string;
+    declare key: string;
+    declare response: string;
+    declare formatted: boolean;
     /**
      * Get reply(only response) according parameters
      * @param {String} key reply's key
@@ -17,7 +17,7 @@ export class Reply extends sequelize.Model {
      */
     static async getResponse(
         key: string,
-        scope: string,
+        scope: string | null,
         global: boolean,
         formated: boolean
     ) {
