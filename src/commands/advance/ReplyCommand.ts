@@ -1,7 +1,11 @@
 import { Reply } from "../../database/models/reply";
 import { Logger } from "../../utils/Logger";
 import { info, paginationEmbed } from "../../graphics/embeds";
-import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
+import {
+    ApplicationCommandOptionType,
+    CommandInteraction,
+    EmbedBuilder,
+} from "discord.js";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 
 function generateEmbed(interaction: CommandInteraction) {
@@ -59,6 +63,10 @@ class ReplyCommand {
         key: string,
         interaction: CommandInteraction
     ) {
+        if (!interaction.channel)
+            return await interaction.reply(
+                "這個指令只能在有文字頻道的時候使用"
+            );
         if (
             await Reply.findOne({
                 where: {
@@ -75,6 +83,7 @@ class ReplyCommand {
             );
 
         await interaction.reply("請輸入回應內容，若未輸入60秒後會自動取消");
+
         const response = (
             await interaction.channel.awaitMessages({
                 filter: (message) => message.author.id === interaction.user.id,
@@ -82,6 +91,7 @@ class ReplyCommand {
                 time: 60000,
             })
         ).first();
+        if (!response) return;
         await Reply.create({
             key: key,
             dm: getDm(interaction, isGlobal),
@@ -89,6 +99,7 @@ class ReplyCommand {
             response: response.content,
             formatted: false,
         });
+
         await interaction.followUp("Yue記下來啦~ 下次會努力的~");
         Logger.instance.info(
             `${interaction.user.id} use reply add at ${
@@ -166,12 +177,12 @@ class ReplyCommand {
         } else {
             // generate pages
             let i = 0;
-            const pagesData = [];
+            const pagesData: Reply[][] = [];
             while (i < replies.length) {
                 pagesData.push(replies.slice(i, (i += 23)));
             }
 
-            const pages = [];
+            const pages: EmbedBuilder[] = [];
             pagesData.forEach((pageData) => {
                 const embed = generateEmbed(interaction);
                 pageData.forEach((reply: Reply) => {

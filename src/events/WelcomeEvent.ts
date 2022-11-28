@@ -107,10 +107,13 @@ class WelcomeEvent {
             (canvas.height - avatar.height) / 2 - 60
         );
         fillText(canvas, member);
-        await member.guild.systemChannel.send({
-            files: [
-                new AttachmentBuilder(canvas.toBuffer(), { name: "card.png" }),
-            ],
-        });
+        if (member.guild.systemChannel)
+            await member.guild.systemChannel.send({
+                files: [
+                    new AttachmentBuilder(canvas.toBuffer(), {
+                        name: "card.png",
+                    }),
+                ],
+            });
     }
 }

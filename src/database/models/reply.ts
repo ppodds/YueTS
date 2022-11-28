@@ -17,7 +17,7 @@ export class Reply extends sequelize.Model {
      */
     static async getResponse(
         key: string,
-        scope: string,
+        scope: string | null,
         global: boolean,
         formated: boolean
     ) {

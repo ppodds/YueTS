@@ -41,7 +41,7 @@ function updateBotStatus() {
     const statusType = ConfigManager.instance.botConfig.statusType;
     if (statusType === ActivityType.Custom)
         throw new Error("Invalid status type");
-    client.user.setActivity(
+    client.user?.setActivity(
         ConfigManager.instance.botConfig.statusList[
             Math.floor(
                 Math.random() *

@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "emitDecoratorMetadata": false,
     "experimentalDecorators": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "strict": true,
+    "strictNullChecks": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["src/**/*.test.ts", "node_modules"]

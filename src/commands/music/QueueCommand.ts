@@ -1,18 +1,20 @@
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, EmbedBuilder } from "discord.js";
 import { paginationEmbed, info } from "../../graphics/embeds";
 import PlayerManager from "../../music/PlayerManager";
 import { Track } from "../../music/Track";
-import { Discord, Slash } from "discordx";
+import { Discord, Guard, Slash } from "discordx";
+import { GuildOnly } from "../../guards/GuildOnly";
 
 @Discord()
 class QueueCommand {
     @Slash({ name: "queue", description: "觀看接下來歌曲的順序" })
+    @Guard(GuildOnly)
     async execute(interaction: CommandInteraction) {
         const user = interaction.member;
 
         if (!user)
             return await interaction.reply("似乎在私聊時不能做這些呢....");
-        else if (!PlayerManager.exist(interaction.guild))
+        else if (interaction.guild && !PlayerManager.exist(interaction.guild))
             return await interaction.reply("嗯? 我沒有在唱歌喔~");
 
         const musicPlayer = PlayerManager.get(interaction);
@@ -50,7 +52,7 @@ class QueueCommand {
             for (const i in queue) {
                 embed.addFields({
                     name: (parseInt(i) + 1).toString(),
-                    value: queue[i].metadata.videoInfo.title,
+                    value: queue[i].metadata.videoInfo.title ?? "無標題",
                 });
             }
             await interaction.reply({ embeds: [embed] });
@@ -62,7 +64,7 @@ class QueueCommand {
                 pagesData.push(queue.slice(i, (i += 22)));
             }
 
-            const pages = [];
+            const pages: EmbedBuilder[] = [];
             let count = 0;
             pagesData.forEach((pageData) => {
                 const embed = generateEmbed();
@@ -70,7 +72,7 @@ class QueueCommand {
                 for (const track of pageData) {
                     embed.addFields({
                         name: (count += 1).toString(),
-                        value: track.metadata.videoInfo.title,
+                        value: track.metadata.videoInfo.title ?? "無標題",
                     });
                 }
 

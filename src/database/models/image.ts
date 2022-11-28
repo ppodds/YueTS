@@ -40,11 +40,13 @@ export class Image extends sequelize.Model {
      * @returns {Promise<Image>} an Image object contains all infomation
      */
     static async get(id: number): Promise<Image> {
-        return await Image.findOne({
+        const img = await Image.findOne({
             where: {
                 id: id,
             },
         });
+        if (!img) throw new Error("Image not found");
+        return img;
     }
 
     /**
@@ -52,7 +54,7 @@ export class Image extends sequelize.Model {
      * @param type image type
      * @returns a random image
      */
-    static async random(type: ImageType): Promise<Image> {
+    static async random(type: ImageType): Promise<Image | null> {
         const dbImageIdList = await Image.findAll({
             where: {
                 type: type,
@@ -61,7 +63,6 @@ export class Image extends sequelize.Model {
         });
         const randId =
             dbImageIdList[Math.floor(Math.random() * dbImageIdList.length)];
-
         return randId ? await Image.get(randId.id) : null;
     }
 

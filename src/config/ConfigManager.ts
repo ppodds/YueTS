@@ -15,17 +15,6 @@ export class ConfigManager {
     private _logConfig: Configuration;
 
     private constructor() {
-        this.load();
-    }
-
-    public static get instance(): ConfigManager {
-        if (!ConfigManager._instance) {
-            ConfigManager._instance = new ConfigManager();
-        }
-        return ConfigManager._instance;
-    }
-
-    private load() {
         if (process.env.TEST === "true") {
             // TODO: load test config
             this._botConfig = {} as BotConfig;
@@ -41,6 +30,13 @@ export class ConfigManager {
             this._dbConfig = JSON.parse(this.loadFile(dbConfigPath));
             this._logConfig = JSON.parse(this.loadFile(logConfigPath));
         }
+    }
+
+    public static get instance(): ConfigManager {
+        if (!ConfigManager._instance) {
+            ConfigManager._instance = new ConfigManager();
+        }
+        return ConfigManager._instance;
     }
 
     private loadFile(path: string): string {

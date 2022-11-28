@@ -14,6 +14,8 @@ class PlayerManager {
      * @returns {MusicPlayer} guild's music player
      */
     public get(interaction: CommandInteraction): MusicPlayer {
+        if (!interaction.guild || !interaction.guildId)
+            throw new Error("Guild is undefined in interaction object");
         const musicPlayer = this.players.get(interaction.guildId);
         if (musicPlayer && !musicPlayer.destroyed) {
             return musicPlayer;
@@ -44,6 +46,7 @@ class PlayerManager {
      */
     public cleanup(guild: Guild) {
         const musicPlayer = this.players.get(guild.id);
+        if (!musicPlayer) return;
         musicPlayer.destroy();
         this.players.delete(guild.id);
     }

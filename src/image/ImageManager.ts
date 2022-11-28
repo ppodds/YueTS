@@ -51,7 +51,10 @@ export class ImageManager {
      * @param phash phash string
      */
     public addPhash(type: ImageType, imageID: number, phash: string) {
-        this.imagePhashs.get(type).push({ id: imageID, data: phash });
+        (this.imagePhashs.get(type) as PhashData[]).push({
+            id: imageID,
+            data: phash,
+        });
         Logger.instance.debug("Added phash data to memory cache");
     }
 
@@ -140,7 +143,9 @@ export class ImageManager {
         Logger.instance.debug("Checking if image is already in database");
         const inDatabase = await new Promise<boolean>(
             ((resolve) => {
-                for (const imagePhash of this.imagePhashs.get(type)) {
+                for (const imagePhash of this.imagePhashs.get(
+                    type
+                ) as PhashData[]) {
                     if (ImageManager.isSimilar(imagePhash.data, phash))
                         resolve(true);
                 }
@@ -203,7 +208,7 @@ export class ImageManager {
      * @param url imgur url
      * @returns image data, or null if url is not valid
      */
-    public static async getImgurImage(url: string): Promise<Buffer> {
+    public static async getImgurImage(url: string): Promise<Buffer | null> {
         // imgur match
         const imgurResult = url.match(/https:\/\/imgur\.com\/([0-9a-zA-Z]+)/);
         if (!imgurResult) return null;

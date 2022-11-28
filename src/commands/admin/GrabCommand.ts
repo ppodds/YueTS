@@ -12,8 +12,8 @@ import {
     User,
 } from "discord.js";
 import { ImageType } from "../../image/ImageType";
-import { ConfigManager } from "../../config/ConfigManager";
-import { Discord, Slash, SlashOption } from "discordx";
+import { Discord, Guard, Slash, SlashOption } from "discordx";
+import { OwnerOnly } from "../../guards/OwnerOnly";
 const { fromBuffer } = filetype;
 
 @Discord()
@@ -27,9 +27,9 @@ class GrabCommand {
     }
 
     private async updateGrabTime(
-        grabData: Grab,
+        grabData: Grab | null,
         grabTime: Date,
-        guildID: string,
+        guildID: string | null,
         channelID: string
     ) {
         Logger.instance.debug("Grab finished, updating grab time database");
@@ -46,26 +46,28 @@ class GrabCommand {
     }
 
     private async sendResult(
-        range: number,
-        grabData: Grab,
+        range: number | undefined,
+        grabData: Grab | null,
         messageCount: number,
         imageCount: number,
         interaction: CommandInteraction
     ) {
         const now = new Date();
+        let time: Date;
+        if (range) {
+            time = new Date(now.setDate(now.getDate() - range));
+        } else {
+            time = grabData
+                ? grabData.time
+                : new Date(now.setDate(now.getDate() - 10));
+        }
         const resultMessage = `Yue從${toDatetimeString(
-            new Date(
-                range || grabData
-                    ? range
-                        ? now.setDate(now.getDate() - range)
-                        : grabData.time
-                    : now.setDate(now.getDate() - 10)
-            )
+            time
         )}以來的 ${messageCount} 則訊息中擷取了 ${imageCount} 張圖片，再繼續學習下去很快就會變得厲害了呢....`;
         try {
             await interaction.editReply(resultMessage);
         } catch (error) {
-            await interaction.channel.send(resultMessage);
+            await interaction.channel?.send(resultMessage);
         }
     }
 
@@ -77,7 +79,10 @@ class GrabCommand {
         let imageCount = 0;
         for (const imageData of imagesData) {
             const filetype = await fromBuffer(imageData);
-
+            if (!filetype) {
+                Logger.instance.warn("Filetype not detected, skipping");
+                continue;
+            }
             if (!ImageManager.isSupportType(filetype)) continue;
 
             const imagePhash = await ImageManager.instance.makePhash(imageData);
@@ -100,6 +105,7 @@ class GrabCommand {
     }
 
     @Slash({ name: "grab", description: "從指定頻道收集圖片進對應的資料庫" })
+    @Guard(OwnerOnly)
     async execute(
         @SlashOption({
             name: "channel",
@@ -123,8 +129,6 @@ class GrabCommand {
         range: number | undefined,
         interaction: CommandInteraction
     ) {
-        if (interaction.user.id !== ConfigManager.instance.botConfig.author.id)
-            return await interaction.reply("無此權限");
         const imgType: number | undefined = ImageType[type.toUpperCase()];
         if (imgType === undefined)
             return await interaction.reply("這不是我能使用的呢....");
@@ -141,16 +145,17 @@ class GrabCommand {
         const now = new Date();
         const grabTime = new Date();
 
-        const time = new Date(
-            range || grabData
-                ? range
-                    ? now.setDate(now.getDate() - range)
-                    : grabData.time
-                : now.setDate(now.getDate() - 10)
-        );
+        let time: Date;
+        if (range) {
+            time = new Date(now.setDate(now.getDate() - range));
+        } else {
+            time = grabData
+                ? grabData.time
+                : new Date(now.setDate(now.getDate() - 10));
+        }
 
         let done = false;
-        let before: string = null;
+        let before: string | undefined = undefined;
         let messageCount = 0;
         let imageCount = 0;
 

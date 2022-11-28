@@ -1,6 +1,6 @@
 import { Reply } from "../database/models/reply";
 import { Logger } from "../utils/Logger";
-import { Collection, Message, TextChannel } from "discord.js";
+import { Collection, Guild, Message, TextChannel } from "discord.js";
 import { ConfigManager } from "../config/ConfigManager";
 import { ArgsOf, Discord, On } from "discordx";
 
@@ -12,13 +12,18 @@ const cooldown = new Collection();
  * @param response reply's response
  */
 async function sendReply(message: Message, reply: Reply) {
+    if (!message.guild)
+        return await message.reply("似乎在私聊時不能做這些呢....");
     if (
         cooldown.get(message.guild.id) === undefined ||
         cooldown.get(message.guild.id)
     ) {
         cooldown.set(message.guild.id, false);
         // 30s cooldown
-        setTimeout(() => cooldown.set(message.guild.id, true), 30000);
+        setTimeout(
+            () => cooldown.set((message.guild as Guild).id, true),
+            30000
+        );
         await message.channel.sendTyping();
         await message.channel.send(reply.response);
     } else if (

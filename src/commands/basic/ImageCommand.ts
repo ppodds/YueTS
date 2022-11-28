@@ -29,17 +29,18 @@ async function replyImageEmbed(
         name: `${imageData.id}.${imageData.ext}`,
     });
 
-    let uploader: string;
+    let uploader: string | undefined = undefined;
 
     try {
         const t = await interaction.client.users.fetch(imageData.uploader);
-        uploader = t ? t.username : "窩不知道";
+        uploader = t.username;
     } catch (err) {
         Logger.instance.error(
             "Got an error while trying to fetch user data",
             err
         );
     }
+    uploader = uploader ? uploader : "窩不知道";
 
     const embed = info(interaction.client, "「我找到了這個...」");
 
@@ -79,7 +80,7 @@ class ImageCommand {
                     .toUpperCase()
             ];
 
-        if (user.contribution < MinimumDemand.get(type)) {
+        if (user.contribution < (MinimumDemand.get(type) as number)) {
             await interaction.reply(
                 "你跟Yue還不夠熟呢... 他有跟我說不要隨便幫陌生人忙的..."
             );
@@ -111,18 +112,22 @@ class ImageCommand {
     private async pickImage(
         imageID: number | undefined,
         interaction: CommandInteraction
-    ): Promise<Image> {
+    ): Promise<Image | null> {
         // user picked image (null if user doesn't assign)
-        const type: ImageType | undefined =
-            ImageType[
-                (interaction.options as CommandInteractionOptionResolver)
-                    .getSubcommand()
-                    .toUpperCase()
-            ];
-        let picked: Image;
+        const type = ImageType[
+            (interaction.options as CommandInteractionOptionResolver)
+                .getSubcommand()
+                .toUpperCase()
+        ] as ImageType;
+        let picked: Image | null = null;
         if (imageID) {
             picked = await Image.findOne({ where: { id: imageID } });
-
+            if (!picked) {
+                await interaction.reply(
+                    "找不到這張圖片呢... 你確定編號是對的嗎?"
+                );
+                return null;
+            }
             if (type !== picked.type) {
                 await interaction.reply("這張圖不是你選擇的圖片類型呢...");
                 return null;

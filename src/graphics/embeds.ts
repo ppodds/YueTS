@@ -8,6 +8,7 @@ import {
     ButtonInteraction,
     ActionRowBuilder,
     ButtonStyle,
+    User,
 } from "discord.js";
 import { Color } from "./Color";
 import { Reaction } from "./Reaction";
@@ -30,8 +31,8 @@ export function info(
     return new EmbedBuilder()
         .setColor(color || Color.PRIMARY)
         .setAuthor({
-            name: client.user.username,
-            iconURL: client.user.displayAvatarURL(),
+            name: (client.user as User).username,
+            iconURL: (client.user as User).displayAvatarURL(),
         })
         .setDescription(description)
         .setFooter({
@@ -209,7 +210,7 @@ export function ehentaiBookPreviewEmbed(
     embed.setImage(galleryMetadata.thumb);
 
     // resolve tags and translate
-    const translateTags = [];
+    const translateTags: string[] = [];
     galleryMetadata.tags.forEach((element) =>
         translateTags.push(
             // tag translate is welcome
@@ -302,7 +303,7 @@ export function nhentaiBookPreviewEmbed(
         },
         {
             name: "類別",
-            value: category.name,
+            value: category?.name ?? "未知",
             inline: true,
         },
         {

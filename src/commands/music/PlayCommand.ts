@@ -10,7 +10,9 @@ import {
 } from "discord.js";
 import { Logger } from "../../utils/Logger";
 import { MusicPlayer } from "../../music/MusicPlayer";
-import { Discord, Slash, SlashOption } from "discordx";
+import { Discord, Guard, Slash, SlashOption } from "discordx";
+import { Track } from "../../music/Track";
+import { GuildOnly } from "../../guards/GuildOnly";
 
 async function createResourceFromUrl(
     interaction: CommandInteraction,
@@ -35,6 +37,7 @@ async function createResourceFromUrl(
 @Discord()
 class PlayCommand {
     @Slash({ name: "play", description: "讓Yue唱Youtube有的歌曲" })
+    @Guard(GuildOnly)
     async execute(
         @SlashOption({
             name: "target",
@@ -68,7 +71,7 @@ class PlayCommand {
             try {
                 // playlist
                 const playlist = await ytpl(target, { limit: Infinity });
-                const tasks = [];
+                const tasks: Promise<Track>[] = [];
                 for (const item of playlist.items)
                     tasks.push(
                         musicPlayer.createResource(

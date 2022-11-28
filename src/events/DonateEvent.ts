@@ -40,8 +40,7 @@ class DonateEvent {
 
         for (const imageData of imagesData) {
             const filetype = await fromBuffer(imageData);
-
-            if (!ImageManager.isSupportType(filetype)) {
+            if (!filetype || !ImageManager.isSupportType(filetype)) {
                 await send(
                     message.channel as TextChannel,
                     "這不是我能使用的呢....",

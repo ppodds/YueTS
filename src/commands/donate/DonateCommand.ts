@@ -7,13 +7,15 @@ import {
     TextChannel,
 } from "discord.js";
 import { ImageType } from "../../image/ImageType";
-import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
+import { Discord, Guard, Slash, SlashGroup, SlashOption } from "discordx";
+import { GuildOnly } from "../../guards/GuildOnly";
 
 @Discord()
 @SlashGroup({ name: "donate", description: "貢獻相關指令" })
 @SlashGroup("donate")
 export class DonateCommand {
     @Slash({ description: "開始貢獻資料" })
+    @Guard(GuildOnly)
     async start(
         @SlashOption({
             name: "type",
@@ -58,13 +60,16 @@ export class DonateCommand {
                 ephemeral: true,
             });
         }
-        Logger.instance.info(
-            `${interaction.user.username} start donate ${typeText} at ${
-                interaction.inGuild()
-                    ? interaction.guild.name + "-" + interaction.channel.name
-                    : "dm channel"
-            }`
-        );
+        if (interaction.guild && interaction.channel)
+            Logger.instance.info(
+                `${interaction.user.username} start donate ${typeText} at ${
+                    interaction.inGuild()
+                        ? interaction.guild.name +
+                          "-" +
+                          interaction.channel.name
+                        : "dm channel"
+                }`
+            );
         return await interaction.reply("了解... 那麼把東西給我吧...");
     }
 
