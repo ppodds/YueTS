@@ -3,7 +3,6 @@
   "statusList": ["a", "list", "of", "status"],
   "statusType": "LISTENING",
   "token": "secret",
-  "env": "dev",
   "dev": {
     "clientId": "123456789",
     "guildId": "123456789"

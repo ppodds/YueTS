@@ -3,14 +3,14 @@ import { ImageType } from "../../image/ImageType";
 import { DatabaseManager } from "../DatabaseManager";
 
 export class Image extends sequelize.Model {
-    id: number;
-    type: number;
-    uploader: string;
-    ext: string;
-    image: Buffer;
-    phash: string;
-    createdAt: Date;
-    updateAt: Date;
+    declare id: number;
+    declare type: number;
+    declare uploader: string;
+    declare ext: string;
+    declare image: Buffer;
+    declare phash: string;
+    declare createdAt: Date;
+    declare updateAt: Date;
     /**
      * Add a image to db
      * @param type pic, hpic, wtfpic

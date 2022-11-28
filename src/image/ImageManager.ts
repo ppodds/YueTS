@@ -1,4 +1,4 @@
-import { Collection, MessageAttachment } from "discord.js";
+import { Collection, Attachment } from "discord.js";
 import { Image } from "../database/models/image";
 import AsyncLock from "async-lock";
 import { Logger } from "../utils/Logger";
@@ -17,7 +17,7 @@ export class ImageManager {
     private readonly _lock = new AsyncLock();
     private readonly _staticPool = new StaticPool({
         size: 4,
-        task: `${process.env.BASE_PATH}/src/image/phash.js`,
+        task: "./src/image/phash.js",
     });
 
     private constructor() {
@@ -230,7 +230,7 @@ export class ImageManager {
      * @returns image data
      */
     public static async getAttachmentImage(
-        attachment: MessageAttachment
+        attachment: Attachment
     ): Promise<Buffer> {
         return (
             await axios.get(attachment.url, {

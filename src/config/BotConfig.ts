@@ -1,9 +1,9 @@
-import { ActivityTypes } from "discord.js/typings/enums";
+import { ActivityType } from "discord.js";
 
 export interface BotConfig {
     readonly name: string;
     readonly statusList: string[];
-    readonly statusType: ActivityTypes;
+    readonly statusType: ActivityType;
     readonly token: string;
     readonly env: string;
     readonly dev: {

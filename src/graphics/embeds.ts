@@ -1,12 +1,13 @@
 import {
     Message,
-    MessageEmbed,
-    MessageButton,
+    EmbedBuilder,
+    ButtonBuilder,
     Client,
     ColorResolvable,
     CommandInteraction,
     ButtonInteraction,
-    MessageActionRow,
+    ActionRowBuilder,
+    ButtonStyle,
 } from "discord.js";
 import { Color } from "./Color";
 import { Reaction } from "./Reaction";
@@ -25,8 +26,8 @@ export function info(
     client: Client,
     description: string,
     color?: Color | ColorResolvable
-): MessageEmbed {
-    return new MessageEmbed()
+): EmbedBuilder {
+    return new EmbedBuilder()
         .setColor(color || Color.PRIMARY)
         .setAuthor({
             name: client.user.username,
@@ -47,22 +48,22 @@ export function info(
  */
 export async function paginationEmbed(
     interaction: CommandInteraction,
-    pages: MessageEmbed[]
+    pages: EmbedBuilder[]
 ): Promise<void> {
     const buttonList = [
-        new MessageButton()
+        new ButtonBuilder()
             .setCustomId("prevPage")
             .setLabel("上一頁")
-            .setStyle("PRIMARY"),
-        new MessageButton()
+            .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
             .setCustomId("nextPage")
             .setLabel("下一頁")
-            .setStyle("PRIMARY"),
+            .setStyle(ButtonStyle.Primary),
     ];
 
     for (let page = 0; page < pages.length; page++) {
         pages[page].setDescription(
-            pages[page].description +
+            pages[page].toJSON().description +
                 `
                 目前顯示的是第 ${page + 1} 頁的結果 共有 ${pages.length} 頁`
         );
@@ -72,7 +73,7 @@ export async function paginationEmbed(
             ? await interaction.editReply({ embeds: [pages[0]] })
             : await interaction.reply({ embeds: [pages[0]], fetchReply: true })
     ) as Message;
-    const messageActionRows = [new MessageActionRow()];
+    const messageActionRows = [new ActionRowBuilder()];
     messageActionRows[0].addComponents(buttonList);
     const listener = new ActionRowMessageListener(message, {
         messageActionRows,
@@ -80,9 +81,11 @@ export async function paginationEmbed(
     const paginator = new Paginator(listener, {
         pages,
         nextPageFilter: (arg) =>
-            (arg as ButtonInteraction).customId === buttonList[1].customId,
+            arg.customId ===
+            (buttonList[1].data as { custom_id?: string }).custom_id,
         previousPageFilter: (arg) =>
-            (arg as ButtonInteraction).customId === buttonList[0].customId,
+            arg.customId ===
+            (buttonList[0].data as { custom_id?: string }).custom_id,
     });
     await paginator.start();
 }
@@ -97,7 +100,7 @@ export async function paginationEmbed(
  */
 export async function selectMenuEmbed(
     interaction: CommandInteraction,
-    embed: MessageEmbed,
+    embed: EmbedBuilder,
     options: number,
     callback: (option: number) => void,
     timeout = 60000
@@ -105,47 +108,47 @@ export async function selectMenuEmbed(
     if (options > 5 || options < 1)
         throw new Error("options amount need be a integer in 1~5.");
 
-    const buttonList: MessageButton[] = [];
+    const buttonList: ButtonBuilder[] = [];
     for (let i = 0; i < options; i++) {
         switch (i) {
             case 0:
                 buttonList.push(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId("one")
                         .setEmoji(Reaction.one)
-                        .setStyle("SECONDARY")
+                        .setStyle(ButtonStyle.Secondary)
                 );
                 break;
             case 1:
                 buttonList.push(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId("two")
                         .setEmoji(Reaction.two)
-                        .setStyle("SECONDARY")
+                        .setStyle(ButtonStyle.Secondary)
                 );
                 break;
             case 2:
                 buttonList.push(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId("three")
                         .setEmoji(Reaction.three)
-                        .setStyle("SECONDARY")
+                        .setStyle(ButtonStyle.Secondary)
                 );
                 break;
             case 3:
                 buttonList.push(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId("four")
                         .setEmoji(Reaction.four)
-                        .setStyle("SECONDARY")
+                        .setStyle(ButtonStyle.Secondary)
                 );
                 break;
             case 4:
                 buttonList.push(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId("five")
                         .setEmoji(Reaction.five)
-                        .setStyle("SECONDARY")
+                        .setStyle(ButtonStyle.Secondary)
                 );
                 break;
         }
@@ -156,7 +159,7 @@ export async function selectMenuEmbed(
             ? await interaction.editReply({ embeds: [embed] })
             : await interaction.reply({ embeds: [embed], fetchReply: true })
     ) as Message;
-    const messageActionRows = [new MessageActionRow()];
+    const messageActionRows = [new ActionRowBuilder()];
     messageActionRows[0].addComponents(buttonList);
     const listener = new ActionRowMessageListener(message, {
         messageActionRows,
@@ -169,7 +172,7 @@ export async function selectMenuEmbed(
             for (let i = 0; i < 5; i++) {
                 if (
                     (arg as ButtonInteraction).customId ===
-                    buttonList[i].customId
+                    (buttonList[i].data as { custom_id?: string }).custom_id
                 ) {
                     callback(i);
                     break;
@@ -181,9 +184,11 @@ export async function selectMenuEmbed(
             if (reason === "USER_SELECTED") {
                 for (const actionRow of messageActionRows) {
                     for (const button of actionRow.components) {
-                        button.disabled = true;
+                        (button as ButtonBuilder).setDisabled(true);
                     }
                 }
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 await listener.editMessage({ components: messageActionRows });
             }
         })

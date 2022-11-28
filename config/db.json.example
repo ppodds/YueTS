@@ -1,7 +1,8 @@
 {
   "host": "localhost",
-  "port": 3306,
+  "port": 59487,
   "user": "Yue",
   "password": "test",
-  "database": "Yue"
+  "database": "Yue",
+  "timezone": "+00:00"
 }

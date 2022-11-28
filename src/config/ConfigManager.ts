@@ -3,9 +3,9 @@ import { Configuration } from "log4js";
 import { BotConfig } from "./BotConfig";
 import { DBConfig } from "./DBConfig";
 
-const botConfigPath = `${process.env.BASE_PATH}/config/bot.json`;
-const dbConfigPath = `${process.env.BASE_PATH}/config/db.json`;
-const logConfigPath = `${process.env.BASE_PATH}/config/log.json`;
+const botConfigPath = "config/bot.json";
+const dbConfigPath = "config/db.json";
+const logConfigPath = "config/log.json";
 
 export class ConfigManager {
     private static _instance: ConfigManager;
