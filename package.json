@@ -55,7 +55,7 @@
     "node-worker-threads-pool": "^1.5.1",
     "play-dl": "^1.9.5",
     "sequelize": "^6.21.3",
-    "sharp": "~0.30.7",
+    "sharp": "~0.31.2",
     "sodium": "^3.0.2",
     "tslib": "^2.4.1",
     "utf-8-validate": "^5.0.9",
