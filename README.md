@@ -26,7 +26,6 @@ config files at `config`
     "statusList": ["a", "list", "of", "status"],
     "statusType": "Bot status type, either 'PLAYING', 'LISTENING' or 'WATCHING'",
     "token": "your token. you can get it on Developer portal",
-    "env": "dev or prod",
     "dev": {
         "clientId": "123456789",
         "guildId": "123456789"
@@ -65,7 +64,6 @@ env files
 `bot.env`
 
 ```
-BASE_PATH=/app
 TZ=Asia/Taipei
 DEBUG=true
 ```
@@ -88,12 +86,9 @@ Change `"host": "localhost"` as `"host": "database"` if you are using docker!
 #### Development
 
 ```shell
-cd YueTS
-docker-compose up -d --build
-docker exec -it yue bash
-npm install
-npm run build
-npm run dev
+pnpm i
+pnpm build
+pnpm dev
 ```
 
 #### Deploy
@@ -101,7 +96,6 @@ npm run dev
 ##### docker compose
 
 ```shell
-cd YueTS
 docker-compose -f "prod.docker-compose.yml" up -d --build
 ```
 
