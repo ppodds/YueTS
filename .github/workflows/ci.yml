@@ -12,9 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Start containers
         run: docker-compose -f "test-docker-compose.yml" up -d --build
-      - run: docker exec yue npm run lint
-      - run: docker exec yue npm run build
-      - run: docker exec yue npm test
+      - run: docker exec yue pnpm lint
+      - run: docker exec yue pnpm build
+      - run: docker exec yue pnpm test
