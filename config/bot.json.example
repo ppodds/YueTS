@@ -1,7 +1,7 @@
 {
   "name": "Yue",
   "statusList": ["a", "list", "of", "status"],
-  "statusType": "LISTENING",
+  "statusType": 2,
   "token": "secret",
   "dev": {
     "clientId": "123456789",
