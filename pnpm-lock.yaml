@@ -4,7 +4,7 @@ specifiers:
   '@discordjs/builders': ~1.4.0
   '@discordjs/opus': ^0.9.0
   '@discordjs/rest': ^1.3.0
-  '@discordjs/voice': ^0.13.0
+  '@discordjs/voice': ^0.14.0
   '@discordx/importer': ^1.1.10
   '@ppodds/nhentai-api': ^0.0.1
   '@types/async-lock': ^1.1.5
@@ -56,7 +56,7 @@ dependencies:
   '@discordjs/builders': 1.4.0
   '@discordjs/opus': 0.9.0
   '@discordjs/rest': 1.3.0
-  '@discordjs/voice': 0.13.0_et5avpqwbva4skp2a4wvqjjvoa
+  '@discordjs/voice': 0.14.0_et5avpqwbva4skp2a4wvqjjvoa
   '@discordx/importer': 1.1.10
   '@ppodds/nhentai-api': 0.0.1
   async-lock: 1.4.0
@@ -520,15 +520,15 @@ packages:
     engines: {node: '>=16.9.0'}
     dev: false
 
-  /@discordjs/voice/0.13.0_et5avpqwbva4skp2a4wvqjjvoa:
-    resolution: {integrity: sha512-ZzwDmVINaLgkoDUeTJfpN9TkjINMLfTVoLMtEygm0YC5jTTw7AvKGqhc+Ae/2kNLywd0joyFVNrLp94yCkQ9SA==}
+  /@discordjs/voice/0.14.0_et5avpqwbva4skp2a4wvqjjvoa:
+    resolution: {integrity: sha512-/LV8LSFuJ1c4OEW1ubPg3al2QNpUpwX8ZL+KL+LORmnUFVCtehSaEh+38uDfWg1O/TgiGI5vOLj4ZKql43drcw==}
     engines: {node: '>=16.9.0'}
     dependencies:
       '@types/ws': 8.5.3
-      discord-api-types: 0.37.16
+      discord-api-types: 0.37.20
       prism-media: 1.3.4_bfd7ybjr4u3cxk5yt76u2mrpt4
       tslib: 2.4.1
-      ws: 8.10.0_3cxu5zja4e2r5wmvge7mdcljwq
+      ws: 8.11.0_3cxu5zja4e2r5wmvge7mdcljwq
     transitivePeerDependencies:
       - '@discordjs/opus'
       - bufferutil
@@ -5460,6 +5460,22 @@ packages:
 
   /ws/8.10.0_3cxu5zja4e2r5wmvge7mdcljwq:
     resolution: {integrity: sha512-+s49uSmZpvtAsd2h37vIPy1RBusaLawVe8of+GyEPsaJTCMpj/2v8NpeK1SHXjBlQ95lQTmQofOJnFiLoaN3yw==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dependencies:
+      bufferutil: 4.0.7
+      utf-8-validate: 5.0.10
+    dev: false
+
+  /ws/8.11.0_3cxu5zja4e2r5wmvge7mdcljwq:
+    resolution: {integrity: sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
