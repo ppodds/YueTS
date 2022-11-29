@@ -37,8 +37,8 @@ COPY --chown=node:node ./config ./config
 
 USER node
 
-ENV BASE_PATH="/app"
 ENV TZ="Asia/Taipei"
 ENV DEBUG=false
+ENV NODE_ENV=production
 
 CMD ["node", "dist/index.js"]
