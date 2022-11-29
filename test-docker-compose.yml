@@ -10,7 +10,6 @@ services:
     depends_on:
       - database
     environment:
-      BASE_PATH: /app
       DEBUG: "true"
   database:
     image: mariadb:latest
