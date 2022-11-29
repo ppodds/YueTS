@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@discordjs/builders': ~1.0.0
-  '@discordjs/opus': ^0.8.0
+  '@discordjs/opus': ^0.9.0
   '@discordjs/rest': ^1.3.0
   '@discordjs/voice': ^0.13.0
   '@discordx/importer': ^1.1.10
@@ -54,9 +54,9 @@ specifiers:
 
 dependencies:
   '@discordjs/builders': 1.0.0
-  '@discordjs/opus': 0.8.0
+  '@discordjs/opus': 0.9.0
   '@discordjs/rest': 1.3.0
-  '@discordjs/voice': 0.13.0_q7kaapfz264k2rkkgpmbpxog4e
+  '@discordjs/voice': 0.13.0_et5avpqwbva4skp2a4wvqjjvoa
   '@discordx/importer': 1.1.10
   '@ppodds/nhentai-api': 0.0.1
   async-lock: 1.4.0
@@ -500,8 +500,8 @@ packages:
       - supports-color
     dev: false
 
-  /@discordjs/opus/0.8.0:
-    resolution: {integrity: sha512-uHE7OmHEmP8YM0yvsH3iSdacdeghO0qTkF0CIkV07Tg0qdyOLUVkoZHj5Zcpge9rC4qb/JvTS2xRgttSZLM43Q==}
+  /@discordjs/opus/0.9.0:
+    resolution: {integrity: sha512-NEE76A96FtQ5YuoAVlOlB3ryMPrkXbUCTQICHGKb8ShtjXyubGicjRMouHtP1RpuDdm16cDa+oI3aAMo1zQRUQ==}
     engines: {node: '>=12.0.0'}
     requiresBuild: true
     dependencies:
@@ -531,13 +531,13 @@ packages:
     engines: {node: '>=16.9.0'}
     dev: false
 
-  /@discordjs/voice/0.13.0_q7kaapfz264k2rkkgpmbpxog4e:
+  /@discordjs/voice/0.13.0_et5avpqwbva4skp2a4wvqjjvoa:
     resolution: {integrity: sha512-ZzwDmVINaLgkoDUeTJfpN9TkjINMLfTVoLMtEygm0YC5jTTw7AvKGqhc+Ae/2kNLywd0joyFVNrLp94yCkQ9SA==}
     engines: {node: '>=16.9.0'}
     dependencies:
       '@types/ws': 8.5.3
       discord-api-types: 0.37.16
-      prism-media: 1.3.4_jxsryrnbb4hrccrd5nqcvpcadi
+      prism-media: 1.3.4_bfd7ybjr4u3cxk5yt76u2mrpt4
       tslib: 2.4.1
       ws: 8.10.0_3cxu5zja4e2r5wmvge7mdcljwq
     transitivePeerDependencies:
@@ -4282,7 +4282,7 @@ packages:
       react-is: 17.0.2
     dev: true
 
-  /prism-media/1.3.4_jxsryrnbb4hrccrd5nqcvpcadi:
+  /prism-media/1.3.4_bfd7ybjr4u3cxk5yt76u2mrpt4:
     resolution: {integrity: sha512-eW7LXORkTCQznZs+eqe9VjGOrLBxcBPXgNyHXMTSRVhphvd/RrxgIR7WaWt4fkLuhshcdT5KHL88LAfcvS3f5g==}
     peerDependencies:
       '@discordjs/opus': ^0.8.0
@@ -4299,7 +4299,7 @@ packages:
       opusscript:
         optional: true
     dependencies:
-      '@discordjs/opus': 0.8.0
+      '@discordjs/opus': 0.9.0
       ffmpeg-static: 5.1.0
     dev: false
 
