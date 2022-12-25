@@ -7,14 +7,16 @@ export const OwnerOnly: GuardFunction<CommandInteraction> = async (
     client,
     next
 ) => {
-    if (interaction.user.id === ConfigManager.instance.botConfig.author.id)
-        await next();
-    const content = "無此權限";
-    if (interaction.deferred) {
-        await interaction.editReply(content);
-    } else if (interaction.replied) {
-        await interaction.followUp(content);
-    } else {
-        await interaction.reply(content);
+    if (interaction.user.id !== ConfigManager.instance.botConfig.author.id) {
+        const content = "無此權限";
+        if (interaction.deferred) {
+            await interaction.editReply(content);
+        } else if (interaction.replied) {
+            await interaction.followUp(content);
+        } else {
+            await interaction.reply(content);
+        }
+        return;
     }
+    await next();
 };
