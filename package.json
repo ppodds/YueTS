@@ -58,7 +58,7 @@
     "sharp": "~0.30.7",
     "sodium": "^3.0.2",
     "tslib": "^2.4.1",
-    "utf-8-validate": "^5.0.10",
+    "utf-8-validate": "^6.0.0",
     "ytpl": "^2.3.0",
     "ytsr": "^3.8.0",
     "zlib-sync": "^0.1.7"

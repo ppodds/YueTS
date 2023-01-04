@@ -47,7 +47,7 @@ specifiers:
   ts-node: ^10.9.1
   tslib: ^2.4.1
   typescript: ^4.9.4
-  utf-8-validate: ^5.0.10
+  utf-8-validate: ^6.0.0
   ytpl: ^2.3.0
   ytsr: ^3.8.0
   zlib-sync: ^0.1.7
@@ -56,7 +56,7 @@ dependencies:
   '@discordjs/builders': 1.4.0
   '@discordjs/opus': 0.9.0
   '@discordjs/rest': 1.5.0
-  '@discordjs/voice': 0.14.0_et5avpqwbva4skp2a4wvqjjvoa
+  '@discordjs/voice': 0.14.0_ekvs3baikmnk5lswpt6fljeivu
   '@discordx/importer': 1.1.10
   '@ppodds/nhentai-api': 0.0.1
   async-lock: 1.4.0
@@ -64,7 +64,7 @@ dependencies:
   bufferutil: 4.0.7
   canvas: 2.11.0
   discord-api-types: 0.37.24
-  discord.js: 14.7.1_3cxu5zja4e2r5wmvge7mdcljwq
+  discord.js: 14.7.1_b534fhs3xgzvdbz5qzlfkrhjjm
   discord.js-message-listener: 3.0.0_discord.js@14.7.1
   discordx: 11.5.2_discord.js@14.7.1
   ehentai-api: 0.0.4
@@ -78,7 +78,7 @@ dependencies:
   sharp: 0.30.7
   sodium: 3.0.2
   tslib: 2.4.1
-  utf-8-validate: 5.0.10
+  utf-8-validate: 6.0.0
   ytpl: 2.3.0
   ytsr: 3.8.0
   zlib-sync: 0.1.7
@@ -531,7 +531,7 @@ packages:
     engines: {node: '>=16.9.0'}
     dev: false
 
-  /@discordjs/voice/0.14.0_et5avpqwbva4skp2a4wvqjjvoa:
+  /@discordjs/voice/0.14.0_ekvs3baikmnk5lswpt6fljeivu:
     resolution: {integrity: sha512-/LV8LSFuJ1c4OEW1ubPg3al2QNpUpwX8ZL+KL+LORmnUFVCtehSaEh+38uDfWg1O/TgiGI5vOLj4ZKql43drcw==}
     engines: {node: '>=16.9.0'}
     dependencies:
@@ -539,7 +539,7 @@ packages:
       discord-api-types: 0.37.24
       prism-media: 1.3.4_bfd7ybjr4u3cxk5yt76u2mrpt4
       tslib: 2.4.1
-      ws: 8.11.0_3cxu5zja4e2r5wmvge7mdcljwq
+      ws: 8.11.0_b534fhs3xgzvdbz5qzlfkrhjjm
     transitivePeerDependencies:
       - '@discordjs/opus'
       - bufferutil
@@ -2005,11 +2005,11 @@ packages:
     peerDependencies:
       discord.js: ^14.0.0
     dependencies:
-      discord.js: 14.7.1_3cxu5zja4e2r5wmvge7mdcljwq
+      discord.js: 14.7.1_b534fhs3xgzvdbz5qzlfkrhjjm
       tiny-typed-emitter: 2.1.0
     dev: false
 
-  /discord.js/14.7.1_3cxu5zja4e2r5wmvge7mdcljwq:
+  /discord.js/14.7.1_b534fhs3xgzvdbz5qzlfkrhjjm:
     resolution: {integrity: sha512-1FECvqJJjjeYcjSm0IGMnPxLqja/pmG1B0W2l3lUY2Gi4KXiyTeQmU1IxWcbXHn2k+ytP587mMWqva2IA87EbA==}
     engines: {node: '>=16.9.0'}
     dependencies:
@@ -2024,7 +2024,7 @@ packages:
       lodash.snakecase: 4.1.1
       tslib: 2.4.1
       undici: 5.14.0
-      ws: 8.11.0_3cxu5zja4e2r5wmvge7mdcljwq
+      ws: 8.11.0_b534fhs3xgzvdbz5qzlfkrhjjm
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -2038,7 +2038,7 @@ packages:
     dependencies:
       '@discordx/di': 3.0.2
       '@discordx/internal': 1.0.2
-      discord.js: 14.7.1_3cxu5zja4e2r5wmvge7mdcljwq
+      discord.js: 14.7.1_b534fhs3xgzvdbz5qzlfkrhjjm
       lodash: 4.17.21
       tslib: 2.4.1
     dev: false
@@ -5024,8 +5024,8 @@ packages:
     dependencies:
       punycode: 2.1.1
 
-  /utf-8-validate/5.0.10:
-    resolution: {integrity: sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ==}
+  /utf-8-validate/6.0.0:
+    resolution: {integrity: sha512-OCJuwxQsnG51swYmNloViggxNOFO/leOZpnb/vVeoastJbrzrZZU7lGsYlUcdkCl9nsBu2nkKLjpljb3Ckvb/Q==}
     engines: {node: '>=6.14.2'}
     requiresBuild: true
     dependencies:
@@ -5152,7 +5152,7 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
-  /ws/8.11.0_3cxu5zja4e2r5wmvge7mdcljwq:
+  /ws/8.11.0_b534fhs3xgzvdbz5qzlfkrhjjm:
     resolution: {integrity: sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -5165,7 +5165,7 @@ packages:
         optional: true
     dependencies:
       bufferutil: 4.0.7
-      utf-8-validate: 5.0.10
+      utf-8-validate: 6.0.0
     dev: false
 
   /y18n/5.0.8:
