@@ -209,22 +209,37 @@ export function ehentaiBookPreviewEmbed(
     const embed = info(client, "「以下是這本魔法書的相關資訊...」");
     embed.setImage(galleryMetadata.thumb);
 
-    // resolve tags and translate
-    const translateTags: string[] = [];
-    galleryMetadata.tags.forEach((element) =>
-        translateTags.push(
-            // tag translate is welcome
-            element
-                .replace("parody:", "二創:")
-                .replace("character:", "角色:")
-                .replace("group:", "社團:")
-                .replace("artist:", "畫師:")
-                .replace("language:", "語言:")
-                .replace("female:", "女性:")
-                .replace("male:", "男性:")
-                .replace("originl", "原創")
-        )
-    );
+    //merge the tag with same keys
+    let translateTags: string = "";
+    let tagTemp: string =  "";
+    galleryMetadata.tags.forEach(function(element){
+        let tag = element.split(':');
+        if(tag[0] == tagTemp){
+            translateTags += ", ";
+        }
+        else{
+            translateTags += "\n";
+            translateTags += tag[0];
+            translateTags += ":";
+            tagTemp = tag[0];
+        }
+        translateTags += tag[1];
+    });
+    
+    //translate the tag keys
+    translateTags = translateTags.substring(1);
+    translateTags = translateTags.replace("artist:", "繪師: ");
+    translateTags = translateTags.replace("character:", "角色: ");
+    translateTags = translateTags.replace("cosplayer:", "coser: ");
+    translateTags = translateTags.replace("female:", "女性: ");
+    translateTags = translateTags.replace("group:", "社團: ");
+    translateTags = translateTags.replace("language:", "語言: ");
+    translateTags = translateTags.replace("male:", "男性: ");
+    translateTags = translateTags.replace("mixed:", "混合: ");
+    translateTags = translateTags.replace("other:", "其他: ");
+    translateTags = translateTags.replace("parody:", "原作: ");
+    translateTags = translateTags.replace("reclass:", "重新分類: ");
+    translateTags = translateTags.replace("temp:", "臨時: ");
 
     embed.addFields(
         {
@@ -249,7 +264,7 @@ export function ehentaiBookPreviewEmbed(
         },
         {
             name: "標籤",
-            value: translateTags.join("\n"),
+            value: translateTags,
             inline: false,
         },
         {
