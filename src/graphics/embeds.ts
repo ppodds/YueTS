@@ -214,7 +214,7 @@ export function ehentaiBookPreviewEmbed(
     galleryMetadata.tags.forEach((element) => {
         const tag = element.split(":");
         if (tagMap.has(tag[0])) {
-            tagMap.set(tag[0], tagMap.get(tag[0]) + ', ' + tag[1]);
+            tagMap.set(tag[0], tagMap.get(tag[0]) + ", " + tag[1]);
         } else {
             tagMap.set(tag[0], tag[1]);
         }
