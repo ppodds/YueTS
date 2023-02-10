@@ -210,10 +210,10 @@ export function ehentaiBookPreviewEmbed(
     embed.setImage(galleryMetadata.thumb);
 
     //merge the tag with same keys
-    let translateTags: string = "";
-    let tagTemp: string =  "";
+    let translateTags = "";
+    let tagTemp =  "";
     galleryMetadata.tags.forEach(function(element){
-        let tag = element.split(':');
+        const tag = element.split(":");
         if(tag[0] == tagTemp){
             translateTags += ", ";
         }
