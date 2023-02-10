@@ -224,26 +224,26 @@ export function ehentaiBookPreviewEmbed(
     });
     
     //translate the tag keys
-    const tagReplaceList = [
-        { original: "artist:", replace: "繪師: " },
-        { original: "character:", replace: "角色: " },
-        { original: "cosplayer:", replace: "coser: " },
-        { original: "female:", replace: "女性: " },
-        { original: "group:", replace: "社團: " },
-        { original: "language:", replace: "語言: " },
-        { original: "male:", replace: "男性: " },
-        { original: "mixed:", replace: "混合: " },
-        { original: "other:", replace: "其他: " },
-        { original: "parody:", replace: "原作: " },
-        { original: "reclass:", replace: "重新分類: " },
-        { original: "temp:", replace: "臨時: " }
-    ];
-
+    const tagReplaceList = new Map<string, string>([
+        ["artist", "繪師: "],
+        ["character", "角色: "],
+        ["cosplayer", "coser: "],
+        ["female", "女性: "],
+        ["group", "社團: "],
+        ["language", "語言: "],
+        ["male", "男性: "],
+        ["mixed", "混合: "],
+        ["other", "其他: "],
+        ["parody", "原作: "],
+        ["reclass", "重新分類: "],
+        ["temp", "臨時: "]
+    ]);
+    
     const translateTags = tagString.map(element => {
         let replacedTag = element;
-        tagReplaceList.forEach(tag => {
-            replacedTag = replacedTag.replace(tag.original, tag.replace);
-        });
+        if (tagReplaceList.has(element.split(":")[0])) {
+            replacedTag = tagReplaceList.get(element.split(":")[0]) + element.split(":")[1];
+        }
         return replacedTag;
     });
     
