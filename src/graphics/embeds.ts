@@ -210,41 +210,40 @@ export function ehentaiBookPreviewEmbed(
     embed.setImage(galleryMetadata.thumb);
 
     //merge the tag with same keys
-    const tagString: string[] = [];
-    let tagTemp = "";
-
+    const tagMap = new Map<string, string>();
     galleryMetadata.tags.forEach((element) => {
         const tag = element.split(":");
-        if (tag[0] == tagTemp) {
-            tagString[tagString.length - 1] += ", " + tag[1];
+        if (tagMap.has(tag[0])) {
+            tagMap.set(tag[0], tagMap.get(tag[0]) + ', ' + tag[1]);
         } else {
-            tagString.push(tag[0] + ":" + tag[1]);
-            tagTemp = tag[0];
+            tagMap.set(tag[0], tag[1]);
         }
     });
-    
+
     //translate the tag keys
+    const translateTags: string[] = [];
     const tagReplaceList = new Map<string, string>([
-        ["artist", "繪師: "],
-        ["character", "角色: "],
-        ["cosplayer", "coser: "],
-        ["female", "女性: "],
-        ["group", "社團: "],
-        ["language", "語言: "],
-        ["male", "男性: "],
-        ["mixed", "混合: "],
-        ["other", "其他: "],
-        ["parody", "原作: "],
-        ["reclass", "重新分類: "],
-        ["temp", "臨時: "]
+        ["artist", "繪師"],
+        ["character", "角色"],
+        ["cosplayer", "coser"],
+        ["female", "女性"],
+        ["group", "社團"],
+        ["language", "語言"],
+        ["male", "男性"],
+        ["mixed", "混合"],
+        ["other", "其他"],
+        ["parody", "原作"],
+        ["reclass", "重新分類"],
+        ["temp", "臨時"]
     ]);
-    
-    const translateTags = tagString.map(element => {
-        let replacedTag = element;
-        if (tagReplaceList.has(element.split(":")[0])) {
-            replacedTag = tagReplaceList.get(element.split(":")[0]) + element.split(":")[1];
+
+    tagMap.forEach((value, key) => {
+        if (tagReplaceList.has(key)) {
+            translateTags.push(tagReplaceList.get(key) + ": " + value);
         }
-        return replacedTag;
+        else{
+            translateTags.push(key + ": " + value);
+        }
     });
     
     embed.addFields(
