@@ -242,8 +242,7 @@ export function ehentaiBookPreviewEmbed(
         const values = value.join(", ");
         if (tagReplaceList.has(key)) {
             translateTags.push(tagReplaceList.get(key) + ": " + values);
-        }
-        else{
+        } else {
             translateTags.push(key + ": " + values);
         }
     });
