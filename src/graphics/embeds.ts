@@ -210,13 +210,13 @@ export function ehentaiBookPreviewEmbed(
     embed.setImage(galleryMetadata.thumb);
 
     //merge the tag with same keys
-    const tagMap = new Map<string, string>();
+    const tagMap = new Map<string, string[]>();
     galleryMetadata.tags.forEach((element) => {
         const tag = element.split(":");
         if (tagMap.has(tag[0])) {
-            tagMap.set(tag[0], tagMap.get(tag[0]) + ", " + tag[1]);
+            tagMap.set(tag[0], [...tagMap.get(tag[0])!, tag[1]]);
         } else {
-            tagMap.set(tag[0], tag[1]);
+            tagMap.set(tag[0], [tag[1]]);
         }
     });
 
@@ -238,11 +238,12 @@ export function ehentaiBookPreviewEmbed(
     ]);
 
     tagMap.forEach((value, key) => {
+        const values = value.join(", ");
         if (tagReplaceList.has(key)) {
-            translateTags.push(tagReplaceList.get(key) + ": " + value);
+            translateTags.push(tagReplaceList.get(key) + ": " + values);
         }
         else{
-            translateTags.push(key + ": " + value);
+            translateTags.push(key + ": " + values);
         }
     });
     
