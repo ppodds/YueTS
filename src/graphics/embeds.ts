@@ -209,23 +209,44 @@ export function ehentaiBookPreviewEmbed(
     const embed = info(client, "「以下是這本魔法書的相關資訊...」");
     embed.setImage(galleryMetadata.thumb);
 
-    // resolve tags and translate
-    const translateTags: string[] = [];
-    galleryMetadata.tags.forEach((element) =>
-        translateTags.push(
-            // tag translate is welcome
-            element
-                .replace("parody:", "二創:")
-                .replace("character:", "角色:")
-                .replace("group:", "社團:")
-                .replace("artist:", "畫師:")
-                .replace("language:", "語言:")
-                .replace("female:", "女性:")
-                .replace("male:", "男性:")
-                .replace("originl", "原創")
-        )
-    );
+    //merge the tag with same keys
+    const tagMap = new Map<string, string[]>();
+    galleryMetadata.tags.forEach((element) => {
+        const tag = element.split(":");
+        const tagList = tagMap.get(tag[0]);
+        if (tagList) {
+            tagList.push(tag[1]);
+        } else {
+            tagMap.set(tag[0], [tag[1]]);
+        }
+    });
 
+    //translate the tag keys
+    const translateTags: string[] = [];
+    const tagReplaceList = new Map<string, string>([
+        ["artist", "繪師"],
+        ["character", "角色"],
+        ["cosplayer", "coser"],
+        ["female", "女性"],
+        ["group", "社團"],
+        ["language", "語言"],
+        ["male", "男性"],
+        ["mixed", "混合"],
+        ["other", "其他"],
+        ["parody", "原作"],
+        ["reclass", "重新分類"],
+        ["temp", "臨時"]
+    ]);
+
+    tagMap.forEach((value, key) => {
+        const values = value.join(", ");
+        if (tagReplaceList.has(key)) {
+            translateTags.push(tagReplaceList.get(key) + ": " + values);
+        } else {
+            translateTags.push(key + ": " + values);
+        }
+    });
+    
     embed.addFields(
         {
             name: "標題",
