@@ -215,7 +215,7 @@ export function ehentaiBookPreviewEmbed(
         const tag = element.split(":");
         const tagList = tagMap.get(tag[0]);
         if (tagList) {
-            tagMap.set(tag[0], [...tagList, tag[1]]);
+            tagList.append(tag[1]);
         } else {
             tagMap.set(tag[0], [tag[1]]);
         }
