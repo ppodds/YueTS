@@ -23,10 +23,10 @@ class AvatarCommand {
     ) {
         const embed = info(interaction.client, "「看來這就是你要的呢...」");
         if (target)
-            embed.setImage(target.avatarURL({ extension: "png", size: 1024 }));
+            embed.setImage(target.displayAvatarURL({ extension: "png", size: 1024 }));
         else
             embed.setImage(
-                interaction.user.avatarURL({
+                interaction.user.displayAvatarURL({
                     extension: "png",
                     size: 1024,
                 })
