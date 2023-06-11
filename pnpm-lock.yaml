@@ -72,8 +72,8 @@ dependencies:
     specifier: ^6.31.0
     version: 6.31.0(mariadb@3.1.1)
   sharp:
-    specifier: ~0.30.7
-    version: 0.30.7
+    specifier: ~0.32.0
+    version: 0.32.0
   sodium:
     specifier: ^3.0.2
     version: 3.0.2
@@ -107,8 +107,8 @@ devDependencies:
     specifier: ^4.28.14
     version: 4.28.14
   '@types/sharp':
-    specifier: ^0.30.5
-    version: 0.30.5
+    specifier: ^0.31.0
+    version: 0.31.0
   '@types/validator':
     specifier: ^13.7.15
     version: 13.7.15
@@ -1183,8 +1183,8 @@ packages:
       '@types/validator': 13.7.15
     dev: true
 
-  /@types/sharp@0.30.5:
-    resolution: {integrity: sha512-EhO29617AIBqxoVtpd1qdBanWpspk/kD2B6qTFRJ31Q23Rdf+DNU1xlHSwtqvwq1vgOqBwq1i38SX+HGCymIQg==}
+  /@types/sharp@0.31.0:
+    resolution: {integrity: sha512-nwivOU101fYInCwdDcH/0/Ru6yIRXOpORx25ynEOc6/IakuCmjOAGpaO5VfUl4QkDtUC6hj+Z2eCQvgXOioknw==}
     dependencies:
       '@types/node': 18.15.11
     dev: true
@@ -4518,14 +4518,14 @@ packages:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
     dev: false
 
-  /sharp@0.30.7:
-    resolution: {integrity: sha512-G+MY2YW33jgflKPTXXptVO28HvNOo9G3j0MybYAHeEmby+QuD2U98dT6ueht9cv/XDqZspSpIhoSW+BAKJ7Hig==}
-    engines: {node: '>=12.13.0'}
+  /sharp@0.32.0:
+    resolution: {integrity: sha512-yLAypVcqj1toSAqRSwbs86nEzfyZVDYqjuUX8grhFpeij0DDNagKJXELS/auegDBRDg1XBtELdOGfo2X1cCpeA==}
+    engines: {node: '>=14.15.0'}
     requiresBuild: true
     dependencies:
       color: 4.2.3
       detect-libc: 2.0.1
-      node-addon-api: 5.1.0
+      node-addon-api: 6.0.0
       prebuild-install: 7.1.1
       semver: 7.4.0
       simple-get: 4.0.1
