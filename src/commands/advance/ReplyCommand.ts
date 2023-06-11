@@ -91,7 +91,7 @@ class ReplyCommand {
                 time: 60000,
             })
         ).first();
-        if (!response) return;
+        if (!response || response.content.length < 1) return;
         await Reply.create({
             key: key,
             dm: getDm(interaction, isGlobal),
