@@ -11,7 +11,7 @@
     "start": "node --no-deprecation --no-warnings ./dist/index.js",
     "dev": "concurrently 'npm:watch' 'sleep 5;nodemon ./dist/index.js'",
     "test": "jest",
-    "clean": "rimraf dist/*",
+    "clean": "rimraf dist",
     "format": "prettier --write src/**/*.{ts,js,json}",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint src/**/*.ts --fix",
@@ -82,7 +82,7 @@
     "lint-staged": "^13.2.1",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
-    "rimraf": "^3.0.2",
+    "rimraf": "^5.0.1",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
