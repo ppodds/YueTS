@@ -42,29 +42,6 @@ The parsed config object would be
 }
 ```
 
-env files
-
-`bot.env`
-
-```
-TZ=Asia/Taipei
-```
-
-db.env
-
-```
-MYSQL_DATABASE=Yue
-MYSQL_USER=Yue
-MYSQL_PASSWORD=test
-MARIADB_ROOT_PASSWORD=test
-TZ=Asia/Taipei
-```
-
-Note:
-Change `"host": "localhost"` as `"host": "database"` if you are using docker!
-
-### Run With Docker
-
 #### Development
 
 ```shell
@@ -75,18 +52,8 @@ pnpm dev
 
 #### Deploy
 
-##### docker compose
-
-```shell
-docker-compose -f "prod.docker-compose.yml" up -d --build
 ```
-
-##### docker run
-
-If you use this method, you should set up database manually.
-
-```
-docker build --pull --rm -f "prod.dockerfile" -t yuets:latest "."
+docker build --pull --rm -t yuets:latest "."
 docker run -d -v $PWD/logs:/var/log/yue --network host --name yuets yuets:latest
 ```
 
