@@ -7,8 +7,12 @@ services:
       - "59487:3306"
     volumes:
       - dbdata:/var/lib/mysql
-    env_file:
-      - db.env
+    environment:
+      - MARIADB_DATABASE=Yue
+      - MARIADB_USER=Yue
+      - MARIADB_PASSWORD=test
+      - MARIADB_RANDOM_ROOT_PASSWORD=true
+      - TZ=Asia/Taipei
   adminer:
     image: adminer:latest
     restart: always

@@ -13,15 +13,15 @@ import {
 import { Color } from "./Color";
 import { Reaction } from "./Reaction";
 import { Logger } from "../utils/Logger";
-import { ConfigManager } from "../config/ConfigManager";
 import {
     ActionRowMessageListener,
     Paginator,
 } from "discord.js-message-listener";
 import { GalleryMetadata } from "ehentai-api";
 import { GalleryResponse, URLBuilder } from "@ppodds/nhentai-api";
+import { Bot } from "../bot";
 
-const author = ConfigManager.instance.botConfig.author;
+const author = Bot.instance.config.bot.author;
 
 export function info(
     client: Client,
@@ -235,7 +235,7 @@ export function ehentaiBookPreviewEmbed(
         ["other", "其他"],
         ["parody", "原作"],
         ["reclass", "重新分類"],
-        ["temp", "臨時"]
+        ["temp", "臨時"],
     ]);
 
     tagMap.forEach((value, key) => {
@@ -246,7 +246,7 @@ export function ehentaiBookPreviewEmbed(
             translateTags.push(key + ": " + values);
         }
     });
-    
+
     embed.addFields(
         {
             name: "標題",

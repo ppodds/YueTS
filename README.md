@@ -14,74 +14,33 @@ This is a TypeScript rewrite version of my Discord bot Yue. Yue was used in NCU 
 git clone https://github.com/ppodds/YueTS.git
 ```
 
-### Set Configuration and Envirment variables
+### Set Envirment variables
 
-config files at `config`
+```shell
+# copy the example env file
+cp .env.example .env
+# edit it
+vim .env
+```
 
-`bot.json`
+The environments will be parsed to a config object, and it also allow you to assign a list of string like this
 
-```json
+```
+BOT__STATUS_LIST__0=a
+BOT__STATUS_LIST__1=list
+BOT__STATUS_LIST__2=of
+BOT__STATUS_LIST__3=status
+```
+
+The parsed config object would be
+
+```js
 {
-    "name": "Bot name",
-    "statusList": ["a", "list", "of", "status"],
-    "statusType": "Bot status type, either 'PLAYING', 'LISTENING' or 'WATCHING'",
-    "token": "your token. you can get it on Developer portal",
-    "dev": {
-        "clientId": "123456789",
-        "guildId": "123456789"
-    },
-    "author": {
-        "avatar": "author avator url"
+    bot: {
+        statusList: ["a", "list", "of", "status"]
     }
 }
 ```
-
-`db.json`
-
-```json
-{
-    "host": "localhost",
-    "port": 3306,
-    "user": "Yue",
-    "password": "test",
-    "database": "Yue"
-}
-```
-
-`log.json`
-
-```json
-{
-    "appenders": {
-        "bot": { "type": "file", "filename": "/var/log/yue/bot.log" }
-    },
-    "categories": { "default": { "appenders": ["bot"], "level": "info" } }
-}
-```
-
-env files
-
-`bot.env`
-
-```
-TZ=Asia/Taipei
-DEBUG=true
-```
-
-db.env
-
-```
-MYSQL_DATABASE=Yue
-MYSQL_USER=Yue
-MYSQL_PASSWORD=test
-MARIADB_ROOT_PASSWORD=test
-TZ=Asia/Taipei
-```
-
-Note:
-Change `"host": "localhost"` as `"host": "database"` if you are using docker!
-
-### Run With Docker
 
 #### Development
 
@@ -93,18 +52,8 @@ pnpm dev
 
 #### Deploy
 
-##### docker compose
-
-```shell
-docker-compose -f "prod.docker-compose.yml" up -d --build
 ```
-
-##### docker run
-
-If you use this method, you should set up database manually.
-
-```
-docker build --pull --rm -f "prod.dockerfile" -t yuets:latest "."
+docker build --pull --rm -t yuets:latest "."
 docker run -d -v $PWD/logs:/var/log/yue --network host --name yuets yuets:latest
 ```
 

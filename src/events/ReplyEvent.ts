@@ -1,7 +1,7 @@
+import { Bot } from "../bot";
 import { Reply } from "../database/models/reply";
 import { Logger } from "../utils/Logger";
 import { Collection, Guild, Message, TextChannel } from "discord.js";
-import { ConfigManager } from "../config/ConfigManager";
 import { ArgsOf, Discord, On } from "discordx";
 
 const cooldown = new Collection();
@@ -26,9 +26,7 @@ async function sendReply(message: Message, reply: Reply) {
         );
         await message.channel.sendTyping();
         await message.channel.send(reply.response);
-    } else if (
-        message.author.id === ConfigManager.instance.botConfig.author.id
-    ) {
+    } else if (message.author.id === Bot.instance.config.bot.author.id) {
         await message.channel.sendTyping();
         await message.channel.send(reply.response);
     }

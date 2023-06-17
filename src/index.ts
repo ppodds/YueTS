@@ -1,10 +1,11 @@
 import { ShardingManager } from "discord.js";
-import { ConfigManager } from "./config/ConfigManager";
 import { Logger } from "./utils/Logger";
+import { config } from "dotenv";
 
 async function bootstrap() {
+    config();
     const manager = new ShardingManager("dist/bot.js", {
-        token: ConfigManager.instance.botConfig.token,
+        token: process.env.BOT__TOKEN,
     });
     manager.on("shardCreate", (shard) => {
         console.log(`Launched shard ${shard.id}`);

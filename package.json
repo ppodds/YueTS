@@ -9,7 +9,7 @@
     "watch": "tsc --watch",
     "deploy-cmd": "node ./dist/deploy-commands.js",
     "start": "node --no-deprecation --no-warnings ./dist/index.js",
-    "dev": "concurrently 'npm:watch' 'sleep 5;nodemon ./dist/index.js'",
+    "dev": "concurrently 'npm:watch' 'sleep 5;nodemon ./dist/bot.js'",
     "test": "jest",
     "clean": "rimraf dist",
     "format": "prettier --write src/**/*.{ts,js,json}",
@@ -27,7 +27,7 @@
     "url": "https://github.com/ppodds/YueTS/issues"
   },
   "lint-staged": {
-    "*.{ts,js,cjs,mjs}": [
+    "src/**/*.{ts,js,cjs,mjs}": [
       "prettier --write",
       "eslint --fix"
     ]
@@ -48,6 +48,7 @@
     "discord.js": "^14.11.0",
     "discord.js-message-listener": "^3.0.2",
     "discordx": "^11.7.6",
+    "dotenv": "^16.3.0",
     "ehentai-api": "^0.0.4",
     "ffmpeg-static": "^5.1.0",
     "file-type": "^16.5.4",
@@ -57,7 +58,7 @@
     "play-dl": "^1.9.6",
     "sequelize": "^6.32.0",
     "sharp": "~0.32.1",
-    "sodium": "^3.0.2",
+    "sodium-native": "^3.4.1",
     "tslib": "^2.5.3",
     "utf-8-validate": "^6.0.3",
     "ytpl": "^2.3.0",

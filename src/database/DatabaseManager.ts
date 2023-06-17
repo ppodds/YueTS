@@ -1,26 +1,27 @@
 import { Sequelize } from "sequelize";
-import { ConfigManager } from "../config/ConfigManager";
 import { Logger } from "../utils/Logger";
 import * as user from "./models/user";
 import * as grab from "./models/grab";
 import * as image from "./models/image";
 import * as reply from "./models/reply";
 import * as donor from "./models/donor";
+import { Bot } from "../bot";
 
 export class DatabaseManager {
     private static _instance: DatabaseManager;
     private readonly _sequelize: Sequelize;
 
     private constructor() {
+        const config = Bot.instance.config;
         this._sequelize = new Sequelize(
-            ConfigManager.instance.dbConfig.database,
-            ConfigManager.instance.dbConfig.user,
-            ConfigManager.instance.dbConfig.password,
+            config.db.database,
+            config.db.user,
+            config.db.password,
             {
-                host: ConfigManager.instance.dbConfig.host,
-                port: ConfigManager.instance.dbConfig.port,
+                host: config.db.host,
+                port: config.db.port,
                 dialect: "mariadb",
-                timezone: ConfigManager.instance.dbConfig.timezone,
+                timezone: config.db.timezone,
                 logging:
                     process.env.NODE_ENV === "production"
                         ? false
