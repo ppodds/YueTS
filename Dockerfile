@@ -1,4 +1,4 @@
-FROM node:16.18-bullseye AS build
+FROM node:16.20-bullseye AS build
 
 WORKDIR /app
 
@@ -21,7 +21,7 @@ RUN npm pkg delete scripts.prepare
 
 RUN pnpm prune --prod
 
-FROM node:16.18-bullseye As production
+FROM node:16.20-bullseye As production
 
 WORKDIR /app
 
