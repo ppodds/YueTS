@@ -1,4 +1,4 @@
-import { Metadata } from "./Metadata";
+import { Metadata } from "./metadata";
 
 export interface Track {
     url: string;

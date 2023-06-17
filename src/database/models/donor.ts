@@ -1,6 +1,5 @@
 import sequelize from "sequelize";
 import { ImageType } from "../../image/ImageType";
-import { DatabaseManager } from "../DatabaseManager";
 
 export class Donor extends sequelize.Model {
     declare id: number;
@@ -33,7 +32,7 @@ export class Donor extends sequelize.Model {
     }
 }
 
-export function init() {
+export function init(instance: sequelize.Sequelize) {
     Donor.init(
         {
             guild: {
@@ -58,6 +57,6 @@ export function init() {
                 allowNull: false,
             },
         },
-        { sequelize: DatabaseManager.instance.sequelize }
+        { sequelize: instance }
     );
 }

@@ -1,33 +1,13 @@
 import { Reply } from "../../database/models/reply";
-import { Logger } from "../../utils/Logger";
-import { info, paginationEmbed } from "../../graphics/embeds";
+import { LoggerService } from "../../utils/logger-service";
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
     EmbedBuilder,
 } from "discord.js";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
-
-function generateEmbed(interaction: CommandInteraction) {
-    const embed = info(
-        interaction.client,
-        "「以前你跟我說過的這些~ Yue通通都記住了喔~ :heart:」"
-    );
-
-    embed.addFields(
-        {
-            name: "格式範例",
-            value: "「待會Yue就用這種方式照著念喔~」",
-            inline: false,
-        },
-        {
-            name: "關鍵字",
-            value: "回應內容",
-            inline: false,
-        }
-    );
-    return embed;
-}
+import { injectable } from "tsyringe";
+import { GraphicService } from "../../graphics/graphic-service";
 
 function getDm(interaction: CommandInteraction, isGlobal: boolean) {
     if (interaction.inGuild()) {
@@ -43,7 +23,13 @@ function getScope(interaction: CommandInteraction, isGlobal: boolean) {
 
 @Discord()
 @SlashGroup({ name: "reply", description: "設定對話回應" })
+@injectable()
 class ReplyCommand {
+    constructor(
+        private readonly _loggerService: LoggerService,
+        private readonly _graphicService: GraphicService
+    ) {}
+
     @Slash({ description: "新增對話回應" })
     @SlashGroup("reply")
     async add(
@@ -101,7 +87,7 @@ class ReplyCommand {
         });
 
         await interaction.followUp("Yue記下來啦~ 下次會努力的~");
-        Logger.instance.info(
+        this._loggerService.info(
             `${interaction.user.id} use reply add at ${
                 interaction.inGuild() ? interaction.guildId : "dm channel"
             } key；${key} response: ${response.content} ${
@@ -169,7 +155,7 @@ class ReplyCommand {
 
         // don't need paginationEmbed
         if (replies.length <= 23) {
-            const embed = generateEmbed(interaction);
+            const embed = this.generateEmbed(interaction);
             replies.forEach((reply) =>
                 embed.addFields({ name: reply.key, value: reply.response })
             );
@@ -184,14 +170,35 @@ class ReplyCommand {
 
             const pages: EmbedBuilder[] = [];
             pagesData.forEach((pageData) => {
-                const embed = generateEmbed(interaction);
+                const embed = this.generateEmbed(interaction);
                 pageData.forEach((reply: Reply) => {
                     embed.addFields({ name: reply.key, value: reply.response });
                 });
                 pages.push(embed);
             });
             await interaction.deferReply();
-            await paginationEmbed(interaction, pages);
+            await this._graphicService.paginationEmbed(interaction, pages);
         }
+    }
+
+    generateEmbed(interaction: CommandInteraction) {
+        const embed = this._graphicService.info(
+            interaction.client,
+            "「以前你跟我說過的這些~ Yue通通都記住了喔~ :heart:」"
+        );
+
+        embed.addFields(
+            {
+                name: "格式範例",
+                value: "「待會Yue就用這種方式照著念喔~」",
+                inline: false,
+            },
+            {
+                name: "關鍵字",
+                value: "回應內容",
+                inline: false,
+            }
+        );
+        return embed;
     }
 }

@@ -1,10 +1,14 @@
 import axios from "axios";
-import { nhentaiBookPreviewEmbed } from "../graphics/embeds";
 import { GalleryResponse, Host } from "@ppodds/nhentai-api";
 import { ArgsOf, Discord, On } from "discordx";
+import { injectable } from "tsyringe";
+import { GraphicService } from "../graphics/graphic-service";
 
 @Discord()
-class EhentaiEvent {
+@injectable()
+export class NhentaiEvent {
+    constructor(private readonly _graphicService: GraphicService) {}
+
     @On({ event: "messageCreate" })
     async execute([message]: ArgsOf<"messageCreate">) {
         if (message.author.bot) return;
@@ -20,7 +24,10 @@ class EhentaiEvent {
 
             const data = resp.data as GalleryResponse;
 
-            const embed = nhentaiBookPreviewEmbed(message.client, data);
+            const embed = this._graphicService.nhentaiBookPreviewEmbed(
+                message.client,
+                data
+            );
 
             await message.channel.send({ embeds: [embed] });
         }

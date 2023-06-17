@@ -1,41 +1,29 @@
-import PlayerManager from "../../music/PlayerManager";
+import { MusicService } from "../../music/music-service";
 import ytpl from "ytpl";
 import ytsr, { Video } from "ytsr";
-import { info, selectMenuEmbed } from "../../graphics/embeds";
 import { Reaction } from "../../graphics/Reaction";
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
     GuildMember,
 } from "discord.js";
-import { Logger } from "../../utils/Logger";
-import { MusicPlayer } from "../../music/MusicPlayer";
+import { MusicPlayer } from "../../music/music-player";
 import { Discord, Guard, Slash, SlashOption } from "discordx";
-import { Track } from "../../music/Track";
+import { Track } from "../../music/track";
 import { GuildOnly } from "../../guards/GuildOnly";
-
-async function createResourceFromUrl(
-    interaction: CommandInteraction,
-    musicPlayer: MusicPlayer,
-    requester,
-    url: string
-): Promise<void> {
-    Logger.instance.debug(`Creating resource from ${url}`);
-    const resource = await musicPlayer.createResource(
-        url,
-        requester as GuildMember
-    );
-    if (resource) {
-        Logger.instance.debug("Resource created");
-        await interaction.editReply(
-            `\`\`\`[已增加 ${resource.metadata.videoInfo.title} 到撥放序列中]\`\`\``
-        );
-        musicPlayer.add(resource);
-    }
-}
+import { injectable } from "tsyringe";
+import { LoggerService } from "../../utils/logger-service";
+import { GraphicService } from "../../graphics/graphic-service";
 
 @Discord()
+@injectable()
 class PlayCommand {
+    constructor(
+        private readonly _loggerService: LoggerService,
+        private readonly _musicService: MusicService,
+        private readonly _graphicService: GraphicService
+    ) {}
+
     @Slash({ name: "play", description: "讓Yue唱Youtube有的歌曲" })
     @Guard(GuildOnly)
     async execute(
@@ -59,14 +47,19 @@ class PlayCommand {
         }
         await interaction.deferReply();
 
-        const musicPlayer = PlayerManager.get(interaction);
+        const musicPlayer = this._musicService.get(interaction);
 
         const regex =
             /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
 
         // create resource
         if (target.match(regex) ? true : false)
-            await createResourceFromUrl(interaction, musicPlayer, user, target);
+            await this.createResourceFromUrl(
+                interaction,
+                musicPlayer,
+                user,
+                target
+            );
         else {
             try {
                 // playlist
@@ -80,7 +73,7 @@ class PlayCommand {
                         )
                     );
                 const resources = await Promise.all(tasks);
-                Logger.instance.debug("Resources created");
+                this._loggerService.debug("Resources created");
                 await interaction.editReply(
                     `\`\`\`[已增加 ${playlist.title} 的所有歌曲到撥放序列中]\`\`\``
                 );
@@ -110,13 +103,16 @@ ${result.length}. ${Reaction.item} [${item.title}](${item.url}) (${item.duration
                     }
                 }
 
-                const embed = info(interaction.client, description);
-                await selectMenuEmbed(
+                const embed = this._graphicService.info(
+                    interaction.client,
+                    description
+                );
+                await this._graphicService.selectMenuEmbed(
                     interaction,
                     embed,
                     result.length,
                     async (option: number) =>
-                        await createResourceFromUrl(
+                        await this.createResourceFromUrl(
                             interaction,
                             musicPlayer,
                             user,
@@ -124,6 +120,26 @@ ${result.length}. ${Reaction.item} [${item.title}](${item.url}) (${item.duration
                         )
                 );
             }
+        }
+    }
+
+    async createResourceFromUrl(
+        interaction: CommandInteraction,
+        musicPlayer: MusicPlayer,
+        requester,
+        url: string
+    ): Promise<void> {
+        this._loggerService.debug(`Creating resource from ${url}`);
+        const resource = await musicPlayer.createResource(
+            url,
+            requester as GuildMember
+        );
+        if (resource) {
+            this._loggerService.debug("Resource created");
+            await interaction.editReply(
+                `\`\`\`[已增加 ${resource.metadata.videoInfo.title} 到撥放序列中]\`\`\``
+            );
+            musicPlayer.add(resource);
         }
     }
 }

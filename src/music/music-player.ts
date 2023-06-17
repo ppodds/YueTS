@@ -20,11 +20,11 @@ import {
     NoSubscriberBehavior,
     DiscordGatewayAdapterCreator,
 } from "@discordjs/voice";
-import { Logger } from "../utils/Logger";
 import { stream, video_info } from "play-dl";
 import { promisify } from "node:util";
-import { Track } from "./Track";
-import { Metadata } from "./Metadata";
+import { Track } from "./track";
+import { Metadata } from "./metadata";
+import { LoggerService } from "../utils/logger-service";
 
 export class MusicPlayer {
     private guild: Guild;
@@ -41,7 +41,10 @@ export class MusicPlayer {
     private player: AudioPlayer;
     public destroyed: boolean;
 
-    constructor(interaction: CommandInteraction) {
+    constructor(
+        private readonly _loggerService: LoggerService,
+        interaction: CommandInteraction
+    ) {
         if (!interaction.guild)
             throw new Error("Guild not found in interaction");
         this.guild = interaction.guild;
@@ -152,7 +155,7 @@ export class MusicPlayer {
 
         // Configure audio player
         this.player.on("stateChange", async (oldState, newState) => {
-            Logger.instance.debug(
+            this._loggerService.debug(
                 `State Changed: from ${oldState.status} to ${newState.status}`
             );
             if (
@@ -162,7 +165,7 @@ export class MusicPlayer {
                 if (!this.current || !this.np) return;
                 // If the Idle state is entered from a non-Idle state, it means that an audio resource has finished playing.
                 // The queue is then processed to start playing the next track, if one is available.
-                Logger.instance.debug(
+                this._loggerService.debug(
                     `${this.current.metadata.videoInfo.title} finished playing`
                 );
                 if (this.np.deletable) await this.np.delete();
@@ -180,7 +183,7 @@ export class MusicPlayer {
         });
 
         this.player.on("error", async (error: AudioPlayerError) => {
-            Logger.instance.error(
+            this._loggerService.error(
                 `${error.name}: ${error.message} with resource ${
                     (error.resource as AudioResource<Metadata>).metadata
                         .videoInfo.title
@@ -210,7 +213,10 @@ export class MusicPlayer {
             return { url: url, metadata: metadata };
         } catch (err) {
             console.log(err);
-            Logger.instance.error("Error occur when getting video info", err);
+            this._loggerService.error(
+                "Error occur when getting video info",
+                err
+            );
             await this.channel.send(
                 "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確"
             );
@@ -245,9 +251,9 @@ export class MusicPlayer {
      * Attempts to play a Track from the queue
      */
     private async processQueue() {
-        Logger.instance.debug(`Processing queue of ${this.guild.name}`);
+        this._loggerService.debug(`Processing queue of ${this.guild.name}`);
         if (this.destroyed) {
-            Logger.instance.warn(
+            this._loggerService.warn(
                 `Music player of ${this.guild.name} has already been destroyed`
             );
             return;
@@ -263,13 +269,13 @@ export class MusicPlayer {
                 );
                 this.destroy();
             }
-            Logger.instance.debug(
+            this._loggerService.debug(
                 `Queue of ${this.guild.name} locked or player is busy, skipping`
             );
             return;
         }
 
-        Logger.instance.debug("Preparing next song");
+        this._loggerService.debug("Preparing next song");
 
         this.queueLock = true;
 
@@ -292,11 +298,14 @@ export class MusicPlayer {
             );
             this.player.play(resource);
             this.queueLock = false;
-            Logger.instance.debug(
+            this._loggerService.debug(
                 `${this.current.metadata.videoInfo.title} started playing`
             );
         } catch (err) {
-            Logger.instance.error("Error occurs when preparing next song", err);
+            this._loggerService.error(
+                "Error occurs when preparing next song",
+                err
+            );
             this.queueLock = false;
             return this.processQueue();
         }
@@ -306,15 +315,15 @@ export class MusicPlayer {
      * Disconnect and cleanup the player.
      */
     public destroy() {
-        Logger.instance.info("Destroying player");
+        this._loggerService.info("Destroying player");
         if (this.connection.state.status !== VoiceConnectionStatus.Destroyed) {
             this.connection.destroy();
-            Logger.instance.info("Voice connection destroyed");
+            this._loggerService.info("Voice connection destroyed");
         }
         this.player.stop(true);
         this.queue = [];
         this.destroyed = true;
-        Logger.instance.info("Player destroyed");
+        this._loggerService.info("Player destroyed");
     }
     /**
      * Change connected voice channel

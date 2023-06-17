@@ -1,6 +1,5 @@
-import { info } from "../../graphics/embeds";
 import { Donor } from "../../database/models/donor";
-import { Logger } from "../../utils/Logger";
+import { LoggerService } from "../../utils/logger-service";
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
@@ -9,11 +8,19 @@ import {
 import { ImageType } from "../../image/ImageType";
 import { Discord, Guard, Slash, SlashGroup, SlashOption } from "discordx";
 import { GuildOnly } from "../../guards/GuildOnly";
+import { injectable } from "tsyringe";
+import { GraphicService } from "../../graphics/graphic-service";
 
 @Discord()
 @SlashGroup({ name: "donate", description: "貢獻相關指令" })
 @SlashGroup("donate")
+@injectable()
 export class DonateCommand {
+    constructor(
+        private readonly _loggerService: LoggerService,
+        private readonly _graphicService: GraphicService
+    ) {}
+
     @Slash({ description: "開始貢獻資料" })
     @Guard(GuildOnly)
     async start(
@@ -61,7 +68,7 @@ export class DonateCommand {
             });
         }
         if (interaction.guild && interaction.channel)
-            Logger.instance.info(
+            this._loggerService.info(
                 `${interaction.user.username} start donate ${typeText} at ${
                     interaction.inGuild()
                         ? interaction.guild.name +
@@ -99,7 +106,7 @@ export class DonateCommand {
 
     @Slash({ description: "檢視可以貢獻給Yue的類別清單" })
     async list(interaction: CommandInteraction) {
-        const embed = info(
+        const embed = this._graphicService.info(
             interaction.client,
             "「想為Yue做些什麼? 可以呦....」\n貢獻說明:貢獻完會獲得Yue的喜愛，Yue會願意為你做更多事"
         );

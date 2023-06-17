@@ -1,14 +1,18 @@
 import { CommandInteraction } from "discord.js";
-import { info } from "../../graphics/embeds";
 import { Image } from "../../database/models/image";
 import { ImageType } from "../../image/ImageType";
 import { Discord, Slash } from "discordx";
+import { injectable } from "tsyringe";
+import { GraphicService } from "../../graphics/graphic-service";
 
 @Discord()
+@injectable()
 class InfoCommand {
+    constructor(private readonly _graphicService: GraphicService) {}
+
     @Slash({ name: "info", description: "查看系統狀況" })
     async execute(interaction: CommandInteraction) {
-        const embed = info(
+        const embed = this._graphicService.info(
             interaction.client,
             "「嗯.....差不多現在就是這樣子吧.....」"
         );

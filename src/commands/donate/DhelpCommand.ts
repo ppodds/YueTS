@@ -1,12 +1,16 @@
-import { info } from "../../graphics/embeds";
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
+import { injectable } from "tsyringe";
+import { GraphicService } from "../../graphics/graphic-service";
 
 @Discord()
+@injectable()
 class DhelpCommand {
+    constructor(private readonly _graphicService: GraphicService) {}
+
     @Slash({ name: "dhelp", description: "觀看Yue的貢獻指令說明" })
     async execute(interaction: CommandInteraction) {
-        const embed = info(
+        const embed = this._graphicService.info(
             interaction.client,
             "「想為Yue做些什麼? 可以呦....」\n貢獻說明:貢獻完會獲得Yue的喜愛，Yue會願意為你做更多事(不同貢獻類別獲取量不同)\n詳細請看dlist"
         );

@@ -1,12 +1,16 @@
 import { CommandInteraction } from "discord.js";
-import { info } from "../../graphics/embeds";
 import { Discord, Slash } from "discordx";
+import { injectable } from "tsyringe";
+import { GraphicService } from "../../graphics/graphic-service";
 
 @Discord()
+@injectable()
 class MhelpCommand {
+    constructor(private readonly _graphicService: GraphicService) {}
+
     @Slash({ name: "mhelp", description: "觀看Yue的音樂指令說明" })
     async execute(interaction: CommandInteraction) {
-        const embed = info(
+        const embed = this._graphicService.info(
             interaction.client,
             "「想聽Yue唱歌嗎? 下次說不定有機會呢~~」"
         );

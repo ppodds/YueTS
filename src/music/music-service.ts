@@ -1,8 +1,13 @@
 import { Collection, CommandInteraction, Guild } from "discord.js";
-import { Logger } from "../utils/Logger";
-import { MusicPlayer } from "./MusicPlayer";
+import { MusicPlayer } from "./music-player";
+import { singleton, injectable } from "tsyringe";
+import { LoggerService } from "../utils/logger-service";
 
-class PlayerManager {
+@singleton()
+@injectable()
+export class MusicService {
+    constructor(private readonly _loggerService: LoggerService) {}
+
     /**
      * Guild music players
      * key: guildId  value: MusicPlayer
@@ -20,10 +25,10 @@ class PlayerManager {
         if (musicPlayer && !musicPlayer.destroyed) {
             return musicPlayer;
         } else {
-            Logger.instance.debug(
+            this._loggerService.debug(
                 `Creating new music player for ${interaction.guild.name}`
             );
-            const t = new MusicPlayer(interaction);
+            const t = new MusicPlayer(this._loggerService, interaction);
             this.players.set(interaction.guildId, t);
             return t;
         }
@@ -51,7 +56,3 @@ class PlayerManager {
         this.players.delete(guild.id);
     }
 }
-
-const playerManager = new PlayerManager();
-
-export default playerManager;

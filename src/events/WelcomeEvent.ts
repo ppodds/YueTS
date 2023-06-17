@@ -78,7 +78,7 @@ function fillText(canvas: pkg.Canvas, member: GuildMember): pkg.Canvas {
 }
 
 @Discord()
-class WelcomeEvent {
+export class WelcomeEvent {
     @On({ event: "guildMemberAdd" })
     async execute([member]: ArgsOf<"guildMemberAdd">) {
         const bg = await loadImage("assets/images/welcome.jpg");

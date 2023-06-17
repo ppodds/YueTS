@@ -1,15 +1,19 @@
 import { CommandInteraction } from "discord.js";
-import { info } from "../../graphics/embeds";
 import { Discord, Slash } from "discordx";
+import { injectable } from "tsyringe";
+import { GraphicService } from "../../graphics/graphic-service";
 
 @Discord()
+@injectable()
 class HelpCommand {
+    constructor(private readonly _graphicService: GraphicService) {}
+
     @Slash({
         name: "help",
         description: "觀看Yue的基本指令說明",
     })
     async execute(interaction: CommandInteraction) {
-        const embed = info(
+        const embed = this._graphicService.info(
             interaction.client,
             "「這麼想跟Yue說話嗎? 也...也不是不可以啦~」"
         );

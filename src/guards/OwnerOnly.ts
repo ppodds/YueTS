@@ -1,13 +1,13 @@
 import { CommandInteraction } from "discord.js";
 import { GuardFunction } from "discordx";
-import { Bot } from "../bot";
 
 export const OwnerOnly: GuardFunction<CommandInteraction> = async (
     interaction,
     client,
-    next
+    next,
+    authorId: string
 ) => {
-    if (interaction.user.id !== Bot.instance.config.bot.author.id) {
+    if (interaction.user.id !== authorId) {
         const content = "無此權限";
         if (interaction.deferred) {
             await interaction.editReply(content);

@@ -1,21 +1,32 @@
-import { ActivityType, IntentsBitField, Partials } from "discord.js";
-import { Client } from "discordx";
-import { importx } from "@discordx/importer";
-import { Config } from "./config/config";
-import { DatabaseManager } from "./database/DatabaseManager";
-import { ImageManager } from "./image/ImageManager";
-import { Logger } from "./utils/Logger";
-import { config } from "dotenv";
-import { EnvParser } from "./config/env-parser";
+import "reflect-metadata";
+import { Client, DIService, tsyringeDependencyRegistryEngine } from "discordx";
 
+import { ActivityType, IntentsBitField, Partials } from "discord.js";
+import { importx } from "@discordx/importer";
+import { DatabaseService } from "./database/database-service";
+import { ImageService } from "./image/image-service";
+import { LoggerService } from "./utils/logger-service";
+import { Service } from "./service";
+import { ConfigService } from "./config/config-service";
+import { injectable, container } from "tsyringe";
+
+@injectable()
 export class Bot {
     private readonly _client: Client;
-    private readonly _config: Config;
-    private static _instance: Bot;
+    private readonly _services: Service[];
 
-    private constructor() {
-        config();
-        this._config = new EnvParser().parse<Config>();
+    constructor(
+        private readonly _configService: ConfigService,
+        private readonly _loggerService: LoggerService,
+        private readonly _databaseService: DatabaseService,
+        private readonly _imageService: ImageService
+    ) {
+        this._services = [
+            this._configService,
+            this._loggerService,
+            this._databaseService,
+            this._imageService,
+        ];
         // Create the Discord client with the appropriate options
         this._client = new Client({
             // IMPORTANT: you should set it or your bot can't get the information of Discord
@@ -41,35 +52,29 @@ export class Bot {
             botGuilds:
                 process.env.NODE_ENV === "production"
                     ? undefined
-                    : [this._config.bot.dev.guildId],
+                    : [this._configService.config.bot.dev.guildId],
             silent: process.env.NODE_ENV === "production",
         });
     }
 
-    public static get instance(): Bot {
-        if (!this._instance) {
-            this._instance = new Bot();
-        }
-        return this._instance;
-    }
-
     async bootstrap() {
         const launchTimestamp = Date.now();
-        await DatabaseManager.init();
+        for (const service of this._services) {
+            await service.init();
+        }
         await importx(__dirname + "/{events,commands}/**/*.{ts,js}");
         try {
-            await this._client.login(this._config.bot.token);
+            await this._client.login(this._configService.config.bot.token);
             console.log(`Logged in as ${this._client.user?.tag}!`);
-            Logger.instance.info("Logged into Discord successfully");
+            this._loggerService.info("Logged into Discord successfully");
         } catch (err) {
-            Logger.instance.error("Error logging into Discord", err);
+            this._loggerService.error("Error logging into Discord", err);
             process.exit();
         }
         this._client.user?.setActivity(
             "「現在剛起床還沒搞清楚狀況... 等一下再叫我吧...」",
             { type: ActivityType.Listening }
         );
-        await ImageManager.instance.init();
         await this._client.clearApplicationCommands();
         await this._client.initApplicationCommands();
         // Updates the bot status every minute
@@ -77,13 +82,13 @@ export class Bot {
 
         // Some other somewhat important events that the bot should listen to
         this._client.on("error", (err) =>
-            Logger.instance.error("The client threw an error", err)
+            this._loggerService.error("The client threw an error", err)
         );
         this._client.on("shardError", (err) =>
-            Logger.instance.error("A shard threw an error", err)
+            this._loggerService.error("A shard threw an error", err)
         );
         this._client.on("warn", (warn) =>
-            Logger.instance.warn("The client received a warning", warn)
+            this._loggerService.warn("The client received a warning", warn)
         );
         this._client.on("interactionCreate", async (interaction) => {
             try {
@@ -91,10 +96,13 @@ export class Bot {
             } catch (error) {
                 console.log(error);
                 if (!interaction.isCommand()) {
-                    Logger.instance.error("Interaction threw an error", error);
+                    this._loggerService.error(
+                        "Interaction threw an error",
+                        error
+                    );
                     return;
                 }
-                Logger.instance.error("Command threw an error", error);
+                this._loggerService.error("Command threw an error", error);
                 const content = {
                     content:
                         process.env.NODE_ENV === "production"
@@ -116,18 +124,23 @@ export class Bot {
                 }
             }
         });
-        Logger.instance.info(`Launched in ${Date.now() - launchTimestamp}ms`);
+        this._loggerService.info(
+            `Launched in ${Date.now() - launchTimestamp}ms`
+        );
     }
 
     private updateStatus() {
         const statusType: ActivityType | undefined =
-            ActivityType[this._config.bot.statusType];
+            ActivityType[this._configService.config.bot.statusType];
         if (statusType === undefined || statusType === ActivityType.Custom) {
             throw new Error("Invalid status type");
         }
         this._client.user?.setActivity(
-            this._config.bot.statusList[
-                Math.floor(Math.random() * this._config.bot.statusList.length)
+            this._configService.config.bot.statusList[
+                Math.floor(
+                    Math.random() *
+                        this._configService.config.bot.statusList.length
+                )
             ],
             {
                 type: statusType,
@@ -138,11 +151,8 @@ export class Bot {
     public get client(): Client {
         return this._client;
     }
-
-    public get config(): Config {
-        return this._config;
-    }
 }
 
-const bot = Bot.instance;
+DIService.engine = tsyringeDependencyRegistryEngine.setInjector(container);
+const bot = container.resolve(Bot);
 bot.bootstrap();

@@ -1,21 +1,21 @@
 import log4js from "log4js";
-import { Bot } from "../bot";
+import { Service } from "../service";
+import { singleton, injectable } from "tsyringe";
+import { ConfigService } from "../config/config-service";
 const { configure, getLogger } = log4js;
 
-export class Logger {
-    private static _instance: Logger;
+@singleton()
+@injectable()
+export class LoggerService implements Service {
     private _logger: log4js.Logger;
 
-    private constructor() {
-        configure(Bot.instance.config.log);
+    constructor(configService: ConfigService) {
+        configure(configService.config.log);
         this._logger = getLogger();
     }
 
-    public static get instance(): Logger {
-        if (!Logger._instance) {
-            Logger._instance = new Logger();
-        }
-        return Logger._instance;
+    public init(): Promise<void> {
+        return Promise.resolve();
     }
 
     public info(text: string) {

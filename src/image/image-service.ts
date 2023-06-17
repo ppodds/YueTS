@@ -1,7 +1,6 @@
 import { Collection, Attachment } from "discord.js";
 import { Image } from "../database/models/image";
 import AsyncLock from "async-lock";
-import { Logger } from "../utils/Logger";
 import { ImageType, toString } from "./ImageType";
 import { StaticPool } from "node-worker-threads-pool";
 import { PhashData } from "./PhashData";
@@ -10,9 +9,13 @@ import { Donor } from "../database/models/donor";
 import { User } from "../database/models/user";
 import { User as DiscordUser } from "discord.js";
 import axios from "axios";
+import { Service } from "../service";
+import { singleton, injectable } from "tsyringe";
+import { LoggerService } from "../utils/logger-service";
 
-export class ImageManager {
-    private static _instance: ImageManager;
+@singleton()
+@injectable()
+export class ImageService implements Service {
     public readonly imagePhashs = new Collection<ImageType, PhashData[]>();
     private readonly _lock = new AsyncLock();
     private readonly _staticPool = new StaticPool({
@@ -20,17 +23,10 @@ export class ImageManager {
         task: "./src/image/phash.js",
     });
 
-    private constructor() {
+    public constructor(private readonly _loggerService: LoggerService) {
         this.imagePhashs.set(ImageType.PIC, []);
         this.imagePhashs.set(ImageType.HPIC, []);
         this.imagePhashs.set(ImageType.WTFPIC, []);
-    }
-
-    public static get instance() {
-        if (!ImageManager._instance) {
-            ImageManager._instance = new ImageManager();
-        }
-        return ImageManager._instance;
     }
 
     /**
@@ -55,7 +51,7 @@ export class ImageManager {
             id: imageID,
             data: phash,
         });
-        Logger.instance.debug("Added phash data to memory cache");
+        this._loggerService.debug("Added phash data to memory cache");
     }
 
     /**
@@ -63,7 +59,7 @@ export class ImageManager {
      * @param type image type
      */
     private async load(type: ImageType) {
-        Logger.instance.info(
+        this._loggerService.info(
             `Loading image phashs which type is ${toString(type)}...`
         );
         const LIMIT = 100;
@@ -80,20 +76,20 @@ export class ImageManager {
             for (const image of images)
                 this.addPhash(type, image.id, image.phash);
         } while (images.length !== 0);
-        Logger.instance.info(`type ${toString(type)} load complete!`);
+        this._loggerService.info(`type ${toString(type)} load complete!`);
     }
 
     /**
      * load function's wrapper. Check all type of image.
      */
     private async loadAll() {
-        Logger.instance.info("Loading image data...");
+        this._loggerService.info("Loading image data...");
         await this._lock.acquire("image", async () => {
             await this.load(ImageType.PIC);
             await this.load(ImageType.HPIC);
             await this.load(ImageType.WTFPIC);
         });
-        Logger.instance.info("Image data load complete!");
+        this._loggerService.info("Image data load complete!");
     }
 
     /**
@@ -102,7 +98,7 @@ export class ImageManager {
      * @returns phash string
      */
     public async makePhash(buffer: Buffer): Promise<string> {
-        Logger.instance.debug("Making phash of the image");
+        this._loggerService.debug("Making phash of the image");
         return await this._staticPool.exec(buffer);
     }
 
@@ -132,21 +128,21 @@ export class ImageManager {
         return this.distance(phash1, phash2) < LEVEL;
     }
 
-    public static isSupportType(filetype: FileTypeResult): boolean {
-        Logger.instance.debug("checking if image is valid");
+    public isSupportType(filetype: FileTypeResult): boolean {
+        this._loggerService.debug("checking if image is valid");
         if (filetype.mime.startsWith("image/")) return true;
-        Logger.instance.debug(`Image is not valid (${filetype.mime})`);
+        this._loggerService.debug(`Image is not valid (${filetype.mime})`);
         return false;
     }
 
     public async isInDatabase(type: ImageType, phash: string) {
-        Logger.instance.debug("Checking if image is already in database");
+        this._loggerService.debug("Checking if image is already in database");
         const inDatabase = await new Promise<boolean>(
             ((resolve) => {
                 for (const imagePhash of this.imagePhashs.get(
                     type
                 ) as PhashData[]) {
-                    if (ImageManager.isSimilar(imagePhash.data, phash))
+                    if (ImageService.isSimilar(imagePhash.data, phash))
                         resolve(true);
                 }
                 resolve(false);
@@ -154,7 +150,7 @@ export class ImageManager {
         );
 
         if (inDatabase) {
-            Logger.instance.debug("Image is already in database");
+            this._loggerService.debug("Image is already in database");
             return true;
         }
         return false;
@@ -168,14 +164,14 @@ export class ImageManager {
      * @param imageData Binary image data.
      * @returns saved image object
      */
-    public static async save(
+    public async save(
         type: ImageType,
         uploader: DiscordUser,
         extention: string,
         imageData: Buffer,
         imagePhash: string
     ): Promise<Image> {
-        Logger.instance.debug("Saving image to database");
+        this._loggerService.debug("Saving image to database");
         const image = await Image.add(
             type,
             uploader.id,
@@ -183,20 +179,17 @@ export class ImageManager {
             imageData,
             imagePhash
         );
-        Logger.instance.info(
+        this._loggerService.info(
             `Save ${image.id}.${image.ext} to ${toString(
                 type
             )} database. author: ${uploader.username}`
         );
-        ImageManager.instance.addPhash(type, image.id, imagePhash);
+        this.addPhash(type, image.id, imagePhash);
         return image;
     }
 
-    public static async updateContribution(
-        uploaderID: string,
-        type: ImageType
-    ) {
-        Logger.instance.debug("Updating user's contribution");
+    public async updateContribution(uploaderID: string, type: ImageType) {
+        this._loggerService.debug("Updating user's contribution");
         const user = await User.get(uploaderID);
         await user.increment("contribution", {
             by: Donor.contributionRatio(type),

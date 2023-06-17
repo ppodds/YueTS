@@ -1,5 +1,5 @@
-import { ImageManager } from "../../image/ImageManager";
-import { Logger } from "../../utils/Logger";
+import { ImageService } from "../../image/image-service";
+import { LoggerService } from "../../utils/logger-service";
 import { Grab } from "../../database/models/grab";
 import filetype from "file-type";
 import { toDatetimeString } from "../../utils/time";
@@ -14,13 +14,20 @@ import {
 import { ImageType } from "../../image/ImageType";
 import { Discord, Guard, Slash, SlashOption } from "discordx";
 import { OwnerOnly } from "../../guards/OwnerOnly";
+import { injectable } from "tsyringe";
 const { fromBuffer } = filetype;
 
 @Discord()
+@injectable()
 class GrabCommand {
+    constructor(
+        private readonly _loggerService: LoggerService,
+        private readonly _imageService: ImageService
+    ) {}
+
     private isMessageTooOld(message: Message, time: Date): boolean {
         if (message.createdAt < time) {
-            Logger.instance.debug(`Message ${message.id} is too old`);
+            this._loggerService.debug(`Message ${message.id} is too old`);
             return true;
         }
         return false;
@@ -32,7 +39,7 @@ class GrabCommand {
         guildID: string | null,
         channelID: string
     ) {
-        Logger.instance.debug("Grab finished, updating grab time database");
+        this._loggerService.debug("Grab finished, updating grab time database");
         // update grab time
         if (grabData) {
             grabData.time = grabTime;
@@ -80,18 +87,18 @@ class GrabCommand {
         for (const imageData of imagesData) {
             const filetype = await fromBuffer(imageData);
             if (!filetype) {
-                Logger.instance.warn("Filetype not detected, skipping");
+                this._loggerService.warn("Filetype not detected, skipping");
                 continue;
             }
-            if (!ImageManager.isSupportType(filetype)) continue;
+            if (!this._imageService.isSupportType(filetype)) continue;
 
-            const imagePhash = await ImageManager.instance.makePhash(imageData);
+            const imagePhash = await this._imageService.makePhash(imageData);
 
-            if (await ImageManager.instance.isInDatabase(type, imagePhash))
+            if (await this._imageService.isInDatabase(type, imagePhash))
                 continue;
 
             if (
-                await ImageManager.save(
+                await this._imageService.save(
                     type,
                     uploader,
                     filetype.ext,
@@ -159,9 +166,9 @@ class GrabCommand {
         let messageCount = 0;
         let imageCount = 0;
 
-        Logger.instance.debug(`Grabing ${type} from ${channel.name}`);
+        this._loggerService.debug(`Grabing ${type} from ${channel.name}`);
         while (!done) {
-            Logger.instance.debug(
+            this._loggerService.debug(
                 `Fetching ${before ? "" : "latest "}messages ${
                     before ? "sent before message which id is " + before : ""
                 }`
@@ -170,10 +177,10 @@ class GrabCommand {
                 limit: 100,
                 before: before,
             });
-            Logger.instance.debug(`Fetched ${messages.size} messages`);
+            this._loggerService.debug(`Fetched ${messages.size} messages`);
 
             for (const [id, message] of messages) {
-                Logger.instance.debug(`Checking message ${id}`);
+                this._loggerService.debug(`Checking message ${id}`);
                 before = id;
                 if (this.isMessageTooOld(message, time)) {
                     done = true;
@@ -181,23 +188,23 @@ class GrabCommand {
                 }
                 messageCount++;
                 if (message.author.bot) continue;
-                const imgurImage = await ImageManager.getImgurImage(
+                const imgurImage = await ImageService.getImgurImage(
                     message.content
                 );
                 if (message.attachments.size === 0 && !imgurImage) continue;
                 const imagesData: Buffer[] = [];
                 if (message.attachments.size !== 0) {
-                    Logger.instance.debug(
+                    this._loggerService.debug(
                         `Saving attachments of message ${id}`
                     );
                     for (const attachmentPair of message.attachments) {
                         const attachment = attachmentPair[1];
                         imagesData.push(
-                            await ImageManager.getAttachmentImage(attachment)
+                            await ImageService.getAttachmentImage(attachment)
                         );
                     }
                 } else if (imgurImage) {
-                    Logger.instance.debug(
+                    this._loggerService.debug(
                         `Message ${id} is a link to imgur, saving image from imgur`
                     );
                     imagesData.push(imgurImage);
@@ -211,7 +218,7 @@ class GrabCommand {
             // no more message!
             if (messages.size !== 100) {
                 done = true;
-                Logger.instance.debug("No more message, stop grabbing");
+                this._loggerService.debug("No more message, stop grabbing");
             }
         }
         await this.sendResult(

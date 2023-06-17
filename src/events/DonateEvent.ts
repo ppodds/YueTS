@@ -2,12 +2,16 @@ import { Donor } from "../database/models/donor";
 import { TextChannel } from "discord.js";
 import filetype from "file-type";
 import { send } from "../graphics/message";
-import { ImageManager } from "../image/ImageManager";
+import { ImageService } from "../image/image-service";
 import { ArgsOf, Discord, On } from "discordx";
+import { injectable } from "tsyringe";
 const { fromBuffer } = filetype;
 
 @Discord()
-class DonateEvent {
+@injectable()
+export class DonateEvent {
+    constructor(private readonly _imageService: ImageService) {}
+
     @On({ event: "messageCreate" })
     async execute([message]: ArgsOf<"messageCreate">) {
         if (message.author.bot) return;
@@ -24,7 +28,7 @@ class DonateEvent {
         if (donor === null) return;
 
         message.channel.sendTyping();
-        const imgurImage = await ImageManager.getImgurImage(message.content);
+        const imgurImage = await ImageService.getImgurImage(message.content);
         if (message.attachments.size === 0 && !imgurImage) return;
 
         const imagesData: Buffer[] = [];
@@ -33,14 +37,14 @@ class DonateEvent {
             for (const attachmentPair of message.attachments) {
                 const attachment = attachmentPair[1];
                 imagesData.push(
-                    await ImageManager.getAttachmentImage(attachment)
+                    await ImageService.getAttachmentImage(attachment)
                 );
             }
         } else if (imgurImage) imagesData.push(imgurImage);
 
         for (const imageData of imagesData) {
             const filetype = await fromBuffer(imageData);
-            if (!filetype || !ImageManager.isSupportType(filetype)) {
+            if (!filetype || !this._imageService.isSupportType(filetype)) {
                 await send(
                     message.channel as TextChannel,
                     "這不是我能使用的呢....",
@@ -49,10 +53,8 @@ class DonateEvent {
                 continue;
             }
 
-            const imagePhash = await ImageManager.instance.makePhash(imageData);
-            if (
-                await ImageManager.instance.isInDatabase(donor.type, imagePhash)
-            ) {
+            const imagePhash = await this._imageService.makePhash(imageData);
+            if (await this._imageService.isInDatabase(donor.type, imagePhash)) {
                 await send(
                     message.channel as TextChannel,
                     "Yue已經有這個了....",
@@ -61,7 +63,7 @@ class DonateEvent {
                 continue;
             }
 
-            await ImageManager.save(
+            await this._imageService.save(
                 donor.type,
                 message.author,
                 filetype.ext,
@@ -69,7 +71,7 @@ class DonateEvent {
                 imagePhash
             );
             await donor.increment("amount", { by: 1 });
-            await ImageManager.updateContribution(
+            await this._imageService.updateContribution(
                 message.author.id,
                 donor.type
             );

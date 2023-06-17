@@ -1,10 +1,14 @@
 import axios from "axios";
-import { ehentaiBookPreviewEmbed } from "../graphics/embeds";
 import { GalleryMetadata, GDataResponse } from "ehentai-api";
 import { ArgsOf, Discord, On } from "discordx";
+import { injectable } from "tsyringe";
+import { GraphicService } from "../graphics/graphic-service";
 
 @Discord()
-class EhentaiEvent {
+@injectable()
+export class EhentaiEvent {
+    constructor(private readonly _graphicService: GraphicService) {}
+
     @On({ event: "messageCreate" })
     async execute([message]: ArgsOf<"messageCreate">) {
         if (message.author.bot) return;
@@ -27,7 +31,7 @@ class EhentaiEvent {
             const galleryMetadata: GalleryMetadata = (
                 resp.data as GDataResponse
             ).gmetadata[0];
-            const embed = ehentaiBookPreviewEmbed(
+            const embed = this._graphicService.ehentaiBookPreviewEmbed(
                 message.client,
                 galleryMetadata
             );

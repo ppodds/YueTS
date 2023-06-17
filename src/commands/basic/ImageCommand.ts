@@ -1,7 +1,6 @@
 import { Image } from "../../database/models/image";
 import { User } from "../../database/models/user";
-import { Logger } from "../../utils/Logger";
-import { info } from "../../graphics/embeds";
+import { LoggerService } from "../../utils/logger-service";
 import {
     ApplicationCommandOptionType,
     AttachmentBuilder,
@@ -13,6 +12,8 @@ import {
 import { toDatetimeString } from "../../utils/time";
 import { ImageType } from "../../image/ImageType";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
+import { injectable } from "tsyringe";
+import { GraphicService } from "../../graphics/graphic-service";
 
 const MinimumDemand = new Map<ImageType, number>([
     [ImageType.PIC, 20],
@@ -20,54 +21,19 @@ const MinimumDemand = new Map<ImageType, number>([
     [ImageType.WTFPIC, 0],
 ]);
 
-async function replyImageEmbed(
-    interaction: CommandInteraction,
-    imageData: Image
-) {
-    if (!imageData) return await interaction.reply("該項圖庫中沒有圖片呢...");
-    const file = new AttachmentBuilder(imageData.image, {
-        name: `${imageData.id}.${imageData.ext}`,
-    });
-
-    let uploader: string | undefined = undefined;
-
-    try {
-        const t = await interaction.client.users.fetch(imageData.uploader);
-        uploader = t.username;
-    } catch (err) {
-        Logger.instance.error(
-            "Got an error while trying to fetch user data",
-            err
-        );
-    }
-    uploader = uploader ? uploader : "窩不知道";
-
-    const embed = info(interaction.client, "「我找到了這個...」");
-
-    embed.addFields(
-        {
-            name: "上傳者",
-            value: uploader,
-            inline: true,
-        },
-        { name: "圖片編號", value: imageData.id.toString(), inline: true },
-        {
-            name: "上傳時間",
-            value: toDatetimeString(imageData.createdAt),
-            inline: false,
-        }
-    );
-    embed.setImage(`attachment://${imageData.id}.${imageData.ext}`);
-    await interaction.reply({ embeds: [embed], files: [file] });
-}
-
 @Discord()
 @SlashGroup({
     name: "image",
     description: "從貢獻的圖庫抽一張圖片",
 })
 @SlashGroup("image")
+@injectable()
 class ImageCommand {
+    constructor(
+        private readonly _loggerService: LoggerService,
+        private readonly _graphicService: GraphicService
+    ) {}
+
     private async validate(
         imageID: number | undefined,
         interaction: CommandInteraction
@@ -193,6 +159,48 @@ class ImageCommand {
         const picked = await this.pickImage(id, interaction);
         if (!picked) return;
 
-        await replyImageEmbed(interaction, picked);
+        await this.replyImageEmbed(interaction, picked);
+    }
+
+    async replyImageEmbed(interaction: CommandInteraction, imageData: Image) {
+        if (!imageData)
+            return await interaction.reply("該項圖庫中沒有圖片呢...");
+        const file = new AttachmentBuilder(imageData.image, {
+            name: `${imageData.id}.${imageData.ext}`,
+        });
+
+        let uploader: string | undefined = undefined;
+
+        try {
+            const t = await interaction.client.users.fetch(imageData.uploader);
+            uploader = t.username;
+        } catch (err) {
+            this._loggerService.error(
+                "Got an error while trying to fetch user data",
+                err
+            );
+        }
+        uploader = uploader ? uploader : "窩不知道";
+
+        const embed = this._graphicService.info(
+            interaction.client,
+            "「我找到了這個...」"
+        );
+
+        embed.addFields(
+            {
+                name: "上傳者",
+                value: uploader,
+                inline: true,
+            },
+            { name: "圖片編號", value: imageData.id.toString(), inline: true },
+            {
+                name: "上傳時間",
+                value: toDatetimeString(imageData.createdAt),
+                inline: false,
+            }
+        );
+        embed.setImage(`attachment://${imageData.id}.${imageData.ext}`);
+        await interaction.reply({ embeds: [embed], files: [file] });
     }
 }

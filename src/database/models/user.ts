@@ -1,5 +1,4 @@
 import sequelize from "sequelize";
-import { DatabaseManager } from "../DatabaseManager";
 
 export class User extends sequelize.Model {
     declare id: string;
@@ -13,7 +12,7 @@ export class User extends sequelize.Model {
         return user;
     }
 }
-export function init() {
+export function init(instance: sequelize.Sequelize) {
     User.init(
         {
             id: {
@@ -28,7 +27,7 @@ export function init() {
             },
         },
         {
-            sequelize: DatabaseManager.instance.sequelize,
+            sequelize: instance,
         }
     );
 }
