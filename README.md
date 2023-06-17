@@ -14,48 +14,31 @@ This is a TypeScript rewrite version of my Discord bot Yue. Yue was used in NCU 
 git clone https://github.com/ppodds/YueTS.git
 ```
 
-### Set Configuration and Envirment variables
+### Set Envirment variables
 
-config files at `config`
+```shell
+# copy the example env file
+cp .env.example .env
+# edit it
+vim .env
+```
 
-`bot.json`
+The environments will be parsed to a config object, and it also allow you to assign a list of string like this
 
-```json
+```
+BOT__STATUS_LIST__0=a
+BOT__STATUS_LIST__1=list
+BOT__STATUS_LIST__2=of
+BOT__STATUS_LIST__3=status
+```
+
+The parsed config object would be
+
+```js
 {
-    "name": "Bot name",
-    "statusList": ["a", "list", "of", "status"],
-    "statusType": "Bot status type, either 'PLAYING', 'LISTENING' or 'WATCHING'",
-    "token": "your token. you can get it on Developer portal",
-    "dev": {
-        "clientId": "123456789",
-        "guildId": "123456789"
-    },
-    "author": {
-        "avatar": "author avator url"
+    bot: {
+        statusList: ["a", "list", "of", "status"]
     }
-}
-```
-
-`db.json`
-
-```json
-{
-    "host": "localhost",
-    "port": 3306,
-    "user": "Yue",
-    "password": "test",
-    "database": "Yue"
-}
-```
-
-`log.json`
-
-```json
-{
-    "appenders": {
-        "bot": { "type": "file", "filename": "/var/log/yue/bot.log" }
-    },
-    "categories": { "default": { "appenders": ["bot"], "level": "info" } }
 }
 ```
 
@@ -65,7 +48,6 @@ env files
 
 ```
 TZ=Asia/Taipei
-DEBUG=true
 ```
 
 db.env
