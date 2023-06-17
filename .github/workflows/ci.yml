@@ -5,7 +5,6 @@ name: CI
 
 on:
   push:
-    branches: [master]
   pull_request:
 
 jobs:
@@ -13,8 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Start containers
-        run: docker-compose -f "test-docker-compose.yml" up -d --build
-      - run: docker exec yue pnpm lint
-      - run: docker exec yue pnpm build
-      - run: docker exec yue pnpm test
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Set node version to 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm i
+      - name: Run unit tests
+        run: pnpm test
+      - name: Run linter
+        run: pnpm lint
