@@ -146,7 +146,7 @@ export class MusicPlayer {
             behaviors: {
                 noSubscriber: NoSubscriberBehavior.Play,
             },
-            debug: Boolean(process.env.DEBUG),
+            debug: Boolean(process.env.NODE_ENV !== "production"),
         });
         // register event listener
 

@@ -47,6 +47,9 @@ dependencies:
   discordx:
     specifier: ^11.7.6
     version: 11.7.6(discord.js@14.11.0)
+  dotenv:
+    specifier: ^16.3.0
+    version: 16.3.0
   ehentai-api:
     specifier: ^0.0.4
     version: 0.0.4
@@ -2174,6 +2177,11 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dotenv@16.3.0:
+    resolution: {integrity: sha512-tHB+hmf8MRCkT3VVivGiG8kq9HiGTmQ3FzOKgztfpJQH1IWuZTOvKSJmHNnQPowecAmkCJhLrxdPhOr06LLqIQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /dottie@2.0.6:
     resolution: {integrity: sha512-iGCHkfUc5kFekGiqhe8B/mdaurD+lakO9txNnTvKtA6PISrw86LgqHvRzWYPyoE2Ph5aMIrCw9/uko6XHTKCwA==}

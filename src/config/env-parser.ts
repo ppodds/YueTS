@@ -1,5 +1,7 @@
 export type EnvValue = string | string[];
-export type EnvConfig = Record<string, Record<string, any> | EnvValue>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type EnvEntry = Record<string, any>;
+export type EnvConfig = Record<string, EnvEntry | EnvValue>;
 
 export class EnvParser {
     /**
@@ -33,9 +35,10 @@ export class EnvParser {
      * @param value The value of the environment variable entry.
      * @returns A configuration object with a environment variable parsed.
      */
-    private parseEntryRecursively<
-        T extends Record<string, Record<string, any> | string>
-    >(key: string, value: string): T {
+    private parseEntryRecursively<T extends Record<string, EnvEntry | string>>(
+        key: string,
+        value: string
+    ): T {
         if (!key.includes("__")) {
             return {
                 [this.convertToCamelCase(key)]: value,
@@ -80,9 +83,9 @@ export class EnvParser {
      * @returns The merged object.
      */
     private mergeRecursively(
-        origin: Record<string, Record<string, any> | string>,
-        target: Record<string, Record<string, any> | string>
-    ): Record<string, Record<string, any> | string> {
+        origin: Record<string, EnvEntry | string>,
+        target: Record<string, EnvEntry | string>
+    ): Record<string, EnvEntry | string> {
         for (const key in target) {
             if (origin[key] === undefined) {
                 origin[key] = target[key];
@@ -92,8 +95,8 @@ export class EnvParser {
                     typeof target[key] === "object"
                 ) {
                     origin[key] = this.mergeRecursively(
-                        origin[key] as Record<string, any>,
-                        target[key] as Record<string, any>
+                        origin[key] as EnvEntry,
+                        target[key] as EnvEntry
                     );
                 } else {
                     throw new Error("Cannot merge two non-object values");
@@ -104,7 +107,7 @@ export class EnvParser {
     }
 
     private transformListRecursively<T extends EnvConfig>(
-        config: Record<string, Record<string, any> | string>
+        config: Record<string, EnvEntry | string>
     ): T {
         for (const key in config) {
             // is a value
@@ -125,6 +128,7 @@ export class EnvParser {
                 config[key] = list;
             } else {
                 this.transformListRecursively(
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     config[key] as Record<string, any>
                 );
             }

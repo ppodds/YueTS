@@ -1,5 +1,5 @@
 import log4js from "log4js";
-import { ConfigManager } from "../config/ConfigManager";
+import { Bot } from "../bot";
 const { configure, getLogger } = log4js;
 
 export class Logger {
@@ -7,7 +7,7 @@ export class Logger {
     private _logger: log4js.Logger;
 
     private constructor() {
-        configure(ConfigManager.instance.logConfig);
+        configure(Bot.instance.config.log);
         this._logger = getLogger();
     }
 

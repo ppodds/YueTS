@@ -1,8 +1,0 @@
-{
-  "host": "localhost",
-  "port": 59487,
-  "user": "Yue",
-  "password": "test",
-  "database": "Yue",
-  "timezone": "+00:00"
-}
