@@ -78,8 +78,8 @@ dependencies:
     specifier: ~0.32.1
     version: 0.32.1
   sodium-native:
-    specifier: ^3.4.1
-    version: 3.4.1
+    specifier: ^4.0.0
+    version: 4.0.0
   tslib:
     specifier: ^2.5.3
     version: 2.5.3
@@ -4360,8 +4360,8 @@ packages:
       is-fullwidth-code-point: 4.0.0
     dev: true
 
-  /sodium-native@3.4.1:
-    resolution: {integrity: sha512-PaNN/roiFWzVVTL6OqjzYct38NSXewdl2wz8SRB51Br/MLIJPrbM3XexhVWkq7D3UWMysfrhKVf1v1phZq6MeQ==}
+  /sodium-native@4.0.0:
+    resolution: {integrity: sha512-U5nZ0sFHtPYJncNBS5SkmBnpSDeVpWuzo//07meNVO4p0K8ybcLuQxDX4ByCeVdT/9OLGa1ayvr1pB5iMBbh0g==}
     requiresBuild: true
     dependencies:
       node-gyp-build: 4.6.0
