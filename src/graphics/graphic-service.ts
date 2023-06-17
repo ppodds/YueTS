@@ -10,8 +10,8 @@ import {
     ButtonStyle,
     User,
 } from "discord.js";
-import { Color } from "./Color";
-import { Reaction } from "./Reaction";
+import { Color } from "./color";
+import { Reaction } from "./reaction";
 import { LoggerService } from "../utils/logger-service";
 import {
     ActionRowMessageListener,

@@ -10,7 +10,7 @@ import {
     TextChannel,
 } from "discord.js";
 import { toDatetimeString } from "../../utils/time";
-import { ImageType } from "../../image/ImageType";
+import { ImageType } from "../../image/image-type";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { injectable } from "tsyringe";
 import { GraphicService } from "../../graphics/graphic-service";

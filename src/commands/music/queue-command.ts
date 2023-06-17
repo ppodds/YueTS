@@ -2,7 +2,7 @@ import { CommandInteraction, EmbedBuilder } from "discord.js";
 import { MusicService } from "../../music/music-service";
 import { Track } from "../../music/track";
 import { Discord, Guard, Slash } from "discordx";
-import { GuildOnly } from "../../guards/GuildOnly";
+import { GuildOnly } from "../../guards/guild-only";
 import { injectable } from "tsyringe";
 import { GraphicService } from "../../graphics/graphic-service";
 

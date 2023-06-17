@@ -5,9 +5,9 @@ import {
     CommandInteraction,
     TextChannel,
 } from "discord.js";
-import { ImageType } from "../../image/ImageType";
+import { ImageType } from "../../image/image-type";
 import { Discord, Guard, Slash, SlashGroup, SlashOption } from "discordx";
-import { GuildOnly } from "../../guards/GuildOnly";
+import { GuildOnly } from "../../guards/guild-only";
 import { injectable } from "tsyringe";
 import { GraphicService } from "../../graphics/graphic-service";
 

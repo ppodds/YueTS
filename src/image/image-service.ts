@@ -1,9 +1,9 @@
 import { Collection, Attachment } from "discord.js";
 import { Image } from "../database/models/image";
 import AsyncLock from "async-lock";
-import { ImageType, toString } from "./ImageType";
+import { ImageType, toString } from "./image-type";
 import { StaticPool } from "node-worker-threads-pool";
-import { PhashData } from "./PhashData";
+import { PhashData } from "./phash-data";
 import { FileTypeResult } from "file-type";
 import { Donor } from "../database/models/donor";
 import { User } from "../database/models/user";

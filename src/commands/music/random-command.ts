@@ -1,15 +1,15 @@
 import { CommandInteraction } from "discord.js";
 import { MusicService } from "../../music/music-service";
 import { Discord, Guard, Slash } from "discordx";
-import { GuildOnly } from "../../guards/GuildOnly";
+import { GuildOnly } from "../../guards/guild-only";
 import { injectable } from "tsyringe";
 
 @Discord()
 @injectable()
-class SkipCommand {
+class RandomCommand {
     constructor(private readonly _musicService: MusicService) {}
 
-    @Slash({ name: "skip", description: "讓Yue跳過當前正在唱的歌" })
+    @Slash({ name: "random", description: "開關歌曲隨機撥放" })
     @Guard(GuildOnly)
     async execute(interaction: CommandInteraction) {
         const user = interaction.member;
@@ -23,7 +23,9 @@ class SkipCommand {
             return await interaction.reply("嗯? 我沒有在唱歌喔~");
 
         const musicPlayer = this._musicService.get(interaction);
-        musicPlayer.skip();
-        await interaction.reply("欸? 不想聽這首嗎? 那好吧....");
+        musicPlayer.switchRandom();
+        await interaction.reply(
+            `${musicPlayer.isRandom() ? "開啟" : "關閉"}歌曲隨機撥放`
+        );
     }
 }

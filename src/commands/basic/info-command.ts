@@ -1,6 +1,6 @@
 import { CommandInteraction } from "discord.js";
 import { Image } from "../../database/models/image";
-import { ImageType } from "../../image/ImageType";
+import { ImageType } from "../../image/image-type";
 import { Discord, Slash } from "discordx";
 import { injectable } from "tsyringe";
 import { GraphicService } from "../../graphics/graphic-service";

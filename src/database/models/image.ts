@@ -1,5 +1,5 @@
 import sequelize from "sequelize";
-import { ImageType } from "../../image/ImageType";
+import { ImageType } from "../../image/image-type";
 
 export class Image extends sequelize.Model {
     declare id: number;

@@ -2,7 +2,7 @@ import { MusicService } from "../../music/music-service";
 import { AudioPlayerStatus } from "@discordjs/voice";
 import { CommandInteraction } from "discord.js";
 import { Discord, Guard, Slash } from "discordx";
-import { GuildOnly } from "../../guards/GuildOnly";
+import { GuildOnly } from "../../guards/guild-only";
 import { injectable } from "tsyringe";
 
 @Discord()

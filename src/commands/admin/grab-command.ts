@@ -11,9 +11,9 @@ import {
     TextChannel,
     User,
 } from "discord.js";
-import { ImageType } from "../../image/ImageType";
+import { ImageType } from "../../image/image-type";
 import { Discord, Guard, Slash, SlashOption } from "discordx";
-import { OwnerOnly } from "../../guards/OwnerOnly";
+import { OwnerOnly } from "../../guards/owner-only";
 import { injectable } from "tsyringe";
 const { fromBuffer } = filetype;
 

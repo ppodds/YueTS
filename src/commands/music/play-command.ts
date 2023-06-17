@@ -1,7 +1,7 @@
 import { MusicService } from "../../music/music-service";
 import ytpl from "ytpl";
 import ytsr, { Video } from "ytsr";
-import { Reaction } from "../../graphics/Reaction";
+import { Reaction } from "../../graphics/reaction";
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
@@ -10,7 +10,7 @@ import {
 import { MusicPlayer } from "../../music/music-player";
 import { Discord, Guard, Slash, SlashOption } from "discordx";
 import { Track } from "../../music/track";
-import { GuildOnly } from "../../guards/GuildOnly";
+import { GuildOnly } from "../../guards/guild-only";
 import { injectable } from "tsyringe";
 import { LoggerService } from "../../utils/logger-service";
 import { GraphicService } from "../../graphics/graphic-service";
