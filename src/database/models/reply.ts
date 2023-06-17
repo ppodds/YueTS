@@ -1,5 +1,4 @@
 import sequelize from "sequelize";
-import { DatabaseManager } from "../DatabaseManager";
 
 export class Reply extends sequelize.Model {
     declare id: number;
@@ -33,7 +32,7 @@ export class Reply extends sequelize.Model {
     }
 }
 
-export function init() {
+export function init(instance: sequelize.Sequelize) {
     Reply.init(
         {
             dm: {
@@ -57,6 +56,6 @@ export function init() {
                 allowNull: false,
             },
         },
-        { sequelize: DatabaseManager.instance.sequelize }
+        { sequelize: instance }
     );
 }

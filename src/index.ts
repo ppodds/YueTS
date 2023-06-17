@@ -1,5 +1,4 @@
 import { ShardingManager } from "discord.js";
-import { Logger } from "./utils/Logger";
 import { config } from "dotenv";
 
 async function bootstrap() {
@@ -9,7 +8,6 @@ async function bootstrap() {
     });
     manager.on("shardCreate", (shard) => {
         console.log(`Launched shard ${shard.id}`);
-        Logger.instance.info(`Launched shard ${shard.id}`);
     });
     await manager.spawn();
 }

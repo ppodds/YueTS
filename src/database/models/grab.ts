@@ -1,5 +1,4 @@
 import sequelize from "sequelize";
-import { DatabaseManager } from "../DatabaseManager";
 
 export class Grab extends sequelize.Model {
     declare id: number;
@@ -8,7 +7,7 @@ export class Grab extends sequelize.Model {
     declare time: Date;
 }
 
-export function init() {
+export function init(instance: sequelize.Sequelize) {
     Grab.init(
         {
             guild: {
@@ -25,6 +24,6 @@ export function init() {
                 allowNull: false,
             },
         },
-        { sequelize: DatabaseManager.instance.sequelize }
+        { sequelize: instance }
     );
 }

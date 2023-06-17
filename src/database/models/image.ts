@@ -1,6 +1,5 @@
 import sequelize from "sequelize";
-import { ImageType } from "../../image/ImageType";
-import { DatabaseManager } from "../DatabaseManager";
+import { ImageType } from "../../image/image-type";
 
 export class Image extends sequelize.Model {
     declare id: number;
@@ -80,7 +79,7 @@ export class Image extends sequelize.Model {
     }
 }
 
-export function init() {
+export function init(instance: sequelize.Sequelize) {
     Image.init(
         {
             type: {
@@ -104,6 +103,6 @@ export function init() {
                 allowNull: false,
             },
         },
-        { sequelize: DatabaseManager.instance.sequelize }
+        { sequelize: instance }
     );
 }
