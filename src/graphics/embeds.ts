@@ -235,7 +235,7 @@ export function ehentaiBookPreviewEmbed(
         ["other", "其他"],
         ["parody", "原作"],
         ["reclass", "重新分類"],
-        ["temp", "臨時"]
+        ["temp", "臨時"],
     ]);
 
     tagMap.forEach((value, key) => {
@@ -246,7 +246,7 @@ export function ehentaiBookPreviewEmbed(
             translateTags.push(key + ": " + values);
         }
     });
-    
+
     embed.addFields(
         {
             name: "標題",

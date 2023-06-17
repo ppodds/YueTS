@@ -1,10 +1,13 @@
+export type EnvValue = string | string[];
+export type EnvConfig = Record<string, Record<string, any> | EnvValue>;
+
 export class EnvParser {
     /**
      * Parse all the environment variables and return a configuration object.
      * @returns A configuration object with all the environment variables parsed.
      */
-    public parse(): Record<string, any> {
-        return this.parseFromObject(process.env);
+    public parse<T extends EnvConfig>(): T {
+        return this.parseFromObject<T>(process.env);
     }
 
     /**
@@ -12,16 +15,16 @@ export class EnvParser {
      * @param env environment variables in the form of a key-value pair object.
      * @returns A configuration object with all the environment variables parsed.
      */
-    public parseFromObject(
+    public parseFromObject<T extends EnvConfig>(
         env: Record<string, string | undefined>
-    ): Record<string, any> {
+    ): T {
         let config = {};
         for (const key in env) {
             const result = this.parseEntryRecursively(key, env[key] || "");
             config = this.mergeRecursively(config, result);
         }
         // parse as a list
-        return this.transformListRecursively(config);
+        return this.transformListRecursively<T>(config);
     }
 
     /**
@@ -30,21 +33,20 @@ export class EnvParser {
      * @param value The value of the environment variable entry.
      * @returns A configuration object with a environment variable parsed.
      */
-    private parseEntryRecursively(
-        key: string,
-        value: string
-    ): Record<string, any> {
+    private parseEntryRecursively<
+        T extends Record<string, Record<string, any> | string>
+    >(key: string, value: string): T {
         if (!key.includes("__")) {
             return {
                 [this.convertToCamelCase(key)]: value,
-            };
+            } as T;
         }
         const newEntryIndex = key.indexOf("__");
         const newKey = key.substring(newEntryIndex + 2, key.length);
         return {
             [this.convertToCamelCase(key.substring(0, newEntryIndex))]:
                 this.parseEntryRecursively(newKey, value),
-        };
+        } as T;
     }
 
     private convertToCamelCase(key: string): string {
@@ -78,9 +80,9 @@ export class EnvParser {
      * @returns The merged object.
      */
     private mergeRecursively(
-        origin: Record<string, any>,
-        target: Record<string, any>
-    ): Record<string, any> {
+        origin: Record<string, Record<string, any> | string>,
+        target: Record<string, Record<string, any> | string>
+    ): Record<string, Record<string, any> | string> {
         for (const key in target) {
             if (origin[key] === undefined) {
                 origin[key] = target[key];
@@ -90,8 +92,8 @@ export class EnvParser {
                     typeof target[key] === "object"
                 ) {
                     origin[key] = this.mergeRecursively(
-                        origin[key],
-                        target[key]
+                        origin[key] as Record<string, any>,
+                        target[key] as Record<string, any>
                     );
                 } else {
                     throw new Error("Cannot merge two non-object values");
@@ -101,9 +103,9 @@ export class EnvParser {
         return origin;
     }
 
-    private transformListRecursively(
-        config: Record<string, any>
-    ): Record<string, any> | string[] {
+    private transformListRecursively<T extends EnvConfig>(
+        config: Record<string, Record<string, any> | string>
+    ): T {
         for (const key in config) {
             // is a value
             if (typeof config[key] !== "object") {
@@ -123,6 +125,6 @@ export class EnvParser {
                 config[key] = list;
             }
         }
-        return config;
+        return config as T;
     }
 }
