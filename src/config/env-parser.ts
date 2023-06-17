@@ -123,6 +123,10 @@ export class EnvParser {
                     list[i] = config[key][i.toString()];
                 }
                 config[key] = list;
+            } else {
+                this.transformListRecursively(
+                    config[key] as Record<string, any>
+                );
             }
         }
         return config as T;

@@ -105,6 +105,34 @@ describe("EnvParser", () => {
         });
     });
 
+    it("should parse a nested list entry", () => {
+        expect(
+            parser.parseFromObject({
+                TEST1__TEST2__0: "0",
+                TEST1__TEST2__1: "1",
+            })
+        ).toEqual({
+            test1: {
+                test2: ["0", "1"],
+            },
+        });
+    });
+
+    it("should parse a nested list entry (3 layers)", () => {
+        expect(
+            parser.parseFromObject({
+                TEST1__TEST2__TEST3__0: "0",
+                TEST1__TEST2__TEST3__1: "1",
+            })
+        ).toEqual({
+            test1: {
+                test2: {
+                    test3: ["0", "1"],
+                },
+            },
+        });
+    });
+
     it("should not parse as a list entry when the key is not a number", () => {
         expect(
             parser.parseFromObject({
