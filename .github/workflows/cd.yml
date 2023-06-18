@@ -9,7 +9,6 @@ jobs:
   
   build-image-and-push:
     needs: test
-    name: Build image and push to registry
     uses: ppodds/workflows/.github/workflows/build-and-push-image.yml@master
     with:
       image_name: yue
