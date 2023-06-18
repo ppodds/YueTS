@@ -16,6 +16,7 @@ jobs:
     steps:
       - name: Set environment variables
         run: echo "IMAGE_TAG=$(basename ${{ github.ref }})" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
       - name: Build image and push to registry
         uses: ppodds/workflows/.github/workflows/build-and-push-image.yml
         with:
