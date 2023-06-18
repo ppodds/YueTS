@@ -1,0 +1,28 @@
+on:
+  push:
+    tags:
+      - 'v*.*.**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run unit tests
+        uses: ./.github/workflows/unit-test.yml
+  
+  build-image-and-push:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Set environment variables
+        run: echo "IMAGE_TAG=$(basename ${{ github.ref }})" >> $GITHUB_ENV
+      - name: Build image and push to registry
+        uses: ppodds/workflows/.github/workflows/build-and-push-image.yml
+        with:
+          image_name: yue
+          registry: ${{ secrets.REGISTRY_URL }}
+          image_tag: ${{ env.IMAGE_TAG }}
+          project_name: yue
+        secrets:
+          REGISTRY_USERNAME: ${{ secrets.HARBOR_USERNAME }}
+          REGISTRY_TOKEN: ${{ secrets.HARBOR_TOKEN }}

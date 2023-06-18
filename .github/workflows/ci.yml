@@ -5,25 +5,15 @@ name: CI
 
 on:
   push:
+    branches:
+      - '**'
   pull_request:
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - name: Set node version to 18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm i
       - name: Run unit tests
-        run: pnpm test
+        uses: ./.github/workflows/unit-test.yml
       - name: Run linter
-        run: pnpm lint
+        run: pnpm run lint
