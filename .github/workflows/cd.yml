@@ -11,11 +11,11 @@ jobs:
     needs: test
     name: Build image and push to registry
     uses: ppodds/workflows/.github/workflows/build-and-push-image.yml@master
-      with:
-        image_name: yue
-        registry: ${{ secrets.REGISTRY_URL }}
-        image_tag: ${{ github.ref_name }}
-        project_name: yue
-      secrets:
-        REGISTRY_USERNAME: ${{ secrets.HARBOR_USERNAME }}
-        REGISTRY_TOKEN: ${{ secrets.HARBOR_TOKEN }}
+    with:
+      image_name: yue
+      registry: ${{ secrets.REGISTRY_URL }}
+      image_tag: ${{ github.ref_name }}
+      project_name: yue
+    secrets:
+      REGISTRY_USERNAME: ${{ secrets.HARBOR_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.HARBOR_TOKEN }}
