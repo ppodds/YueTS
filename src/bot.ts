@@ -75,21 +75,29 @@ export class Bot {
             "「現在剛起床還沒搞清楚狀況... 等一下再叫我吧...」",
             { type: ActivityType.Listening }
         );
+        this._loggerService.info("Clearing application commands");
         await this._client.clearApplicationCommands();
+        this._loggerService.info("Initializing application commands");
         await this._client.initApplicationCommands();
+
+        this._loggerService.info("Registering bot status updater");
         // Updates the bot status every minute
         setInterval(this.updateStatus.bind(this), 60000);
 
+        this._loggerService.info("Registering error handler");
         // Some other somewhat important events that the bot should listen to
         this._client.on("error", (err) =>
             this._loggerService.error("The client threw an error", err)
         );
+        this._loggerService.info("Registering shard error handler");
         this._client.on("shardError", (err) =>
             this._loggerService.error("A shard threw an error", err)
         );
+        this._loggerService.info("Registering warn handler");
         this._client.on("warn", (warn) =>
             this._loggerService.warn("The client received a warning", warn)
         );
+        this._loggerService.info("Registering interaction handler");
         this._client.on("interactionCreate", async (interaction) => {
             try {
                 await this._client.executeInteraction(interaction);
