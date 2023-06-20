@@ -53,7 +53,7 @@ export class Bot {
                 process.env.NODE_ENV === "production"
                     ? undefined
                     : [this._configService.config.bot.dev.guildId],
-            silent: process.env.NODE_ENV === "production",
+            silent: false,
         });
     }
 
