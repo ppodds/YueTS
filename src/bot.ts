@@ -75,11 +75,17 @@ export class Bot {
             "「現在剛起床還沒搞清楚狀況... 等一下再叫我吧...」",
             { type: ActivityType.Listening }
         );
-        this._loggerService.info("Clearing application commands");
-        await this._client.clearApplicationCommands();
-        this._loggerService.info("Initializing application commands");
-        await this._client.initApplicationCommands();
-
+        try {
+            this._loggerService.info("Clearing application commands");
+            await this._client.clearApplicationCommands();
+            this._loggerService.info("Initializing application commands");
+            await this._client.initApplicationCommands();
+        } catch (e) {
+            this._loggerService.error(
+                "Error initializing application commands",
+                e
+            );
+        }
         this._loggerService.info("Registering bot status updater");
         // Updates the bot status every minute
         setInterval(this.updateStatus.bind(this), 60000);
