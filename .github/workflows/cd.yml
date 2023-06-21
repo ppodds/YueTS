@@ -18,3 +18,12 @@ jobs:
     secrets:
       REGISTRY_USERNAME: ${{ secrets.HARBOR_USERNAME }}
       REGISTRY_TOKEN: ${{ secrets.HARBOR_TOKEN }}
+  
+  trigger-deploy:
+    needs: build-image-and-push
+    uses: ppodds/workflows/.github/workflows/update-helm-chart.yml@master
+    with:
+      repo: ppodds/yue-helm
+      app_version: ${{ github.ref_name }}
+    secrets:
+      TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
