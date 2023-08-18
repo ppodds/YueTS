@@ -64,7 +64,7 @@
     "tsyringe": "^4.8.0",
     "utf-8-validate": "^6.0.3",
     "ytpl": "^2.3.0",
-    "ytsr": "^3.8.2",
+    "ytsr": "^3.8.4",
     "zlib-sync": "^0.1.8"
   },
   "devDependencies": {
