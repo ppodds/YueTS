@@ -146,8 +146,8 @@ devDependencies:
     specifier: ^14.0.1
     version: 14.0.1
   nodemon:
-    specifier: ^3.0.0
-    version: 3.0.0
+    specifier: ^3.0.1
+    version: 3.0.1
   prettier:
     specifier: ^3.0.0
     version: 3.0.0
@@ -3793,8 +3793,8 @@ packages:
     resolution: {integrity: sha512-7TXAhpMm+jO4MfESxYLtMGSnJWv+itdNHMdaFmeZuPXxwFGU90mtEB42BciUULXOUAxYBfXILAuvrSG3rQZ7mw==}
     dev: false
 
-  /nodemon@3.0.0:
-    resolution: {integrity: sha512-yU9NSp3n+DUSt3S2LmtXss+4kOsmC8ZLpXeGe5mKuLdqkoSRwmaplk2lo5cmve7TPw5MgMcd2cazL0KpUscoSQ==}
+  /nodemon@3.0.1:
+    resolution: {integrity: sha512-g9AZ7HmkhQkqXkRc20w+ZfQ73cHLbE8hnPbtaFbFtCumZsjyMhKk9LajQ07U5Ux28lvFjZ5X7HvWR1xzU8jHVw==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
