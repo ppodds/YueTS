@@ -18,8 +18,8 @@ dependencies:
     specifier: ^0.16.0
     version: 0.16.0(@discordjs/opus@0.9.0)(bufferutil@4.0.7)(ffmpeg-static@5.1.0)(utf-8-validate@6.0.3)
   '@discordx/importer':
-    specifier: ^1.2.2
-    version: 1.2.2
+    specifier: ^1.2.3
+    version: 1.2.3
   '@ppodds/nhentai-api':
     specifier: ^0.0.1
     version: 0.0.1
@@ -675,10 +675,10 @@ packages:
       typedi: 0.10.0
     dev: false
 
-  /@discordx/importer@1.2.2:
-    resolution: {integrity: sha512-JVUDCHzf+dTXqcF2hU++JzCJgVYt6G+StIubaF96SLGTMw8ZcaPUlrYClGAld3JXevzrQVr1yrRYScGObNgEMg==}
+  /@discordx/importer@1.2.3:
+    resolution: {integrity: sha512-7LvdlImpCceb/eOsXiOH2LN2Lgnd9Fz5jw9k9C4yFDBWxGO5r3844yr6OiA+RpEPThuCfXjmD1aeOAuZdn8c0g==}
     dependencies:
-      glob: 10.3.0
+      glob: 10.3.3
       tslib: 2.6.2
     dev: false
 
@@ -2624,6 +2624,19 @@ packages:
       minimatch: 9.0.1
       minipass: 6.0.2
       path-scurry: 1.9.2
+    dev: true
+
+  /glob@10.3.3:
+    resolution: {integrity: sha512-92vPiMb/iqpmEgsOoIDvTjc50wf9CCCvMzsi6W0JLPeUKE8TWP1a73PgqSrqy7iAZxaSD1YdzU7QZR5LF51MJw==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    hasBin: true
+    dependencies:
+      foreground-child: 3.1.1
+      jackspeak: 2.2.1
+      minimatch: 9.0.1
+      minipass: 6.0.2
+      path-scurry: 1.10.1
+    dev: false
 
   /glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
@@ -3904,12 +3917,21 @@ packages:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
     dev: true
 
+  /path-scurry@1.10.1:
+    resolution: {integrity: sha512-MkhCqzzBEpPvxxQ71Md0b1Kk51W01lrYvlMzSUaIzNsODdd7mqhiimSZlr+VegAz5Z6Vzt9Xg2ttE//XBhH3EQ==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    dependencies:
+      lru-cache: 9.1.2
+      minipass: 6.0.2
+    dev: false
+
   /path-scurry@1.9.2:
     resolution: {integrity: sha512-qSDLy2aGFPm8i4rsbHd4MNyTcrzHFsLQykrtbuGRknZZCBBVXSv2tSCDN2Cg6Rt/GFRw8GoW9y9Ecw5rIPG1sg==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
       lru-cache: 9.1.2
       minipass: 6.0.2
+    dev: true
 
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
