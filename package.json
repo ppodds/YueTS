@@ -50,7 +50,7 @@
     "discordx": "^11.7.6",
     "dotenv": "^16.3.1",
     "ehentai-api": "^0.0.4",
-    "ffmpeg-static": "^5.1.0",
+    "ffmpeg-static": "^5.2.0",
     "file-type": "^16.5.4",
     "log4js": "^6.9.1",
     "mariadb": "^3.2.0",
