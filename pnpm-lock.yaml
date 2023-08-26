@@ -84,8 +84,8 @@ dependencies:
     specifier: ^4.0.4
     version: 4.0.4
   tslib:
-    specifier: ^2.5.3
-    version: 2.5.3
+    specifier: ^2.6.2
+    version: 2.6.2
   tsyringe:
     specifier: ^4.8.0
     version: 4.8.0
@@ -541,7 +541,7 @@ packages:
       discord-api-types: 0.37.46
       fast-deep-equal: 3.1.3
       ts-mixer: 6.0.3
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: false
 
   /@discordjs/builders@1.6.5:
@@ -554,7 +554,7 @@ packages:
       discord-api-types: 0.37.50
       fast-deep-equal: 3.1.3
       ts-mixer: 6.0.3
-      tslib: 2.6.1
+      tslib: 2.6.2
     dev: false
 
   /@discordjs/collection@1.5.3:
@@ -617,7 +617,7 @@ packages:
       '@vladfrangu/async_event_emitter': 2.2.2
       discord-api-types: 0.37.50
       magic-bytes.js: 1.0.15
-      tslib: 2.6.1
+      tslib: 2.6.2
       undici: 5.22.1
     dev: false
 
@@ -638,7 +638,7 @@ packages:
       '@types/ws': 8.5.5
       discord-api-types: 0.37.46
       prism-media: 1.3.5(@discordjs/opus@0.9.0)(ffmpeg-static@5.1.0)
-      tslib: 2.5.3
+      tslib: 2.6.2
       ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@6.0.3)
     transitivePeerDependencies:
       - '@discordjs/opus'
@@ -660,7 +660,7 @@ packages:
       '@types/ws': 8.5.5
       '@vladfrangu/async_event_emitter': 2.2.2
       discord-api-types: 0.37.50
-      tslib: 2.6.1
+      tslib: 2.6.2
       ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@6.0.3)
     transitivePeerDependencies:
       - bufferutil
@@ -679,14 +679,14 @@ packages:
     resolution: {integrity: sha512-JVUDCHzf+dTXqcF2hU++JzCJgVYt6G+StIubaF96SLGTMw8ZcaPUlrYClGAld3JXevzrQVr1yrRYScGObNgEMg==}
     dependencies:
       glob: 10.3.0
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: false
 
   /@discordx/internal@1.0.2:
     resolution: {integrity: sha512-+vv5QS133O3TDDBvPp+ugQy5ExCFjVTxVn5AwQRgwpKNyXSplarNXA4TzACuiYBnXb6ecwtjfbDLcy/xMjYIoQ==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     dependencies:
-      tslib: 2.6.1
+      tslib: 2.6.2
     dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.43.0):
@@ -2118,7 +2118,7 @@ packages:
       discord-api-types: 0.37.50
       fast-deep-equal: 3.1.3
       lodash.snakecase: 4.1.1
-      tslib: 2.6.1
+      tslib: 2.6.2
       undici: 5.22.1
       ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@6.0.3)
     transitivePeerDependencies:
@@ -2136,7 +2136,7 @@ packages:
       '@discordx/internal': 1.0.2
       discord.js: 14.13.0(bufferutil@4.0.7)(utf-8-validate@6.0.3)
       lodash: 4.17.21
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: false
 
   /doctrine@3.0.0:
@@ -4188,7 +4188,7 @@ packages:
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
     dependencies:
-      tslib: 2.6.1
+      tslib: 2.6.2
     dev: true
 
   /safe-buffer@5.2.1:
@@ -4690,12 +4690,8 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: false
 
-  /tslib@2.5.3:
-    resolution: {integrity: sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==}
-    dev: false
-
-  /tslib@2.6.1:
-    resolution: {integrity: sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==}
+  /tslib@2.6.2:
+    resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
   /tsyringe@4.8.0:
     resolution: {integrity: sha512-YB1FG+axdxADa3ncEtRnQCFq/M0lALGLxSZeVNbTU8NqhOVc51nnv2CISTcvc1kyv6EGPtXVr0v6lWeDxiijOA==}
