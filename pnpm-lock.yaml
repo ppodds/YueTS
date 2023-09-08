@@ -75,8 +75,8 @@ dependencies:
     specifier: ^0.1.13
     version: 0.1.13
   sequelize:
-    specifier: ^6.32.1
-    version: 6.32.1(mariadb@3.2.0)
+    specifier: ^6.33.0
+    version: 6.33.0(mariadb@3.2.0)
   sharp:
     specifier: ~0.32.5
     version: 0.32.5
@@ -3982,8 +3982,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /pg-connection-string@2.6.0:
-    resolution: {integrity: sha512-x14ibktcwlHKoHxx9X3uTVW9zIGR41ZB6QNhHb21OPNdCCO3NaRnpJuwKIQSR4u+Yqjx4HCvy7Hh7VSy1U4dGg==}
+  /pg-connection-string@2.6.2:
+    resolution: {integrity: sha512-ch6OwaeaPYcova4kKZ15sbJ2hKb/VP48ZD2gE7i1J+L4MspCtBMAx8nMgz7bksc7IojCIIWuEhHibSMFH8m8oA==}
     dev: false
 
   /picocolors@1.0.0:
@@ -4283,6 +4283,7 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
+    dev: true
 
   /semver@7.5.4:
     resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
@@ -4296,8 +4297,8 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.32.1(mariadb@3.2.0):
-    resolution: {integrity: sha512-3Iv0jruv57Y0YvcxQW7BE56O7DC1BojcfIrqh6my+IQwde+9u/YnuYHzK+8kmZLhLvaziRT1eWu38nh9yVwn/g==}
+  /sequelize@6.33.0(mariadb@3.2.0):
+    resolution: {integrity: sha512-GkeCbqgaIcpyZ1EyXrDNIwktbfMldHAGOVXHGM4x8bxGSRAOql5htDWofPvwpfL/FoZ59CaFmfO3Mosv1lDbQw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       ibm_db: '*'
@@ -4338,9 +4339,9 @@ packages:
       mariadb: 3.2.0
       moment: 2.29.4
       moment-timezone: 0.5.43
-      pg-connection-string: 2.6.0
+      pg-connection-string: 2.6.2
       retry-as-promised: 7.0.4
-      semver: 7.5.3
+      semver: 7.5.4
       sequelize-pool: 7.1.0
       toposort-class: 1.0.1
       uuid: 8.3.2
