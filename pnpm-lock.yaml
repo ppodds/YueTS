@@ -63,8 +63,8 @@ dependencies:
     specifier: ^6.9.1
     version: 6.9.1
   mariadb:
-    specifier: ^3.2.0
-    version: 3.2.0
+    specifier: ^3.2.2
+    version: 3.2.2
   node-worker-threads-pool:
     specifier: ^1.5.1
     version: 1.5.1
@@ -76,7 +76,7 @@ dependencies:
     version: 0.1.13
   sequelize:
     specifier: ^6.32.1
-    version: 6.32.1(mariadb@3.2.0)
+    version: 6.32.1(mariadb@3.2.2)
   sharp:
     specifier: ~0.32.5
     version: 0.32.5
@@ -3556,6 +3556,11 @@ packages:
       - supports-color
     dev: false
 
+  /lru-cache@10.0.1:
+    resolution: {integrity: sha512-IJ4uwUTi2qCccrioU6g9g/5rvvVl13bsdczUUcqbciD9iLr095yj8DQKdObriEvuNSx325N1rV1O0sJFszx75g==}
+    engines: {node: 14 || >=16.14}
+    dev: false
+
   /lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
     dependencies:
@@ -3567,11 +3572,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-
-  /lru-cache@7.18.3:
-    resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
-    engines: {node: '>=12'}
-    dev: false
 
   /lru-cache@9.1.2:
     resolution: {integrity: sha512-ERJq3FOzJTxBbFjZ7iDs+NiK4VI9Wz+RdrrAB8dio1oV+YvdPzUEE4QNiT2VD51DkIbCYRUUzCRkssXCHqSnKQ==}
@@ -3597,15 +3597,15 @@ packages:
       tmpl: 1.0.5
     dev: true
 
-  /mariadb@3.2.0:
-    resolution: {integrity: sha512-IH2nidQat1IBMxP5gjuNxG6dADtz1PESEC6rKrcATen5v3ngFyZITjehyYiwNfz3zUNQupfYmVntz93M+Pz8pQ==}
+  /mariadb@3.2.2:
+    resolution: {integrity: sha512-9ClJCFsLcK7WnPXVxuKGd7p0CBvNch3i5nwAf1HEqERj7RV60DG/0dJu4DfO33gpYQd9Cr4jq17O76/2VjSbkg==}
     engines: {node: '>= 12'}
     dependencies:
       '@types/geojson': 7946.0.10
       '@types/node': 17.0.45
       denque: 2.1.0
       iconv-lite: 0.6.3
-      lru-cache: 7.18.3
+      lru-cache: 10.0.1
     dev: false
 
   /merge-stream@2.0.0:
@@ -4296,7 +4296,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.32.1(mariadb@3.2.0):
+  /sequelize@6.32.1(mariadb@3.2.2):
     resolution: {integrity: sha512-3Iv0jruv57Y0YvcxQW7BE56O7DC1BojcfIrqh6my+IQwde+9u/YnuYHzK+8kmZLhLvaziRT1eWu38nh9yVwn/g==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -4335,7 +4335,7 @@ packages:
       dottie: 2.0.6
       inflection: 1.13.4
       lodash: 4.17.21
-      mariadb: 3.2.0
+      mariadb: 3.2.2
       moment: 2.29.4
       moment-timezone: 0.5.43
       pg-connection-string: 2.6.0
