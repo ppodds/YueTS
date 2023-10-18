@@ -113,8 +113,8 @@ devDependencies:
     specifier: ^18.17.14
     version: 18.17.14
   '@types/sequelize':
-    specifier: ^4.28.15
-    version: 4.28.15
+    specifier: ^4.28.17
+    version: 4.28.17
   '@types/validator':
     specifier: ^13.11.1
     version: 13.11.1
@@ -1251,8 +1251,8 @@ packages:
     resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
     dev: true
 
-  /@types/sequelize@4.28.15:
-    resolution: {integrity: sha512-DlwOs4Dz2s+bDlL4RFxl5mJZJC2r1Z7/hlTPIF0JF1RciivH120yEQF0gYQI9NXd3+KJOmvFyScaEO/7dxGQew==}
+  /@types/sequelize@4.28.17:
+    resolution: {integrity: sha512-n3ZChokiKFIK85oThbQiSOeQOpRMle7BkUJqxBQLC6EJ0B6S4+LQN5XEqDFwwXsUkISftu6PaYOWXoL7tu+E5A==}
     dependencies:
       '@types/bluebird': 3.5.38
       '@types/continuation-local-storage': 3.2.4
