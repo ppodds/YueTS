@@ -68,7 +68,7 @@
     "zlib-sync": "^0.1.8"
   },
   "devDependencies": {
-    "@types/async-lock": "^1.4.0",
+    "@types/async-lock": "^1.4.1",
     "@types/jest": "^29.5.4",
     "@types/node": "^18.17.14",
     "@types/sequelize": "^4.28.15",
