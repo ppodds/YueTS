@@ -104,8 +104,8 @@ dependencies:
 
 devDependencies:
   '@types/async-lock':
-    specifier: ^1.4.1
-    version: 1.4.1
+    specifier: ^1.4.2
+    version: 1.4.2
   '@types/jest':
     specifier: ^29.5.6
     version: 29.5.6
@@ -1103,8 +1103,8 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
 
-  /@types/async-lock@1.4.1:
-    resolution: {integrity: sha512-tpYc9kp2I8eI6qcDWtD2023jIlJYz6030qR1S5WhRbTK/JJcYdJ8fb2dRKPRgqioxcPZfTPmzl/PemHIPCrA9g==}
+  /@types/async-lock@1.4.2:
+    resolution: {integrity: sha512-HlZ6Dcr205BmNhwkdXqrg2vkFMN2PluI7Lgr8In3B3wE5PiQHhjRqtW/lGdVU9gw+sM0JcIDx2AN+cW8oSWIcw==}
     dev: true
 
   /@types/babel__core@7.20.3:
