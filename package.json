@@ -41,7 +41,7 @@
     "@discordx/importer": "^1.2.3",
     "@ppodds/nhentai-api": "^0.0.1",
     "async-lock": "^1.4.0",
-    "axios": "^1.5.1",
+    "axios": "^1.6.1",
     "bufferutil": "^4.0.8",
     "canvas": "^2.11.2",
     "discord-api-types": "^0.37.60",
