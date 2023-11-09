@@ -45,8 +45,8 @@ dependencies:
     specifier: ^3.0.2
     version: 3.0.2(discord.js@14.13.0)
   discordx:
-    specifier: ^11.7.6
-    version: 11.7.6(discord.js@14.13.0)
+    specifier: ^11.8.1
+    version: 11.8.1(discord.js@14.13.0)
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -643,8 +643,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@discordx/di@3.1.1:
-    resolution: {integrity: sha512-WqJOlMNTzBogiBke6LWNFhZ/9PDVzOl3GAkJLs6fsY3srMjOlZukmXP5l2ILx5I5VWpFkpM1aZZxSpnfR+a+fg==}
+  /@discordx/di@3.2.0:
+    resolution: {integrity: sha512-2GYYFiAfdzmKAhUxpr+TkQRUab46F6VmV/QMUyfN2Cr7Lf5JrSJQ2t6DRRPn/9CZW8OSIS4gGBun8zkCBAbW2w==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     dependencies:
       tsyringe: 4.8.0
@@ -658,8 +658,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@discordx/internal@1.0.2:
-    resolution: {integrity: sha512-+vv5QS133O3TDDBvPp+ugQy5ExCFjVTxVn5AwQRgwpKNyXSplarNXA4TzACuiYBnXb6ecwtjfbDLcy/xMjYIoQ==}
+  /@discordx/internal@1.1.0:
+    resolution: {integrity: sha512-C2o6LxzhTLbR8t74a6m/3YWLpkt2SjXvUMqfUIgLFjDn6nN3qKxeDJo+e83jNC8VFCcWbxKTzMLbnm+h9B8frg==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     dependencies:
       tslib: 2.6.2
@@ -2101,14 +2101,14 @@ packages:
       - utf-8-validate
     dev: false
 
-  /discordx@11.7.6(discord.js@14.13.0):
-    resolution: {integrity: sha512-Vo7godHVFu6weq9orIXfOpbySSKGW+gmE0h0QXQSFh/sqG1YTp9tsnrdIH4ce6+NcGOpEeZwAdUd+KK5RPQf7w==}
+  /discordx@11.8.1(discord.js@14.13.0):
+    resolution: {integrity: sha512-4bPyw8F9TcnLzWlRE61tXWuvipz5yJs7m7pqX0+DA+dbfRpjkvB0IaFsCBMIdoQKWIZZT23fSltIKasok1KA7g==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     peerDependencies:
       discord.js: '>=14 || ^14.0.0-dev'
     dependencies:
-      '@discordx/di': 3.1.1
-      '@discordx/internal': 1.0.2
+      '@discordx/di': 3.2.0
+      '@discordx/internal': 1.1.0
       discord.js: 14.13.0(bufferutil@4.0.8)(utf-8-validate@6.0.3)
       lodash: 4.17.21
       tslib: 2.6.2
