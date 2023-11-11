@@ -51,7 +51,7 @@
     "dotenv": "^16.3.1",
     "ehentai-api": "^0.0.4",
     "ffmpeg-static": "^5.2.0",
-    "file-type": "^16.5.4",
+    "file-type": "^18.7.0",
     "log4js": "^6.9.1",
     "mariadb": "^3.2.2",
     "node-worker-threads-pool": "^1.5.1",
