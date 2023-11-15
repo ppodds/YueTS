@@ -1,11 +1,9 @@
-FROM node:18.17-bullseye AS build
+FROM node:20.9 AS build
 
 WORKDIR /app
 
-RUN apt update && apt install python -y
-
 # install pnpm
-RUN npm install -g pnpm
+RUN corepack enable
 
 COPY ./package.json .
 COPY ./pnpm-lock.yaml .
@@ -21,7 +19,7 @@ RUN npm pkg delete scripts.prepare
 
 RUN pnpm prune --prod
 
-FROM node:18.17-bullseye As production
+FROM node:20.9 As production
 
 WORKDIR /app
 
