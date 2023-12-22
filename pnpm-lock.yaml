@@ -24,8 +24,8 @@ dependencies:
     specifier: ^0.0.1
     version: 0.0.1
   async-lock:
-    specifier: ^1.4.0
-    version: 1.4.0
+    specifier: ^1.4.1
+    version: 1.4.1
   axios:
     specifier: ^1.6.2
     version: 1.6.2
@@ -1538,8 +1538,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /async-lock@1.4.0:
-    resolution: {integrity: sha512-coglx5yIWuetakm3/1dsX9hxCNox22h7+V80RQOu2XUUMidtArxKoZoOtHUPuR84SycKTXzgGzAUR5hJxujyJQ==}
+  /async-lock@1.4.1:
+    resolution: {integrity: sha512-Az2ZTpuytrtqENulXwO3GGv1Bztugx6TT37NIo7imr/Qo0gsYiGtSdBa2B6fsXhTpVZDNfu1Qn3pk531e3q+nQ==}
     dev: false
 
   /asynckit@0.4.0:
