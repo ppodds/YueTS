@@ -116,8 +116,8 @@ devDependencies:
     specifier: ^4.28.18
     version: 4.28.18
   '@types/validator':
-    specifier: ^13.11.6
-    version: 13.11.6
+    specifier: ^13.11.9
+    version: 13.11.9
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.11.0
     version: 6.11.0(@typescript-eslint/parser@6.11.0)(eslint@8.53.0)(typescript@5.2.2)
@@ -1249,15 +1249,15 @@ packages:
       '@types/bluebird': 3.5.42
       '@types/continuation-local-storage': 3.2.7
       '@types/lodash': 4.14.201
-      '@types/validator': 13.11.6
+      '@types/validator': 13.11.9
     dev: true
 
   /@types/stack-utils@2.0.3:
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
     dev: true
 
-  /@types/validator@13.11.6:
-    resolution: {integrity: sha512-HUgHujPhKuNzgNXBRZKYexwoG+gHKU+tnfPqjWXFghZAnn73JElicMkuSKJyLGr9JgyA8IgK7fj88IyA9rwYeQ==}
+  /@types/validator@13.11.9:
+    resolution: {integrity: sha512-FCTsikRozryfayPuiI46QzH3fnrOoctTjvOYZkho9BTFLCOZ2rgZJHMOVgCOfttjPJcgOx52EpkY0CMfy87MIw==}
 
   /@types/ws@8.5.9:
     resolution: {integrity: sha512-jbdrY0a8lxfdTp/+r7Z4CkycbOFN8WX+IOchLJr3juT/xzbJ8URyTVSJ/hvNdadTgM1mnedb47n+Y31GsFnQlg==}
@@ -4294,7 +4294,7 @@ packages:
         optional: true
     dependencies:
       '@types/debug': 4.1.12
-      '@types/validator': 13.11.6
+      '@types/validator': 13.11.9
       debug: 4.3.4
       dottie: 2.0.6
       inflection: 1.13.4
