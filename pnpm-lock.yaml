@@ -42,8 +42,8 @@ dependencies:
     specifier: ^14.14.1
     version: 14.14.1(bufferutil@4.0.8)(utf-8-validate@6.0.3)
   discord.js-message-listener:
-    specifier: ^3.0.2
-    version: 3.0.2(discord.js@14.14.1)
+    specifier: ^3.0.3
+    version: 3.0.3(discord.js@14.14.1)
   discordx:
     specifier: ^11.8.1
     version: 11.8.1(discord.js@14.14.1)
@@ -2097,8 +2097,8 @@ packages:
     resolution: {integrity: sha512-WbEDWj/1JGCIC1oCMIC4z9XbYY8PrWpV5eqFFQymJhJlHMqgIjqoYbU812X5oj5cwbRrEh6Va4LNLumB2Nt6IQ==}
     dev: false
 
-  /discord.js-message-listener@3.0.2(discord.js@14.14.1):
-    resolution: {integrity: sha512-fpNvH6L5j5e70XMQqt2y6KxvKYwUk+CixvVCP9Z0AyYfDz5l+gaamRJhQymGFEA4bcLjCMtSOsu6Ctibkex5lA==}
+  /discord.js-message-listener@3.0.3(discord.js@14.14.1):
+    resolution: {integrity: sha512-rryDNvmmqIQRR4bIKX4/WhhIoBiazEjlpG9kJRT09QU1Th7KYm98HG1LussHRtMnYPLdzg0/IG/s6lm4toP14Q==}
     peerDependencies:
       discord.js: ^14.0.0
     dependencies:
