@@ -45,7 +45,7 @@
     "bufferutil": "^4.0.8",
     "canvas": "^2.11.2",
     "discord-api-types": "^0.37.63",
-    "discord.js": "^14.14.1",
+    "discord.js": "^14.15.3",
     "discord.js-message-listener": "^3.0.2",
     "discordx": "^11.8.1",
     "dotenv": "^16.3.1",
