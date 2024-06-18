@@ -56,7 +56,7 @@
     "mariadb": "^3.2.2",
     "node-worker-threads-pool": "^1.5.1",
     "play-dl": "^1.9.7",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.2.2",
     "sequelize": "^6.35.0",
     "sharp": "~0.32.6",
     "sodium-native": "^4.0.4",
