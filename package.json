@@ -53,7 +53,7 @@
     "ffmpeg-static": "^5.2.0",
     "file-type": "^16.5.4",
     "log4js": "^6.9.1",
-    "mariadb": "^3.2.2",
+    "mariadb": "^3.3.1",
     "node-worker-threads-pool": "^1.5.1",
     "play-dl": "^1.9.7",
     "reflect-metadata": "^0.2.2",
