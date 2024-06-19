@@ -60,7 +60,7 @@
     "sequelize": "^6.35.0",
     "sharp": "~0.32.6",
     "sodium-native": "^4.0.4",
-    "tslib": "^2.6.2",
+    "tslib": "^2.6.3",
     "tsyringe": "^4.8.0",
     "utf-8-validate": "^6.0.3",
     "ytpl": "^2.3.0",
