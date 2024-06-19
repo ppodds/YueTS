@@ -45,8 +45,8 @@ importers:
         specifier: ^14.15.3
         version: 14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       discord.js-message-listener:
-        specifier: ^3.0.2
-        version: 3.0.2(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^3.0.3
+        version: 3.0.3(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       discordx:
         specifier: ^11.11.2
         version: 11.11.2(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))
@@ -1250,8 +1250,8 @@ packages:
   discord-api-types@0.37.90:
     resolution: {integrity: sha512-lpOJSGrqHuXoM4FV/2HtjoaJpCClGFHpRNIdZEW8zPINlsCHNSfIwA2EQ8dxeE6k1QhhTuM9ZlOGVYXoU7FLgA==}
 
-  discord.js-message-listener@3.0.2:
-    resolution: {integrity: sha512-fpNvH6L5j5e70XMQqt2y6KxvKYwUk+CixvVCP9Z0AyYfDz5l+gaamRJhQymGFEA4bcLjCMtSOsu6Ctibkex5lA==}
+  discord.js-message-listener@3.0.3:
+    resolution: {integrity: sha512-rryDNvmmqIQRR4bIKX4/WhhIoBiazEjlpG9kJRT09QU1Th7KYm98HG1LussHRtMnYPLdzg0/IG/s6lm4toP14Q==}
     peerDependencies:
       discord.js: ^14.0.0
 
@@ -4091,7 +4091,7 @@ snapshots:
 
   discord-api-types@0.37.90: {}
 
-  discord.js-message-listener@3.0.2(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
+  discord.js-message-listener@3.0.3(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
     dependencies:
       discord.js: 14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       tiny-typed-emitter: 2.1.0
