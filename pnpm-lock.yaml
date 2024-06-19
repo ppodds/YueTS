@@ -36,8 +36,8 @@ dependencies:
     specifier: ^2.11.2
     version: 2.11.2
   discord-api-types:
-    specifier: ^0.37.63
-    version: 0.37.63
+    specifier: ^0.37.90
+    version: 0.37.90
   discord.js:
     specifier: ^14.15.3
     version: 14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)
@@ -2258,12 +2258,12 @@ packages:
     resolution: {integrity: sha512-o/dXNFfhBpYHpQFdT6FWzeO7pKc838QeeZ9d91CfVAtpr5XLK4B/zYxQbYgPdoMiTDvJfzcsLW5naXgmHGDNXw==}
     dev: false
 
-  /discord-api-types@0.37.63:
-    resolution: {integrity: sha512-WbEDWj/1JGCIC1oCMIC4z9XbYY8PrWpV5eqFFQymJhJlHMqgIjqoYbU812X5oj5cwbRrEh6Va4LNLumB2Nt6IQ==}
-    dev: false
-
   /discord-api-types@0.37.83:
     resolution: {integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA==}
+    dev: false
+
+  /discord-api-types@0.37.90:
+    resolution: {integrity: sha512-lpOJSGrqHuXoM4FV/2HtjoaJpCClGFHpRNIdZEW8zPINlsCHNSfIwA2EQ8dxeE6k1QhhTuM9ZlOGVYXoU7FLgA==}
     dev: false
 
   /discord.js-message-listener@3.0.2(discord.js@14.15.3):

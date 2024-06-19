@@ -44,7 +44,7 @@
     "axios": "^1.6.2",
     "bufferutil": "^4.0.8",
     "canvas": "^2.11.2",
-    "discord-api-types": "^0.37.63",
+    "discord-api-types": "^0.37.90",
     "discord.js": "^14.15.3",
     "discord.js-message-listener": "^3.0.2",
     "discordx": "^11.11.1",
