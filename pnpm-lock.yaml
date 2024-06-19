@@ -45,8 +45,8 @@ dependencies:
     specifier: ^3.0.2
     version: 3.0.2(discord.js@14.15.3)
   discordx:
-    specifier: ^11.11.1
-    version: 11.11.1(discord.js@14.15.3)
+    specifier: ^11.11.2
+    version: 11.11.2(discord.js@14.15.3)
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -2284,8 +2284,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /discordx@11.11.1(discord.js@14.15.3):
-    resolution: {integrity: sha512-+aJxqrFBTNJ/IzgUmbkhpG18tOrcdWHbNqBWEHF/JWfuORYF3cf9Z9+u4o6tzBrBqMbaX2lGIGr6W1HJQTOj7A==}
+  /discordx@11.11.2(discord.js@14.15.3):
+    resolution: {integrity: sha512-Qpwst1uwhNRszSfYFU3TrSPPqzNgAs64o9Cv1dL+xDAuE7VL+8Y+zzzGPJMqiZsc1juSvhlA+nPPx/4B2RLt+A==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     peerDependencies:
       discord.js: '>=14 || ^14.0.0-dev'
