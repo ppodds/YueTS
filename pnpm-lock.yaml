@@ -81,8 +81,8 @@ dependencies:
     specifier: ~0.33.4
     version: 0.33.4
   sodium-native:
-    specifier: ^4.0.4
-    version: 4.0.4
+    specifier: ^4.1.1
+    version: 4.1.1
   tslib:
     specifier: ^2.6.3
     version: 2.6.3
@@ -696,7 +696,7 @@ packages:
     resolution: {integrity: sha512-3bfqkzuR1KLx57nZfjr2NLnFOobvyS0aTszaEGCGqmYMVDRaGvgIZbjGSV/MHSSmLgQ/b9JFHQ5xm5WRZYd+XQ==}
     requiresBuild: true
     dependencies:
-      tslib: 2.6.2
+      tslib: 2.6.3
     dev: false
     optional: true
 
@@ -3870,6 +3870,11 @@ packages:
     hasBin: true
     dev: false
 
+  /node-gyp-build@4.8.1:
+    resolution: {integrity: sha512-OSs33Z9yWr148JZcbZd5WiAXhh/n9z8TxQcdMhIOlpN9AhWpLfvVFO73+m77bBABQMaY9XSvIa+qk0jlI7Gcaw==}
+    hasBin: true
+    dev: false
+
   /node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
     dev: true
@@ -4496,11 +4501,11 @@ packages:
       is-fullwidth-code-point: 4.0.0
     dev: true
 
-  /sodium-native@4.0.4:
-    resolution: {integrity: sha512-faqOKw4WQKK7r/ybn6Lqo1F9+L5T6NlBJJYvpxbZPetpWylUVqz449mvlwIBKBqxEHbWakWuOlUt8J3Qpc4sWw==}
+  /sodium-native@4.1.1:
+    resolution: {integrity: sha512-LXkAfRd4FHtkQS4X6g+nRcVaN7mWVNepV06phIsC6+IZFvGh1voW5TNQiQp2twVaMf05gZqQjuS+uWLM6gHhNQ==}
     requiresBuild: true
     dependencies:
-      node-gyp-build: 4.6.1
+      node-gyp-build: 4.8.1
     dev: false
 
   /source-map-support@0.5.13:
