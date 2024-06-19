@@ -69,7 +69,7 @@
   },
   "devDependencies": {
     "@types/async-lock": "^1.4.2",
-    "@types/jest": "^29.5.8",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.9.0",
     "@types/sequelize": "^4.28.18",
     "@types/validator": "^13.11.6",
