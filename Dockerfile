@@ -1,4 +1,4 @@
-FROM node:20.9 AS build
+FROM node:20.14.0 AS build
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ RUN npm pkg delete scripts.prepare
 
 RUN pnpm prune --prod
 
-FROM node:20.9 As production
+FROM node:20.14.0 As production
 
 WORKDIR /app
 
