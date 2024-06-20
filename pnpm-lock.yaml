@@ -115,8 +115,8 @@ importers:
         specifier: ^20.14.6
         version: 20.14.6
       '@types/sequelize':
-        specifier: ^4.28.18
-        version: 4.28.18
+        specifier: ^4.28.20
+        version: 4.28.20
       '@types/validator':
         specifier: ^13.12.0
         version: 13.12.0
@@ -761,8 +761,8 @@ packages:
   '@types/node@20.14.6':
     resolution: {integrity: sha512-JbA0XIJPL1IiNnU7PFxDXyfAwcwVVrOoqyzzyQTyMeVhBzkJVMSkC1LlVsRQ2lpqiY4n6Bb9oCS6lzDKVQxbZw==}
 
-  '@types/sequelize@4.28.18':
-    resolution: {integrity: sha512-p9RRutrfuWn5wvzY51+pY8uD4XxhyVvSVTTwdUNJ8j5TUhn19ZRz/pIC8MqSFlv9FRGe5g/vbzeykE4pzVQ2bw==}
+  '@types/sequelize@4.28.20':
+    resolution: {integrity: sha512-XaGOKRhdizC87hDgQ0u3btxzbejlF+t6Hhvkek1HyphqCI4y7zVBIVAGmuc4cWJqGpxusZ1RiBToHHnNK/Edlw==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -3590,7 +3590,7 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
-  '@types/sequelize@4.28.18':
+  '@types/sequelize@4.28.20':
     dependencies:
       '@types/bluebird': 3.5.42
       '@types/continuation-local-storage': 3.2.7
