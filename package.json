@@ -15,7 +15,7 @@
     "format": "prettier --write src/**/*.{ts,js,json}",
     "lint": "eslint src/**/*.ts",
     "lint-fix": "eslint src/**/*.ts --fix",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
