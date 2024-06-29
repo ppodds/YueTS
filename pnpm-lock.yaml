@@ -48,8 +48,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       discordx:
-        specifier: ^11.11.2
-        version: 11.11.2(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^11.12.0
+        version: 11.12.0(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -1236,8 +1236,8 @@ packages:
     resolution: {integrity: sha512-/UJDQO10VuU6wQPglA4kz2bw2ngeeSbogiIPx/TsnctfzV/tNf+q+i1HlgtX1OGpeOBpJH9erZQNO5oRM2uAtQ==}
     engines: {node: '>=16.11.0'}
 
-  discordx@11.11.2:
-    resolution: {integrity: sha512-Qpwst1uwhNRszSfYFU3TrSPPqzNgAs64o9Cv1dL+xDAuE7VL+8Y+zzzGPJMqiZsc1juSvhlA+nPPx/4B2RLt+A==}
+  discordx@11.12.0:
+    resolution: {integrity: sha512-nff56kwSEE1Es2u74/wYCixQwSYIS5nNdI1r4xO8knU302FB1Rg6SkA4jJoiT6zfGNyofzkt4U9L1ijpqCTINQ==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     peerDependencies:
       discord.js: '>=14 || ^14.0.0-dev'
@@ -4097,7 +4097,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  discordx@11.11.2(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
+  discordx@11.12.0(discord.js@14.15.3(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
     dependencies:
       '@discordx/di': 3.3.2
       '@discordx/internal': 1.1.4
