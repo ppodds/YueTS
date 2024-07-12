@@ -14,7 +14,7 @@ jobs:
       image_name: yue
       registry: https://docker.io
       image_tag: ${{ github.ref_name }}
-      project_name: yue
+      project_name: ppodds
     secrets:
       REGISTRY_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       REGISTRY_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
