@@ -12,12 +12,12 @@ jobs:
     uses: ppodds/workflows/.github/workflows/build-and-push-image.yml@master
     with:
       image_name: yue
-      registry: https://harbor.ppodds.cc
+      registry: https://docker.io
       image_tag: ${{ github.ref_name }}
       project_name: yue
     secrets:
-      REGISTRY_USERNAME: ${{ secrets.HARBOR_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.HARBOR_TOKEN }}
+      REGISTRY_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
   
   trigger-deploy:
     needs: build-image-and-push
