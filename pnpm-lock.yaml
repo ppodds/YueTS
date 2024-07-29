@@ -71,9 +71,6 @@ importers:
       node-worker-threads-pool:
         specifier: ^1.5.1
         version: 1.5.1
-      play-dl:
-        specifier: ^1.9.7
-        version: 1.9.7
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -95,12 +92,6 @@ importers:
       utf-8-validate:
         specifier: ^6.0.4
         version: 6.0.4
-      ytpl:
-        specifier: ^2.3.0
-        version: 2.3.0
-      ytsr:
-        specifier: ^3.8.4
-        version: 3.8.4
       zlib-sync:
         specifier: ^0.1.9
         version: 0.1.9
@@ -1994,10 +1985,6 @@ packages:
     resolution: {integrity: sha512-wXqjST+SLt7R009ySCglWBCFpjUygmCIfD790/kVbiGmUgfYGuB14PiTd5DwVxSV4NcYHjzMkoj5LjQZwTQLEA==}
     engines: {node: '>=8'}
 
-  miniget@4.2.3:
-    resolution: {integrity: sha512-SjbDPDICJ1zT+ZvQwK0hUcRY4wxlhhNpHL9nJOB2MEAXRGagTljsO8MEDzQMTFf0Q8g4QNi8P9lEm/g7e+qgzA==}
-    engines: {node: '>=12'}
-
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -2215,13 +2202,6 @@ packages:
   pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
-
-  play-audio@0.5.2:
-    resolution: {integrity: sha512-ZAqHUKkQLix2Iga7pPbsf1LpUoBjcpwU93F1l3qBIfxYddQLhxS6GKmS0d3jV8kSVaUbr6NnOEcEMFvuX93SWQ==}
-
-  play-dl@1.9.7:
-    resolution: {integrity: sha512-KpgerWxUCY4s9Mhze2qdqPhiqd8Ve6HufpH9mBH3FN+vux55qSh6WJKDabfie8IBHN7lnrAlYcT/UdGax58c2A==}
-    engines: {node: '>=16.0.0'}
 
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -2816,16 +2796,6 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-
-  ytpl@2.3.0:
-    resolution: {integrity: sha512-Cfw2rxq3PFK6qgWr2Z8gsRefVahEzbn9XEuiJldqdXHE6GhO7kTfEvbZKdfXing1SmgW635uJ/UL2g8r0fvu2Q==}
-    engines: {node: '>=8'}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-
-  ytsr@3.8.4:
-    resolution: {integrity: sha512-rrJo59vDDf98mz/Cuw7Y2YiuTwSm3cs4XsXrP6yjYDXYup/aE0lRxY6XMKR3mGOHKwgLouZqFq8QRllVVVN88w==}
-    engines: {node: '>=8'}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   zlib-sync@0.1.9:
     resolution: {integrity: sha512-DinB43xCjVwIBDpaIvQqHbmDsnYnSt6HJ/yiB2MZQGTqgPcwBSZqLkimXwK8BvdjQ/MaZysb5uEenImncqvCqQ==}
@@ -5058,8 +5028,6 @@ snapshots:
 
   mimic-response@2.1.0: {}
 
-  miniget@4.2.3: {}
-
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -5246,12 +5214,6 @@ snapshots:
   pkg-dir@4.2.0:
     dependencies:
       find-up: 4.1.0
-
-  play-audio@0.5.2: {}
-
-  play-dl@1.9.7:
-    dependencies:
-      play-audio: 0.5.2
 
   prelude-ls@1.2.1: {}
 
@@ -5774,14 +5736,6 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
-
-  ytpl@2.3.0:
-    dependencies:
-      miniget: 4.2.3
-
-  ytsr@3.8.4:
-    dependencies:
-      miniget: 4.2.3
 
   zlib-sync@0.1.9:
     dependencies:

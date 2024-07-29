@@ -55,7 +55,6 @@
     "log4js": "^6.9.1",
     "mariadb": "^3.3.1",
     "node-worker-threads-pool": "^1.5.1",
-    "play-dl": "^1.9.7",
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.3",
     "sharp": "~0.33.4",
@@ -63,8 +62,6 @@
     "tslib": "^2.6.3",
     "tsyringe": "^4.8.0",
     "utf-8-validate": "^6.0.4",
-    "ytpl": "^2.3.0",
-    "ytsr": "^3.8.4",
     "zlib-sync": "^0.1.9"
   },
   "devDependencies": {
