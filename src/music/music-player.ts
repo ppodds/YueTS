@@ -25,7 +25,7 @@ import { promisify } from "node:util";
 import { Track } from "./track";
 import { Metadata } from "./metadata";
 import { LoggerService } from "../utils/logger-service";
-import { createOpusStream } from "./ffmpeg";
+import { createOpusStreamByDownload } from "./ffmpeg";
 import { extractInfo } from "./ytdlp";
 
 export class MusicPlayer {
@@ -289,7 +289,9 @@ export class MusicPlayer {
 
         try {
             const resource = createAudioResource(
-                createOpusStream(nextTrack.metadata.videoInfo.audioUrl),
+                createOpusStreamByDownload(
+                    nextTrack.metadata.videoInfo.audioUrl,
+                ),
                 {
                     metadata: nextTrack.metadata,
                     inputType: StreamType.OggOpus,
