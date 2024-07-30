@@ -20,7 +20,7 @@ export class ImageService implements Service {
     private readonly _lock = new AsyncLock();
     private readonly _staticPool = new StaticPool({
         size: 4,
-        task: "./src/image/phash.js",
+        task: "./dist/image/phash.js",
     });
 
     public constructor(private readonly _loggerService: LoggerService) {
@@ -60,7 +60,7 @@ export class ImageService implements Service {
      */
     private async load(type: ImageType) {
         this._loggerService.info(
-            `Loading image phashs which type is ${toString(type)}...`
+            `Loading image phashs which type is ${toString(type)}...`,
         );
         const LIMIT = 100;
         let offset = 0;
@@ -140,13 +140,13 @@ export class ImageService implements Service {
         const inDatabase = await new Promise<boolean>(
             ((resolve) => {
                 for (const imagePhash of this.imagePhashs.get(
-                    type
+                    type,
                 ) as PhashData[]) {
                     if (ImageService.isSimilar(imagePhash.data, phash))
                         resolve(true);
                 }
                 resolve(false);
-            }).bind(this)
+            }).bind(this),
         );
 
         if (inDatabase) {
@@ -169,7 +169,7 @@ export class ImageService implements Service {
         uploader: DiscordUser,
         extention: string,
         imageData: Buffer,
-        imagePhash: string
+        imagePhash: string,
     ): Promise<Image> {
         this._loggerService.debug("Saving image to database");
         const image = await Image.add(
@@ -177,12 +177,12 @@ export class ImageService implements Service {
             uploader.id,
             extention,
             imageData,
-            imagePhash
+            imagePhash,
         );
         this._loggerService.info(
             `Save ${image.id}.${image.ext} to ${toString(
-                type
-            )} database. author: ${uploader.username}`
+                type,
+            )} database. author: ${uploader.username}`,
         );
         this.addPhash(type, image.id, imagePhash);
         return image;
@@ -211,7 +211,7 @@ export class ImageService implements Service {
             responseType: "document",
         });
         const re = new RegExp(
-            "https://i.imgur.com/" + imgurResult[1] + ".([0-9a-z]+)"
+            "https://i.imgur.com/" + imgurResult[1] + ".([0-9a-z]+)",
         );
         const imageResult = resp.data.match(re);
         // get image
@@ -228,7 +228,7 @@ export class ImageService implements Service {
      * @returns image data
      */
     public static async getAttachmentImage(
-        attachment: Attachment
+        attachment: Attachment,
     ): Promise<Buffer> {
         return (
             await axios.get(attachment.url, {

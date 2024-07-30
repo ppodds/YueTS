@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
-import { YouTubeVideo } from "play-dl";
+import { VideoInfo } from "./video-info";
 
 export interface Metadata {
-    videoInfo: YouTubeVideo;
+    videoInfo: VideoInfo;
     requester: GuildMember;
 }

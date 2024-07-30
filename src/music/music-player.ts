@@ -19,12 +19,14 @@ import {
     AudioPlayerError,
     NoSubscriberBehavior,
     DiscordGatewayAdapterCreator,
+    StreamType,
 } from "@discordjs/voice";
-import { stream, video_info } from "play-dl";
 import { promisify } from "node:util";
 import { Track } from "./track";
 import { Metadata } from "./metadata";
 import { LoggerService } from "../utils/logger-service";
+import { createOpusStreamByDownload } from "./ffmpeg";
+import { extractInfo } from "./ytdlp";
 
 export class MusicPlayer {
     private guild: Guild;
@@ -43,7 +45,7 @@ export class MusicPlayer {
 
     constructor(
         private readonly _loggerService: LoggerService,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
         if (!interaction.guild)
             throw new Error("Guild not found in interaction");
@@ -80,17 +82,17 @@ export class MusicPlayer {
                     newState.closeCode === 4014
                 ) {
                     /*
-        				If the WebSocket closed with a 4014 code, this means that we should not manually attempt to reconnect,
-        				but there is a chance the connection will recover itself if the reason of the disconnect was due to
-        				switching voice channels. This is also the same code for the bot being kicked from the voice channel,
-        				so we allow 5 seconds to figure out which scenario it is. If the bot has been kicked, we should destroy
-        				the voice connection.
-        			*/
+                        If the WebSocket closed with a 4014 code, this means that we should not manually attempt to reconnect,
+                        but there is a chance the connection will recover itself if the reason of the disconnect was due to
+                        switching voice channels. This is also the same code for the bot being kicked from the voice channel,
+                        so we allow 5 seconds to figure out which scenario it is. If the bot has been kicked, we should destroy
+                        the voice connection.
+                    */
                     try {
                         await entersState(
                             this.connection,
                             VoiceConnectionStatus.Connecting,
-                            5000
+                            5000,
                         );
                         // Probably moved voice channel
                     } catch {
@@ -99,22 +101,22 @@ export class MusicPlayer {
                     }
                 } else if (this.connection.rejoinAttempts < 5) {
                     /*
-        				The disconnect in this case is recoverable, and we also have <5 repeated attempts so we will reconnect.
-        			*/
+                        The disconnect in this case is recoverable, and we also have <5 repeated attempts so we will reconnect.
+                    */
                     await promisify(setTimeout)(
-                        (this.connection.rejoinAttempts + 1) * 5000
+                        (this.connection.rejoinAttempts + 1) * 5000,
                     );
                     this.connection.rejoin();
                 } else {
                     /*
-        				The disconnect in this case may be recoverable, but we have no more remaining attempts - destroy.
-        			*/
+                        The disconnect in this case may be recoverable, but we have no more remaining attempts - destroy.
+                    */
                     this.destroy();
                 }
             } else if (newState.status === VoiceConnectionStatus.Destroyed) {
                 /*
-        			Once destroyed, stop the subscription
-        		*/
+                    Once destroyed, stop the subscription
+                */
                 this.destroy();
             } else if (
                 !this.readyLock &&
@@ -122,16 +124,16 @@ export class MusicPlayer {
                     newState.status === VoiceConnectionStatus.Signalling)
             ) {
                 /*
-        			In the Signalling or Connecting states, we set a 20 second time limit for the connection to become ready
-        			before destroying the voice connection. This stops the voice connection permanently existing in one of these
-        			states.
-        		*/
+                    In the Signalling or Connecting states, we set a 20 second time limit for the connection to become ready
+                    before destroying the voice connection. This stops the voice connection permanently existing in one of these
+                    states.
+                */
                 this.readyLock = true;
                 try {
                     await entersState(
                         this.connection,
                         VoiceConnectionStatus.Ready,
-                        20000
+                        20000,
                     );
                 } catch {
                     if (
@@ -156,7 +158,7 @@ export class MusicPlayer {
         // Configure audio player
         this.player.on("stateChange", async (oldState, newState) => {
             this._loggerService.debug(
-                `State Changed: from ${oldState.status} to ${newState.status}`
+                `State Changed: from ${oldState.status} to ${newState.status}`,
             );
             if (
                 newState.status === AudioPlayerStatus.Idle &&
@@ -166,12 +168,12 @@ export class MusicPlayer {
                 // If the Idle state is entered from a non-Idle state, it means that an audio resource has finished playing.
                 // The queue is then processed to start playing the next track, if one is available.
                 this._loggerService.debug(
-                    `${this.current.metadata.videoInfo.title} finished playing`
+                    `${this.current.metadata.videoInfo.title} finished playing`,
                 );
                 if (this.np.deletable) await this.np.delete();
                 if (this.looping && !this.destroyed)
                     this.queue.push({
-                        url: this.current.metadata.videoInfo.url,
+                        url: this.current.metadata.videoInfo.webpageUrl,
                         metadata: this.current.metadata,
                     });
                 this.np = null;
@@ -187,7 +189,7 @@ export class MusicPlayer {
                 `${error.name}: ${error.message} with resource ${
                     (error.resource as AudioResource<Metadata>).metadata
                         .videoInfo.title
-                }`
+                }`,
             );
             await this.channel.send("嗯....似乎沒辦法唱下去的樣子...");
         });
@@ -202,12 +204,11 @@ export class MusicPlayer {
      */
     public async createResource(
         url: string,
-        requester: GuildMember
+        requester: GuildMember,
     ): Promise<Track> {
         try {
-            const info = await video_info(url);
             const metadata: Metadata = {
-                videoInfo: info.video_details,
+                videoInfo: await extractInfo(url),
                 requester,
             };
             return { url: url, metadata: metadata };
@@ -215,10 +216,10 @@ export class MusicPlayer {
             console.log(err);
             this._loggerService.error(
                 "Error occur when getting video info",
-                err
+                err,
             );
             await this.channel.send(
-                "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確"
+                "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確",
             );
             throw err;
         }
@@ -254,7 +255,7 @@ export class MusicPlayer {
         this._loggerService.debug(`Processing queue of ${this.guild.name}`);
         if (this.destroyed) {
             this._loggerService.warn(
-                `Music player of ${this.guild.name} has already been destroyed`
+                `Music player of ${this.guild.name} has already been destroyed`,
             );
             return;
         }
@@ -265,12 +266,12 @@ export class MusicPlayer {
         ) {
             if (this.queue.length === 0) {
                 await this.channel.send(
-                    "清單中的歌曲都唱完啦! 那我就先去休息了!"
+                    "清單中的歌曲都唱完啦! 那我就先去休息了!",
                 );
                 this.destroy();
             }
             this._loggerService.debug(
-                `Queue of ${this.guild.name} locked or player is busy, skipping`
+                `Queue of ${this.guild.name} locked or player is busy, skipping`,
             );
             return;
         }
@@ -287,24 +288,28 @@ export class MusicPlayer {
             throw new Error("Next track is undefined, this should not happen");
 
         try {
-            const s = await stream(nextTrack.url);
-            const resource = createAudioResource(s.stream, {
-                metadata: nextTrack.metadata,
-                inputType: s.type,
-            });
+            const resource = createAudioResource(
+                createOpusStreamByDownload(
+                    nextTrack.metadata.videoInfo.audioUrl,
+                ),
+                {
+                    metadata: nextTrack.metadata,
+                    inputType: StreamType.OggOpus,
+                },
+            );
             this.current = resource;
             this.np = await this.channel.send(
-                `**正在撥放:** \`${this.current.metadata.videoInfo.title}\` 點歌者: \`${this.current.metadata.requester.displayName}\``
+                `**正在撥放:** \`${this.current.metadata.videoInfo.title}\` 點歌者: \`${this.current.metadata.requester.displayName}\``,
             );
             this.player.play(resource);
             this.queueLock = false;
             this._loggerService.debug(
-                `${this.current.metadata.videoInfo.title} started playing`
+                `${this.current.metadata.videoInfo.title} started playing`,
             );
         } catch (err) {
             this._loggerService.error(
                 "Error occurs when preparing next song",
-                err
+                err,
             );
             this.queueLock = false;
             return this.processQueue();
