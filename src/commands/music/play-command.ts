@@ -13,6 +13,7 @@ import { injectable } from "tsyringe";
 import { LoggerService } from "../../utils/logger-service";
 import { GraphicService } from "../../graphics/graphic-service";
 import { extractInfoFromPlaylist, search } from "../../music/ytdlp";
+import { batchRun } from "../../utils/promise";
 
 @Discord()
 @injectable()
@@ -63,15 +64,15 @@ class PlayCommand {
             );
         } else if (target.match(youtubePlaylistRegex) !== null) {
             const playlist = await extractInfoFromPlaylist(target);
-            const tasks: Promise<Track>[] = [];
+            const tasks: (() => Promise<Track>)[] = [];
             for (const item of playlist.items)
-                tasks.push(
+                tasks.push(() =>
                     musicPlayer.createResource(
                         item.webpageUrl,
                         user as GuildMember,
                     ),
                 );
-            const resources = await Promise.all(tasks);
+            const resources = await batchRun(tasks, 4);
             this._loggerService.debug("Resources created");
             await interaction.editReply(
                 `\`\`\`[已增加 ${playlist.title} 的所有歌曲到撥放序列中]\`\`\``,
