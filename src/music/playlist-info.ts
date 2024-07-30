@@ -1,6 +1,10 @@
-import { VideoInfo } from "./video-info";
+export interface PlaylistItem {
+    title: string;
+    webpageUrl: string;
+    durationString: string;
+}
 
 export interface PlaylistInfo {
     title: string;
-    items: VideoInfo[];
+    items: PlaylistItem[];
 }

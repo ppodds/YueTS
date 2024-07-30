@@ -1,16 +1,19 @@
 import { execFile } from "child_process";
 import { promisify } from "util";
 import { VideoInfo } from "./video-info";
-import { PlaylistInfo } from "./playlist-info";
+import { PlaylistInfo, PlaylistItem } from "./playlist-info";
 
-interface YTDLPVideoInfo {
+interface YTDLPBasicInfo {
     title: string;
     webpage_url: string;
-    url: string;
     duration_string: string;
 }
 
-interface YTDLPPlaylistInfo extends YTDLPVideoInfo {
+interface YTDLPVideoInfo extends YTDLPBasicInfo {
+    url: string;
+}
+
+interface YTDLPPlaylistItem extends YTDLPBasicInfo {
     playlist_title: string;
 }
 
@@ -18,8 +21,16 @@ function toVideoInfo(ytdlpVideoInfo: YTDLPVideoInfo): VideoInfo {
     return {
         title: ytdlpVideoInfo.title,
         webpageUrl: ytdlpVideoInfo.webpage_url,
-        audioUrl: ytdlpVideoInfo.url,
         durationString: ytdlpVideoInfo.duration_string,
+        audioUrl: ytdlpVideoInfo.url,
+    };
+}
+
+function toPlaylistItem(ytdlpPlaylistItem: YTDLPPlaylistItem): PlaylistItem {
+    return {
+        title: ytdlpPlaylistItem.title,
+        webpageUrl: ytdlpPlaylistItem.webpage_url,
+        durationString: ytdlpPlaylistItem.duration_string,
     };
 }
 
@@ -37,7 +48,7 @@ export async function extractInfo(url: string): Promise<VideoInfo> {
         "bestaudio/best",
         url,
     ]);
-    return toVideoInfo(JSON.parse(stdout));
+    return toVideoInfo(JSON.parse(stdout) as YTDLPVideoInfo);
 }
 
 export async function extractInfoFromPlaylist(
@@ -48,9 +59,11 @@ export async function extractInfoFromPlaylist(
         // run quiet
         "-q",
         "--no-warnings",
+        // output playlist only (reduce time)
+        "--flat-playlist",
         // print JSON information
         "--print",
-        "{title,url,webpage_url,duration_string,playlist_title}",
+        "{title,webpage_url,duration_string,playlist_title}",
         // select format
         "-f",
         "bestaudio/best",
@@ -62,16 +75,18 @@ export async function extractInfoFromPlaylist(
     return {
         title:
             parsed.length !== 0
-                ? (JSON.parse(parsed[0]) as YTDLPPlaylistInfo).title
+                ? (JSON.parse(parsed[0]) as YTDLPPlaylistItem).playlist_title
                 : "未知播放清單",
-        items: parsed.map((json) => toVideoInfo(JSON.parse(json))),
+        items: parsed.map((json) =>
+            toPlaylistItem(JSON.parse(json) as YTDLPPlaylistItem),
+        ),
     };
 }
 
 export async function search(
     keyword: string,
     options?: { limit?: number },
-): Promise<VideoInfo[]> {
+): Promise<PlaylistItem[]> {
     if (options?.limit !== undefined && options.limit <= 0) {
         throw new Error("The result amount limit should larger than 0");
     }
@@ -80,9 +95,11 @@ export async function search(
         // run quiet
         "-q",
         "--no-warnings",
+        // output playlist only (reduce time)
+        "--flat-playlist",
         // print JSON information
         "--print",
-        "{title,url,webpage_url,duration_string}",
+        "{title,webpage_url,duration_string,playlist_title}",
         // select format
         "-f",
         "bestaudio/best",
@@ -91,5 +108,7 @@ export async function search(
     const parsed = stdout.split("\n");
     // there is always a line ending at the end
     parsed.pop();
-    return parsed.map((json) => toVideoInfo(JSON.parse(json)));
+    return parsed.map((json) =>
+        toPlaylistItem(JSON.parse(json) as YTDLPPlaylistItem),
+    );
 }
