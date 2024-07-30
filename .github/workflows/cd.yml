@@ -12,7 +12,7 @@ jobs:
     uses: ppodds/workflows/.github/workflows/build-and-push-image.yml@master
     with:
       image_name: yue
-      registry: https://docker.io
+      registry: docker.io
       image_tag: ${{ github.ref_name }}
       project_name: ppodds
     secrets:
