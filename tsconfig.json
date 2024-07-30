@@ -17,8 +17,15 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "strict": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "allowJs": true,
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "node_modules"]
+  "include": [
+    "src/**/*.ts",
+    "src/image/phash.js"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "node_modules"
+  ]
 }

@@ -19,7 +19,11 @@ RUN npm pkg delete scripts.prepare
 
 RUN pnpm prune --prod
 
-FROM node:20.14.0 As production
+FROM node:20.14.0-slim AS production
+
+RUN apt update && apt install -y wget ffmpeg python3   \
+    && wget -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp && chmod +x /usr/local/bin/yt-dlp  \
+    && apt remove -y wget && apt clean
 
 WORKDIR /app
 
@@ -27,7 +31,6 @@ RUN chown node:node /app
 
 COPY --chown=node:node --from=build /app/dist ./dist
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
-COPY --chown=node:node ./src ./src
 COPY --chown=node:node ./assets ./assets
 
 USER node
