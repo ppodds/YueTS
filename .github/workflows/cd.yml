@@ -32,10 +32,10 @@ jobs:
       REGISTRY_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
   
   trigger-deploy:
-    needs: build-image-and-push
+    needs: [generate-image-tag, build-image-and-push]
     uses: ppodds/workflows/.github/workflows/update-helm-chart.yml@master
     with:
       repo: ppodds/yue-helm
-      app_version: ${{ github.ref_name }}
+      app_version: ${{ needs.generate-image-tag.outputs.tag }}
     secrets:
       TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
