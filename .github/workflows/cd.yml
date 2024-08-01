@@ -6,14 +6,26 @@ on:
 jobs:
   test:
     uses: ./.github/workflows/unit-test.yml
-  
-  build-image-and-push:
+
+  generate-image-tag:
     needs: test
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.get-tag.outputs.tag }}
+    steps:
+      - name: replace + with -
+        id: get-tag
+        run: |
+          tag=${{ github.ref_name }}
+          echo "tag=${tag//+/-}" >> $GITHUB_OUTPUT
+
+  build-image-and-push:
+    needs: generate-image-tag
     uses: ppodds/workflows/.github/workflows/build-and-push-image.yml@master
     with:
       image_name: yue
       registry: docker.io
-      image_tag: ${{ github.ref_name }}
+      image_tag: ${{ needs.generate-image-tag.outputs.tag }}
       project_name: ppodds
     secrets:
       REGISTRY_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
