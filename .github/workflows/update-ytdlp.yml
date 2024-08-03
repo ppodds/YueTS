@@ -24,7 +24,7 @@ jobs:
           latest=$(date -d ${{ needs.get-latest-version.outputs.latest-release-date }} +%s)
           current=$(date -d ${{ needs.get-current-version.outputs.current-release-date }} +%s)
           
-          if [ $latest -ge $current ];
+          if [ $latest -gt $current ];
           then
               echo "need_update=true" >> $GITHUB_OUTPUT
           fi
