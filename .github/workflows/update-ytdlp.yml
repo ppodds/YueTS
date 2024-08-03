@@ -1,4 +1,4 @@
-name: Check yt-dlp version
+name: Check yt-dlp version and update Dockerfile
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  RELEASE_BRANCH:: release
+  RELEASE_BRANCH: release
 
 jobs:
   get-latest-version:
