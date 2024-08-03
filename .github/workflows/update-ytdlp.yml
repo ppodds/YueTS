@@ -36,6 +36,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: release
+          token: ${{ secrets.CI_GH_TOKEN }}
       - name: Update the yt-dlp version in Dockerfile
         run: sed -E -i 's/https:\/\/github\.com\/yt-dlp\/yt-dlp\/releases\/download\/([0-9\.]+)\/yt-dlp/https:\/\/github\.com\/yt-dlp\/yt-dlp\/releases\/download\/${{ needs.get-latest-version.outputs.latest-release-tag }}\/yt-dlp/' Dockerfile
       - name: Get the current app version
