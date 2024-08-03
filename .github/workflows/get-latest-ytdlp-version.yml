@@ -1,0 +1,31 @@
+name: Get the latest version of yt-dlp
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    outputs:
+      latest-release-tag:
+        description: "The latest release tag of yt-dlp"
+        value: ${{ jobs.get-latest-release.outputs.latest-release-tag }}
+      latest-release-date:
+        description: "The latest release date of yt-dlp"
+        value: ${{ jobs.get-latest-release.outputs.latest-release-date }}
+
+jobs:
+  get-latest-release:
+    runs-on: ubuntu-latest
+    outputs:
+      latest-release-tag: ${{ steps.get-latest-version.outputs.tag }}
+      latest-release-date: ${{ steps.get-latest-version.outputs.date }}
+    steps:
+    - name: Get the latest release version
+      id: get-latest-version
+      run: |
+        # get the latest tag
+        tag=$(curl https://api.github.com/repos/yt-dlp/yt-dlp/releases | jq .[0].tag_name)
+        # remove "
+        date=${tag//\"/}
+        # replace . with -
+        date=${date//./-}
+        echo "tag=$tag" >> $GITHUB_OUTPUT
+        echo "date=$date" >> $GITHUB_OUTPUT

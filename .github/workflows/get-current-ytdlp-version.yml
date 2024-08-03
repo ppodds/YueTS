@@ -1,0 +1,42 @@
+name: Get the current version of yt-dlp
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        type: string
+        required: true
+        description: "The branch should be check"
+  workflow_call:
+    inputs:
+      branch:
+        type: string
+        required: true
+        description: "The branch should be check"
+    outputs:
+      current-release-tag:
+        description: "The current release tag of yt-dlp"
+        value: ${{ jobs.get-current-version.outputs.latest-version }}
+      current-release-date:
+        description: "The current release date of yt-dlp"
+        value: ${{ jobs.get-current-version.outputs.latest-version }}
+
+jobs:
+  get-current-version:
+    runs-on: ubuntu-latest
+    outputs:
+      current-release-tag: ${{ steps.get-current-version.outputs.tag }}
+      current-release-date: ${{ steps.get-current-version.outputs.date }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ inputs.branch }}
+    - name: Check the current version
+      id: get-current-version
+      run: |
+        # get the current tag
+        tag=$(cat Dockerfile | grep -Eo 'https:\/\/github.com\/yt-dlp\/yt-dlp\/releases\/download\/[0-9\.]+\/yt-dlp' | grep -Eo '[0-9]{4}\.[0-9]{2}\.[0-9]{2}')
+        # replace . with -
+        date=${tag//./-}
+        echo "tag=$tag" >> $GITHUB_OUTPUT
+        echo "date=$date" >> $GITHUB_OUTPUT
