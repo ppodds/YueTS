@@ -32,10 +32,10 @@ jobs:
     - name: Check if the latest version is newer than the current version
       id: check-version
       run: |
-        latest=$(date -d ${{ steps.get-latest-version.version }} +%s)
-        current=$(date -d ${{ steps.get-current-version.version }} +%s)
+        latest=$(date -d ${{ steps.get-latest-version.outputs.version }} +%s)
+        current=$(date -d ${{ steps.get-current-version.outputs.version }} +%s)
         
         if [ $latest -ge $current ];
         then
-            echo "latest_version=${{ steps.get-latest-version.version }}" >> $GITHUB_OUTPUT
+            echo "latest_version=${{ steps.get-latest-version.outputs.version }}" >> $GITHUB_OUTPUT
         fi
