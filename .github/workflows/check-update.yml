@@ -1,0 +1,41 @@
+name: Check yt-dlp version
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  check-latest-release:
+    runs-on: ubuntu-latest
+    outputs:
+      latest-version: ${{ steps.check-version.outputs.latest_version }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Get the latest release version
+      id: get-latest-version
+      run: |
+        # get the latest tag
+        tag=$(curl https://api.github.com/repos/yt-dlp/yt-dlp/releases | jq .[0].tag_name)
+        # remove "
+        version=${tag//\"/}
+        # replace . with -
+        version=${version//./-}
+        echo "version=$version" >> $GITHUB_OUTPUT
+    - name: Check the current version
+      id: get-current-version
+      run: |
+        # get the current tag
+        tag=$(cat Dockerfile | grep -Eo 'https:\/\/github.com\/yt-dlp\/yt-dlp\/releases\/download\/[0-9\.]+\/yt-dlp' | grep -Eo '[0-9]{4}\.[0-9]{2}\.[0-9]{2}')
+        # replace . with -
+        version=${tag//./-}
+        echo "version=$version" >> $GITHUB_OUTPUT
+    - name: Check if the latest version is newer than the current version
+      id: check-version
+      run: |
+        latest=$(date -d ${{ steps.get-latest-version.version }} +%s)
+        current=$(date -d ${{ steps.get-current-version.version }} +%s)
+        
+        if [ $latest -ge $current ];
+        then
+            echo "latest_version=${{ steps.get-latest-version.version }}" >> $GITHUB_OUTPUT
+        fi
