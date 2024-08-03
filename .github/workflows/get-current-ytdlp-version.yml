@@ -16,10 +16,10 @@ on:
     outputs:
       current-release-tag:
         description: "The current release tag of yt-dlp"
-        value: ${{ jobs.get-current-version.outputs.latest-version }}
+        value: ${{ jobs.get-current-version.outputs.current-release-tag }}
       current-release-date:
         description: "The current release date of yt-dlp"
-        value: ${{ jobs.get-current-version.outputs.latest-version }}
+        value: ${{ jobs.get-current-version.outputs.current-release-date }}
 
 jobs:
   get-current-version:
