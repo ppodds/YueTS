@@ -24,8 +24,8 @@ jobs:
         # get the latest tag
         tag=$(curl https://api.github.com/repos/yt-dlp/yt-dlp/releases | jq .[0].tag_name)
         # remove "
-        date=${tag//\"/}
+        tag=${tag//\"/}
         # replace . with -
-        date=${date//./-}
+        date=${tag//./-}
         echo "tag=$tag" >> $GITHUB_OUTPUT
         echo "date=$date" >> $GITHUB_OUTPUT
