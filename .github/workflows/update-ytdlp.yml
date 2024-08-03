@@ -5,16 +5,13 @@ on:
     - cron: '0 19 * * *'
   workflow_dispatch:
 
-env:
-  RELEASE_BRANCH: release
-
 jobs:
   get-latest-version:
     uses: ./.github/workflows/get-latest-ytdlp-version.yml
   get-current-version:
     uses: ./.github/workflows/get-current-ytdlp-version.yml
     with:
-      branch: ${{ env.RELEASE_BRANCH }}
+      branch: release
   check-need-update:
     runs-on: ubuntu-latest
     needs: [get-latest-version, get-current-version]
@@ -38,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ env.RELEASE_BRANCH }}
+          ref: release
       - name: Update the yt-dlp version in Dockerfile
         run: sed -E -i 's/https:\/\/github\.com\/yt-dlp\/yt-dlp\/releases\/download\/([0-9\.]+)\/yt-dlp/https:\/\/github\.com\/yt-dlp\/yt-dlp\/releases\/download\/${{ needs.get-latest-version.outputs.latest-release-tag }}\/yt-dlp/' Dockerfile
       - name: Get the current app version
