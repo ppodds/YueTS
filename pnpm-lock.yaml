@@ -112,8 +112,8 @@ importers:
         specifier: ^3.0.7
         version: 3.0.7
       '@types/validator':
-        specifier: ^13.12.0
-        version: 13.12.0
+        specifier: ^13.12.2
+        version: 13.12.2
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.13.1
         version: 7.13.1(@typescript-eslint/parser@7.13.1(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -764,8 +764,8 @@ packages:
   '@types/stream-buffers@3.0.7':
     resolution: {integrity: sha512-azOCy05sXVXrO+qklf0c/B07H/oHaIuDDAiHPVwlk3A9Ek+ksHyTeMajLZl3r76FxpPpxem//4Te61G1iW3Giw==}
 
-  '@types/validator@13.12.0':
-    resolution: {integrity: sha512-nH45Lk7oPIJ1RVOF6JgFI6Dy0QpHEzq4QecZhvguxYPDwT8c93prCMqAtiIttm39voZ+DDR+qkNnMpJmMBRqag==}
+  '@types/validator@13.12.2':
+    resolution: {integrity: sha512-6SlHBzUW8Jhf3liqrGGXyTJSIFe4nqlJ5A5KaMZ2l/vbM3Wh3KSybots/wfWVzNLK4D1NZluDlSQIbIEPx6oyA==}
 
   '@types/ws@8.5.10':
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
@@ -3577,7 +3577,7 @@ snapshots:
       '@types/bluebird': 3.5.42
       '@types/continuation-local-storage': 3.2.7
       '@types/lodash': 4.14.201
-      '@types/validator': 13.12.0
+      '@types/validator': 13.12.2
 
   '@types/stack-utils@2.0.3': {}
 
@@ -3585,7 +3585,7 @@ snapshots:
     dependencies:
       '@types/node': 20.14.6
 
-  '@types/validator@13.12.0': {}
+  '@types/validator@13.12.2': {}
 
   '@types/ws@8.5.10':
     dependencies:
@@ -5354,7 +5354,7 @@ snapshots:
   sequelize@6.37.3(mariadb@3.3.1):
     dependencies:
       '@types/debug': 4.1.12
-      '@types/validator': 13.12.0
+      '@types/validator': 13.12.2
       debug: 4.3.4(supports-color@5.5.0)
       dottie: 2.0.6
       inflection: 1.13.4
