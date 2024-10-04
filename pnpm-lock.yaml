@@ -78,8 +78,8 @@ importers:
         specifier: ~0.33.4
         version: 0.33.4
       sodium-native:
-        specifier: ^4.1.1
-        version: 4.1.1
+        specifier: ^4.2.1
+        version: 4.2.1
       stream-buffers:
         specifier: ^3.0.3
         version: 3.0.3
@@ -2451,8 +2451,8 @@ packages:
     resolution: {integrity: sha512-bSiSngZ/jWeX93BqeIAbImyTbEihizcwNjFoRUIY/T1wWQsfsm2Vw1agPKylXvQTU7iASGdHhyqRlqQzfz+Htg==}
     engines: {node: '>=18'}
 
-  sodium-native@4.1.1:
-    resolution: {integrity: sha512-LXkAfRd4FHtkQS4X6g+nRcVaN7mWVNepV06phIsC6+IZFvGh1voW5TNQiQp2twVaMf05gZqQjuS+uWLM6gHhNQ==}
+  sodium-native@4.2.1:
+    resolution: {integrity: sha512-48X3PfRLW+f0fgb3J7f7mkZ9eBKcGR/bD5mdXXLAx4RWwKUe3095yPQgiUUQTfh8Q29JzwhSQATitQDBIozN/w==}
 
   source-map-support@0.5.13:
     resolution: {integrity: sha512-SHSKFHadjVA5oR4PPqhtAVdcBWwRYVd6g6cAXnIbRiIwc2EhPrTuKUBdSLvlEKyIP3GCf89fltvcZiP9MMFA1w==}
@@ -5444,7 +5444,7 @@ snapshots:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 5.0.0
 
-  sodium-native@4.1.1:
+  sodium-native@4.2.1:
     dependencies:
       node-gyp-build: 4.8.1
 
