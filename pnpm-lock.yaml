@@ -78,8 +78,8 @@ importers:
         specifier: ~0.33.4
         version: 0.33.4
       sodium-native:
-        specifier: ^4.1.1
-        version: 4.1.1
+        specifier: ^4.2.2
+        version: 4.2.2
       stream-buffers:
         specifier: ^3.0.3
         version: 3.0.3
@@ -1320,6 +1320,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -2451,8 +2452,8 @@ packages:
     resolution: {integrity: sha512-bSiSngZ/jWeX93BqeIAbImyTbEihizcwNjFoRUIY/T1wWQsfsm2Vw1agPKylXvQTU7iASGdHhyqRlqQzfz+Htg==}
     engines: {node: '>=18'}
 
-  sodium-native@4.1.1:
-    resolution: {integrity: sha512-LXkAfRd4FHtkQS4X6g+nRcVaN7mWVNepV06phIsC6+IZFvGh1voW5TNQiQp2twVaMf05gZqQjuS+uWLM6gHhNQ==}
+  sodium-native@4.2.2:
+    resolution: {integrity: sha512-/gYaDtIK76FRcW0oBhIKJvLCDp706rJugd8wxJUBdbutgWrDlviG4tp8k+HfIRdy0Z+MbQE32ZGr4RPu1vXSsw==}
 
   source-map-support@0.5.13:
     resolution: {integrity: sha512-SHSKFHadjVA5oR4PPqhtAVdcBWwRYVd6g6cAXnIbRiIwc2EhPrTuKUBdSLvlEKyIP3GCf89fltvcZiP9MMFA1w==}
@@ -5444,7 +5445,7 @@ snapshots:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 5.0.0
 
-  sodium-native@4.1.1:
+  sodium-native@4.2.2:
     dependencies:
       node-gyp-build: 4.8.1
 
