@@ -72,8 +72,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2
       sequelize:
-        specifier: ^6.37.3
-        version: 6.37.3(mariadb@3.3.1)
+        specifier: ^6.37.5
+        version: 6.37.5(mariadb@3.3.1)
       sharp:
         specifier: ~0.33.4
         version: 0.33.4
@@ -1320,6 +1320,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -2365,8 +2366,8 @@ packages:
     resolution: {integrity: sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==}
     engines: {node: '>= 10.0.0'}
 
-  sequelize@6.37.3:
-    resolution: {integrity: sha512-V2FTqYpdZjPy3VQrZvjTPnOoLm0KudCRXfGWp48QwhyPPp2yW8z0p0sCYZd/em847Tl2dVxJJ1DR+hF+O77T7A==}
+  sequelize@6.37.5:
+    resolution: {integrity: sha512-10WA4poUb3XWnUROThqL2Apq9C2NhyV1xHPMZuybNMCucDsbbFuKg51jhmyvvAUyUqCiimwTZamc3AHhMoBr2Q==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       ibm_db: '*'
@@ -4440,7 +4441,7 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.5
     transitivePeerDependencies:
       - supports-color
 
@@ -5351,11 +5352,11 @@ snapshots:
 
   sequelize-pool@7.1.0: {}
 
-  sequelize@6.37.3(mariadb@3.3.1):
+  sequelize@6.37.5(mariadb@3.3.1):
     dependencies:
       '@types/debug': 4.1.12
       '@types/validator': 13.12.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.5
       dottie: 2.0.6
       inflection: 1.13.4
       lodash: 4.17.21
