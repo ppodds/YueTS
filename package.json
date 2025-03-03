@@ -61,7 +61,7 @@
     "stream-buffers": "^3.0.3",
     "tslib": "^2.6.3",
     "tsyringe": "^4.8.0",
-    "utf-8-validate": "^6.0.4",
+    "utf-8-validate": "^6.0.5",
     "zlib-sync": "^0.1.9"
   },
   "devDependencies": {
