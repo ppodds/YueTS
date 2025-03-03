@@ -57,7 +57,7 @@
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.3",
     "sharp": "~0.33.4",
-    "sodium-native": "^4.1.1",
+    "sodium-native": "^4.3.3",
     "stream-buffers": "^3.0.3",
     "tslib": "^2.6.3",
     "tsyringe": "^4.8.0",
