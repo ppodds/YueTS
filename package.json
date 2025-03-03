@@ -43,7 +43,7 @@
     "async-lock": "^1.4.1",
     "axios": "^1.7.2",
     "bufferutil": "^4.0.8",
-    "canvas": "^2.11.2",
+    "canvas": "^3.1.0",
     "discord-api-types": "^0.37.90",
     "discord.js": "^14.15.3",
     "discord.js-message-listener": "^3.0.2",
