@@ -45,8 +45,8 @@ importers:
         specifier: ^14.18.0
         version: 14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       discord.js-message-listener:
-        specifier: ^3.0.2
-        version: 3.0.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        specifier: ^3.0.3
+        version: 3.0.3(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       discordx:
         specifier: ^11.12.2
         version: 11.12.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))
@@ -376,10 +376,6 @@ packages:
   '@discordjs/rest@2.4.3':
     resolution: {integrity: sha512-+SO4RKvWsM+y8uFHgYQrcTl/3+cY02uQOH7/7bKbVZsTfrfpoE62o5p+mmV+s7FVhTX82/kQUGGbu4YlV60RtA==}
     engines: {node: '>=18'}
-
-  '@discordjs/util@1.1.0':
-    resolution: {integrity: sha512-IndcI5hzlNZ7GS96RV3Xw1R2kaDuXEp7tRIy/KlhidpN/BQ1qh1NZt3377dMLTa44xDUNKT7hnXkA/oUAzD/lg==}
-    engines: {node: '>=16.11.0'}
 
   '@discordjs/util@1.1.1':
     resolution: {integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g==}
@@ -1284,11 +1280,8 @@ packages:
   discord-api-types@0.37.119:
     resolution: {integrity: sha512-WasbGFXEB+VQWXlo6IpW3oUv73Yuau1Ig4AZF/m13tXcTKnMpc/mHjpztIlz4+BM9FG9BHQkEXiPto3bKduQUg==}
 
-  discord-api-types@0.37.83:
-    resolution: {integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA==}
-
-  discord.js-message-listener@3.0.2:
-    resolution: {integrity: sha512-fpNvH6L5j5e70XMQqt2y6KxvKYwUk+CixvVCP9Z0AyYfDz5l+gaamRJhQymGFEA4bcLjCMtSOsu6Ctibkex5lA==}
+  discord.js-message-listener@3.0.3:
+    resolution: {integrity: sha512-rryDNvmmqIQRR4bIKX4/WhhIoBiazEjlpG9kJRT09QU1Th7KYm98HG1LussHRtMnYPLdzg0/IG/s6lm4toP14Q==}
     peerDependencies:
       discord.js: ^14.0.0
 
@@ -3266,8 +3259,6 @@ snapshots:
       tslib: 2.6.3
       undici: 6.21.1
 
-  '@discordjs/util@1.1.0': {}
-
   '@discordjs/util@1.1.1': {}
 
   '@discordjs/voice@0.18.0(@discordjs/opus@0.10.0)(bufferutil@4.0.8)(ffmpeg-static@5.2.0)(utf-8-validate@6.0.4)':
@@ -4281,9 +4272,7 @@ snapshots:
 
   discord-api-types@0.37.119: {}
 
-  discord-api-types@0.37.83: {}
-
-  discord.js-message-listener@3.0.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
+  discord.js-message-listener@3.0.3(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
     dependencies:
       discord.js: 14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)
       tiny-typed-emitter: 2.1.0
