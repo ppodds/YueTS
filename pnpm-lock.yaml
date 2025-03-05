@@ -19,7 +19,7 @@ importers:
         version: 2.4.3
       '@discordjs/voice':
         specifier: ^0.18.0
-        version: 0.18.0(@discordjs/opus@0.10.0)(bufferutil@4.0.8)(ffmpeg-static@5.2.0)(utf-8-validate@6.0.4)
+        version: 0.18.0(@discordjs/opus@0.10.0)(bufferutil@4.0.9)(ffmpeg-static@5.2.0)(utf-8-validate@6.0.4)
       '@discordx/importer':
         specifier: ^1.3.1
         version: 1.3.1
@@ -33,8 +33,8 @@ importers:
         specifier: ^1.7.2
         version: 1.7.4
       bufferutil:
-        specifier: ^4.0.8
-        version: 4.0.8
+        specifier: ^4.0.9
+        version: 4.0.9
       canvas:
         specifier: ^3.1.0
         version: 3.1.0
@@ -43,13 +43,13 @@ importers:
         version: 0.37.119
       discord.js:
         specifier: ^14.18.0
-        version: 14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+        version: 14.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.4)
       discord.js-message-listener:
         specifier: ^3.0.2
-        version: 3.0.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        version: 3.0.2(discord.js@14.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.4))
       discordx:
         specifier: ^11.12.2
-        version: 11.12.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))
+        version: 11.12.2(discord.js@14.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.4))
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -376,10 +376,6 @@ packages:
   '@discordjs/rest@2.4.3':
     resolution: {integrity: sha512-+SO4RKvWsM+y8uFHgYQrcTl/3+cY02uQOH7/7bKbVZsTfrfpoE62o5p+mmV+s7FVhTX82/kQUGGbu4YlV60RtA==}
     engines: {node: '>=18'}
-
-  '@discordjs/util@1.1.0':
-    resolution: {integrity: sha512-IndcI5hzlNZ7GS96RV3Xw1R2kaDuXEp7tRIy/KlhidpN/BQ1qh1NZt3377dMLTa44xDUNKT7hnXkA/oUAzD/lg==}
-    engines: {node: '>=16.11.0'}
 
   '@discordjs/util@1.1.1':
     resolution: {integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g==}
@@ -1048,8 +1044,8 @@ packages:
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
 
-  bufferutil@4.0.8:
-    resolution: {integrity: sha512-4T53u4PdgsXqKaIctwF8ifXlRTTmEPJ8iEPWFdGZvcf7sbwYo6FKFEX9eNNAnzFZ7EzJAQ3CJeOtCRA4rDp7Pw==}
+  bufferutil@4.0.9:
+    resolution: {integrity: sha512-WDtdLmJvAuNNPzByAYpRo2rF1Mmradw6gvWsQKf63476DDXmomT9zUiGypLcG4ibIM67vhAj8jJRdbmEws2Aqw==}
     engines: {node: '>=6.14.2'}
 
   call-bind-apply-helpers@1.0.2:
@@ -1283,9 +1279,6 @@ packages:
 
   discord-api-types@0.37.119:
     resolution: {integrity: sha512-WasbGFXEB+VQWXlo6IpW3oUv73Yuau1Ig4AZF/m13tXcTKnMpc/mHjpztIlz4+BM9FG9BHQkEXiPto3bKduQUg==}
-
-  discord-api-types@0.37.83:
-    resolution: {integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA==}
 
   discord.js-message-listener@3.0.2:
     resolution: {integrity: sha512-fpNvH6L5j5e70XMQqt2y6KxvKYwUk+CixvVCP9Z0AyYfDz5l+gaamRJhQymGFEA4bcLjCMtSOsu6Ctibkex5lA==}
@@ -3266,17 +3259,15 @@ snapshots:
       tslib: 2.6.3
       undici: 6.21.1
 
-  '@discordjs/util@1.1.0': {}
-
   '@discordjs/util@1.1.1': {}
 
-  '@discordjs/voice@0.18.0(@discordjs/opus@0.10.0)(bufferutil@4.0.8)(ffmpeg-static@5.2.0)(utf-8-validate@6.0.4)':
+  '@discordjs/voice@0.18.0(@discordjs/opus@0.10.0)(bufferutil@4.0.9)(ffmpeg-static@5.2.0)(utf-8-validate@6.0.4)':
     dependencies:
       '@types/ws': 8.5.14
       discord-api-types: 0.37.119
       prism-media: 1.3.5(@discordjs/opus@0.10.0)(ffmpeg-static@5.2.0)
       tslib: 2.6.3
-      ws: 8.18.1(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      ws: 8.18.1(bufferutil@4.0.9)(utf-8-validate@6.0.4)
     transitivePeerDependencies:
       - '@discordjs/opus'
       - bufferutil
@@ -3285,7 +3276,7 @@ snapshots:
       - opusscript
       - utf-8-validate
 
-  '@discordjs/ws@1.2.1(bufferutil@4.0.8)(utf-8-validate@6.0.4)':
+  '@discordjs/ws@1.2.1(bufferutil@4.0.9)(utf-8-validate@6.0.4)':
     dependencies:
       '@discordjs/collection': 2.1.0
       '@discordjs/rest': 2.4.3
@@ -3295,7 +3286,7 @@ snapshots:
       '@vladfrangu/async_event_emitter': 2.2.4
       discord-api-types: 0.37.119
       tslib: 2.6.3
-      ws: 8.17.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      ws: 8.17.0(bufferutil@4.0.9)(utf-8-validate@6.0.4)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -4069,7 +4060,7 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  bufferutil@4.0.8:
+  bufferutil@4.0.9:
     dependencies:
       node-gyp-build: 4.6.1
 
@@ -4281,21 +4272,19 @@ snapshots:
 
   discord-api-types@0.37.119: {}
 
-  discord-api-types@0.37.83: {}
-
-  discord.js-message-listener@3.0.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
+  discord.js-message-listener@3.0.2(discord.js@14.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.4)):
     dependencies:
-      discord.js: 14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      discord.js: 14.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.4)
       tiny-typed-emitter: 2.1.0
 
-  discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4):
+  discord.js@14.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.4):
     dependencies:
       '@discordjs/builders': 1.10.1
       '@discordjs/collection': 1.5.3
       '@discordjs/formatters': 0.6.0
       '@discordjs/rest': 2.4.3
       '@discordjs/util': 1.1.1
-      '@discordjs/ws': 1.2.1(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      '@discordjs/ws': 1.2.1(bufferutil@4.0.9)(utf-8-validate@6.0.4)
       '@sapphire/snowflake': 3.5.3
       discord-api-types: 0.37.119
       fast-deep-equal: 3.1.3
@@ -4306,11 +4295,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  discordx@11.12.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
+  discordx@11.12.2(discord.js@14.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.4)):
     dependencies:
       '@discordx/di': 3.3.2
       '@discordx/internal': 1.1.4
-      discord.js: 14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      discord.js: 14.18.0(bufferutil@4.0.9)(utf-8-validate@6.0.4)
       lodash: 4.17.21
 
   doctrine@3.0.0:
@@ -6080,14 +6069,14 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 3.0.7
 
-  ws@8.17.0(bufferutil@4.0.8)(utf-8-validate@6.0.4):
+  ws@8.17.0(bufferutil@4.0.9)(utf-8-validate@6.0.4):
     optionalDependencies:
-      bufferutil: 4.0.8
+      bufferutil: 4.0.9
       utf-8-validate: 6.0.4
 
-  ws@8.18.1(bufferutil@4.0.8)(utf-8-validate@6.0.4):
+  ws@8.18.1(bufferutil@4.0.9)(utf-8-validate@6.0.4):
     optionalDependencies:
-      bufferutil: 4.0.8
+      bufferutil: 4.0.9
       utf-8-validate: 6.0.4
 
   y18n@5.0.8: {}
