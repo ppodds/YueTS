@@ -51,8 +51,8 @@ importers:
         specifier: ^11.12.2
         version: 11.12.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4))
       dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
+        specifier: ^16.4.7
+        version: 16.4.7
       ehentai-api:
         specifier: ^0.0.4
         version: 0.0.4
@@ -376,10 +376,6 @@ packages:
   '@discordjs/rest@2.4.3':
     resolution: {integrity: sha512-+SO4RKvWsM+y8uFHgYQrcTl/3+cY02uQOH7/7bKbVZsTfrfpoE62o5p+mmV+s7FVhTX82/kQUGGbu4YlV60RtA==}
     engines: {node: '>=18'}
-
-  '@discordjs/util@1.1.0':
-    resolution: {integrity: sha512-IndcI5hzlNZ7GS96RV3Xw1R2kaDuXEp7tRIy/KlhidpN/BQ1qh1NZt3377dMLTa44xDUNKT7hnXkA/oUAzD/lg==}
-    engines: {node: '>=16.11.0'}
 
   '@discordjs/util@1.1.1':
     resolution: {integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g==}
@@ -1284,9 +1280,6 @@ packages:
   discord-api-types@0.37.119:
     resolution: {integrity: sha512-WasbGFXEB+VQWXlo6IpW3oUv73Yuau1Ig4AZF/m13tXcTKnMpc/mHjpztIlz4+BM9FG9BHQkEXiPto3bKduQUg==}
 
-  discord-api-types@0.37.83:
-    resolution: {integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA==}
-
   discord.js-message-listener@3.0.2:
     resolution: {integrity: sha512-fpNvH6L5j5e70XMQqt2y6KxvKYwUk+CixvVCP9Z0AyYfDz5l+gaamRJhQymGFEA4bcLjCMtSOsu6Ctibkex5lA==}
     peerDependencies:
@@ -1306,8 +1299,8 @@ packages:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
 
-  dotenv@16.4.5:
-    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+  dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
 
   dottie@2.0.6:
@@ -3266,8 +3259,6 @@ snapshots:
       tslib: 2.6.3
       undici: 6.21.1
 
-  '@discordjs/util@1.1.0': {}
-
   '@discordjs/util@1.1.1': {}
 
   '@discordjs/voice@0.18.0(@discordjs/opus@0.10.0)(bufferutil@4.0.8)(ffmpeg-static@5.2.0)(utf-8-validate@6.0.4)':
@@ -4281,8 +4272,6 @@ snapshots:
 
   discord-api-types@0.37.119: {}
 
-  discord-api-types@0.37.83: {}
-
   discord.js-message-listener@3.0.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
     dependencies:
       discord.js: 14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)
@@ -4317,7 +4306,7 @@ snapshots:
     dependencies:
       esutils: 2.0.3
 
-  dotenv@16.4.5: {}
+  dotenv@16.4.7: {}
 
   dottie@2.0.6: {}
 
