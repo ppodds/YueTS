@@ -72,8 +72,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2
       sequelize:
-        specifier: ^6.37.3
-        version: 6.37.3(mariadb@3.3.1)
+        specifier: ^6.37.6
+        version: 6.37.6(mariadb@3.3.1)
       sharp:
         specifier: ~0.33.4
         version: 0.33.4
@@ -376,10 +376,6 @@ packages:
   '@discordjs/rest@2.4.3':
     resolution: {integrity: sha512-+SO4RKvWsM+y8uFHgYQrcTl/3+cY02uQOH7/7bKbVZsTfrfpoE62o5p+mmV+s7FVhTX82/kQUGGbu4YlV60RtA==}
     engines: {node: '>=18'}
-
-  '@discordjs/util@1.1.0':
-    resolution: {integrity: sha512-IndcI5hzlNZ7GS96RV3Xw1R2kaDuXEp7tRIy/KlhidpN/BQ1qh1NZt3377dMLTa44xDUNKT7hnXkA/oUAzD/lg==}
-    engines: {node: '>=16.11.0'}
 
   '@discordjs/util@1.1.1':
     resolution: {integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g==}
@@ -1283,9 +1279,6 @@ packages:
 
   discord-api-types@0.37.119:
     resolution: {integrity: sha512-WasbGFXEB+VQWXlo6IpW3oUv73Yuau1Ig4AZF/m13tXcTKnMpc/mHjpztIlz4+BM9FG9BHQkEXiPto3bKduQUg==}
-
-  discord-api-types@0.37.83:
-    resolution: {integrity: sha512-urGGYeWtWNYMKnYlZnOnDHm8fVRffQs3U0SpE8RHeiuLKb/u92APS8HoQnPTFbnXmY1vVnXjXO4dOxcAn3J+DA==}
 
   discord.js-message-listener@3.0.2:
     resolution: {integrity: sha512-fpNvH6L5j5e70XMQqt2y6KxvKYwUk+CixvVCP9Z0AyYfDz5l+gaamRJhQymGFEA4bcLjCMtSOsu6Ctibkex5lA==}
@@ -2518,8 +2511,8 @@ packages:
     resolution: {integrity: sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==}
     engines: {node: '>= 10.0.0'}
 
-  sequelize@6.37.3:
-    resolution: {integrity: sha512-V2FTqYpdZjPy3VQrZvjTPnOoLm0KudCRXfGWp48QwhyPPp2yW8z0p0sCYZd/em847Tl2dVxJJ1DR+hF+O77T7A==}
+  sequelize@6.37.6:
+    resolution: {integrity: sha512-4Slqjqpktofs7AVqWviFOInzP9w8ZRQDhF+DnRtm4WKIdIATpyzGgedyseP3xbgpBxapvfQcJv6CeIdZe4ZL2A==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       ibm_db: '*'
@@ -3265,8 +3258,6 @@ snapshots:
       magic-bytes.js: 1.10.0
       tslib: 2.6.3
       undici: 6.21.1
-
-  '@discordjs/util@1.1.0': {}
 
   '@discordjs/util@1.1.1': {}
 
@@ -4280,8 +4271,6 @@ snapshots:
       path-type: 4.0.0
 
   discord-api-types@0.37.119: {}
-
-  discord-api-types@0.37.83: {}
 
   discord.js-message-listener@3.0.2(discord.js@14.18.0(bufferutil@4.0.8)(utf-8-validate@6.0.4)):
     dependencies:
@@ -5676,11 +5665,11 @@ snapshots:
 
   sequelize-pool@7.1.0: {}
 
-  sequelize@6.37.3(mariadb@3.3.1):
+  sequelize@6.37.6(mariadb@3.3.1):
     dependencies:
       '@types/debug': 4.1.12
       '@types/validator': 13.12.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.5
       dottie: 2.0.6
       inflection: 1.13.4
       lodash: 4.17.21
