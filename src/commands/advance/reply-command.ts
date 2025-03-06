@@ -27,7 +27,7 @@ function getScope(interaction: CommandInteraction, isGlobal: boolean) {
 class ReplyCommand {
     constructor(
         private readonly _loggerService: LoggerService,
-        private readonly _graphicService: GraphicService
+        private readonly _graphicService: GraphicService,
     ) {}
 
     @Slash({ description: "新增對話回應" })
@@ -47,11 +47,11 @@ class ReplyCommand {
             type: ApplicationCommandOptionType.String,
         })
         key: string,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
-        if (!interaction.channel)
+        if (!interaction.channel || !interaction.channel.isSendable())
             return await interaction.reply(
-                "這個指令只能在有文字頻道的時候使用"
+                "這個指令只能在有文字頻道的時候使用",
             );
         if (
             await Reply.findOne({
@@ -65,7 +65,7 @@ class ReplyCommand {
             })
         )
             return await interaction.reply(
-                "好像已經有人對Yue下過相同的指示了呢~"
+                "好像已經有人對Yue下過相同的指示了呢~",
             );
 
         await interaction.reply("請輸入回應內容，若未輸入60秒後會自動取消");
@@ -92,7 +92,7 @@ class ReplyCommand {
                 interaction.inGuild() ? interaction.guildId : "dm channel"
             } key；${key} response: ${response.content} ${
                 interaction.inGuild() ? "global: " + isGlobal : ""
-            }`
+            }`,
         );
     }
 
@@ -113,7 +113,7 @@ class ReplyCommand {
             type: ApplicationCommandOptionType.String,
         })
         key: string,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
         const reply = await Reply.findOne({
             where: {
@@ -142,7 +142,7 @@ class ReplyCommand {
             type: ApplicationCommandOptionType.Boolean,
         })
         isGlobal: boolean,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
         const replies = await Reply.findAll({
             where: {
@@ -157,7 +157,7 @@ class ReplyCommand {
         if (replies.length <= 23) {
             const embed = this.generateEmbed(interaction);
             replies.forEach((reply) =>
-                embed.addFields({ name: reply.key, value: reply.response })
+                embed.addFields({ name: reply.key, value: reply.response }),
             );
             await interaction.reply({ embeds: [embed] });
         } else {
@@ -184,7 +184,7 @@ class ReplyCommand {
     generateEmbed(interaction: CommandInteraction) {
         const embed = this._graphicService.info(
             interaction.client,
-            "「以前你跟我說過的這些~ Yue通通都記住了喔~ :heart:」"
+            "「以前你跟我說過的這些~ Yue通通都記住了喔~ :heart:」",
         );
 
         embed.addFields(
@@ -197,7 +197,7 @@ class ReplyCommand {
                 name: "關鍵字",
                 value: "回應內容",
                 inline: false,
-            }
+            },
         );
         return embed;
     }

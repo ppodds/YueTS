@@ -7,6 +7,7 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "watch": "tsc --watch",
+    "typecheck": "tsc --noEmit",
     "deploy-cmd": "node ./dist/deploy-commands.js",
     "start": "node --no-deprecation --no-warnings ./dist/index.js",
     "dev": "concurrently 'npm:watch' 'sleep 5;nodemon ./dist/bot.js'",
@@ -87,5 +88,5 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
-  "version": "1.1.1"
+  "version": "1.1.2"
 }

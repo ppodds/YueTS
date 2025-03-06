@@ -191,7 +191,9 @@ export class MusicPlayer {
                         .videoInfo.title
                 }`,
             );
-            await this.channel.send("嗯....似乎沒辦法唱下去的樣子...");
+            if (this.channel.isSendable()) {
+                await this.channel.send("嗯....似乎沒辦法唱下去的樣子...");
+            }
         });
 
         this.connection.subscribe(this.player);
@@ -218,9 +220,11 @@ export class MusicPlayer {
                 "Error occur when getting video info",
                 err,
             );
-            await this.channel.send(
-                "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確",
-            );
+            if (this.channel.isSendable()) {
+                await this.channel.send(
+                    "在查詢指定影片時碰到了問題，請重試或檢查網址是否正確",
+                );
+            }
             throw err;
         }
     }
@@ -265,9 +269,11 @@ export class MusicPlayer {
             this.queue.length === 0
         ) {
             if (this.queue.length === 0) {
-                await this.channel.send(
-                    "清單中的歌曲都唱完啦! 那我就先去休息了!",
-                );
+                if (this.channel.isSendable()) {
+                    await this.channel.send(
+                        "清單中的歌曲都唱完啦! 那我就先去休息了!",
+                    );
+                }
                 this.destroy();
             }
             this._loggerService.debug(
@@ -298,9 +304,11 @@ export class MusicPlayer {
                 },
             );
             this.current = resource;
-            this.np = await this.channel.send(
-                `**正在撥放:** \`${this.current.metadata.videoInfo.title}\` 點歌者: \`${this.current.metadata.requester.displayName}\``,
-            );
+            if (this.channel.isSendable()) {
+                this.np = await this.channel.send(
+                    `**正在撥放:** \`${this.current.metadata.videoInfo.title}\` 點歌者: \`${this.current.metadata.requester.displayName}\``,
+                );
+            }
             this.player.play(resource);
             this.queueLock = false;
             this._loggerService.debug(
