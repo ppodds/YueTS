@@ -88,5 +88,11 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
-  "version": "1.1.2"
+  "version": "1.1.2",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@discordjs/opus",
+      "canvas"
+    ]
+  }
 }
