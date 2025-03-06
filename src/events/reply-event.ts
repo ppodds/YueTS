@@ -12,7 +12,7 @@ export class ReplyEvent {
 
     constructor(
         private readonly _loggerService: LoggerService,
-        private readonly _configService: ConfigService
+        private readonly _configService: ConfigService,
     ) {}
 
     @On({ event: "messageCreate" })
@@ -25,20 +25,20 @@ export class ReplyEvent {
                     message.content,
                     message.guildId,
                     false,
-                    false
+                    false,
                 ),
                 Reply.getResponse(
                     message.content,
                     message.author.id,
                     true,
-                    false
+                    false,
                 ),
             ]);
 
             this._loggerService.info(
                 `${message.guild.name}-${
                     (message.channel as TextChannel).name
-                }-${message.author.username}: ${message.content}`
+                }-${message.author.username}: ${message.content}`,
             );
 
             // 對話反應內容
@@ -54,7 +54,7 @@ export class ReplyEvent {
                     message.content,
                     message.author.id,
                     true,
-                    false
+                    false,
                 ),
                 // Reply.getResponse(message.content, message.guildId, true, true)
             ]);
@@ -82,15 +82,19 @@ export class ReplyEvent {
             // 30s cooldown
             setTimeout(
                 () => this._cooldown.set((message.guild as Guild).id, true),
-                30000
+                30000,
             );
-            await message.channel.sendTyping();
-            await message.channel.send(reply.response);
+            if (message.channel.isSendable()) {
+                await message.channel.sendTyping();
+                await message.channel.send(reply.response);
+            }
         } else if (
             message.author.id === this._configService.config.bot.author.id
         ) {
-            await message.channel.sendTyping();
-            await message.channel.send(reply.response);
+            if (message.channel.isSendable()) {
+                await message.channel.sendTyping();
+                await message.channel.send(reply.response);
+            }
         }
     }
 }

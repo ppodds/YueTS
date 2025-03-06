@@ -22,7 +22,7 @@ const { fromBuffer } = filetype;
 class GrabCommand {
     constructor(
         private readonly _loggerService: LoggerService,
-        private readonly _imageService: ImageService
+        private readonly _imageService: ImageService,
     ) {}
 
     private isMessageTooOld(message: Message, time: Date): boolean {
@@ -37,7 +37,7 @@ class GrabCommand {
         grabData: Grab | null,
         grabTime: Date,
         guildID: string | null,
-        channelID: string
+        channelID: string,
     ) {
         this._loggerService.debug("Grab finished, updating grab time database");
         // update grab time
@@ -57,7 +57,7 @@ class GrabCommand {
         grabData: Grab | null,
         messageCount: number,
         imageCount: number,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
         const now = new Date();
         let time: Date;
@@ -69,19 +69,21 @@ class GrabCommand {
                 : new Date(now.setDate(now.getDate() - 10));
         }
         const resultMessage = `Yue從${toDatetimeString(
-            time
+            time,
         )}以來的 ${messageCount} 則訊息中擷取了 ${imageCount} 張圖片，再繼續學習下去很快就會變得厲害了呢....`;
         try {
             await interaction.editReply(resultMessage);
         } catch (error) {
-            await interaction.channel?.send(resultMessage);
+            if (interaction.channel?.isSendable()) {
+                await interaction.channel?.send(resultMessage);
+            }
         }
     }
 
     private async saveImagesData(
         type: ImageType,
         uploader: User,
-        imagesData: Buffer[]
+        imagesData: Buffer[],
     ): Promise<number> {
         let imageCount = 0;
         for (const imageData of imagesData) {
@@ -103,7 +105,7 @@ class GrabCommand {
                     uploader,
                     filetype.ext,
                     imageData,
-                    imagePhash
+                    imagePhash,
                 )
             )
                 imageCount++;
@@ -134,7 +136,7 @@ class GrabCommand {
             type: ApplicationCommandOptionType.Integer,
         })
         range: number | undefined,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
         const imgType: number | undefined = ImageType[type.toUpperCase()];
         if (imgType === undefined)
@@ -171,7 +173,7 @@ class GrabCommand {
             this._loggerService.debug(
                 `Fetching ${before ? "" : "latest "}messages ${
                     before ? "sent before message which id is " + before : ""
-                }`
+                }`,
             );
             const messages = await (channel as TextChannel).messages.fetch({
                 limit: 100,
@@ -189,30 +191,30 @@ class GrabCommand {
                 messageCount++;
                 if (message.author.bot) continue;
                 const imgurImage = await ImageService.getImgurImage(
-                    message.content
+                    message.content,
                 );
                 if (message.attachments.size === 0 && !imgurImage) continue;
                 const imagesData: Buffer[] = [];
                 if (message.attachments.size !== 0) {
                     this._loggerService.debug(
-                        `Saving attachments of message ${id}`
+                        `Saving attachments of message ${id}`,
                     );
                     for (const attachmentPair of message.attachments) {
                         const attachment = attachmentPair[1];
                         imagesData.push(
-                            await ImageService.getAttachmentImage(attachment)
+                            await ImageService.getAttachmentImage(attachment),
                         );
                     }
                 } else if (imgurImage) {
                     this._loggerService.debug(
-                        `Message ${id} is a link to imgur, saving image from imgur`
+                        `Message ${id} is a link to imgur, saving image from imgur`,
                     );
                     imagesData.push(imgurImage);
                 }
                 imageCount += await this.saveImagesData(
                     imgType,
                     message.author,
-                    imagesData
+                    imagesData,
                 );
             }
             // no more message!
@@ -226,13 +228,13 @@ class GrabCommand {
             grabData,
             messageCount,
             imageCount,
-            interaction
+            interaction,
         );
         await this.updateGrabTime(
             grabData,
             grabTime,
             interaction.guildId,
-            channel.id
+            channel.id,
         );
     }
 }
