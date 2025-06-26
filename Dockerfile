@@ -22,7 +22,7 @@ RUN pnpm prune --prod
 FROM node:22.14.0-slim AS production
 
 RUN apt update && apt install -y wget ffmpeg python3   \
-    && wget -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/download/2025.06.09/yt-dlp && chmod +x /usr/local/bin/yt-dlp  \
+    && wget -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/download/2025.06.25/yt-dlp && chmod +x /usr/local/bin/yt-dlp  \
     && apt remove -y wget && apt clean
 
 WORKDIR /app
