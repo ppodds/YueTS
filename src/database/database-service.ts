@@ -16,7 +16,7 @@ export class DatabaseService implements Service {
 
     constructor(
         private readonly _configService: ConfigService,
-        private readonly _loggerService: LoggerService
+        private readonly _loggerService: LoggerService,
     ) {
         this._sequelize = new Sequelize(
             _configService.config.db.database,
@@ -26,6 +26,10 @@ export class DatabaseService implements Service {
                 host: _configService.config.db.host,
                 port: _configService.config.db.port,
                 dialect: "mariadb",
+                dialectOptions: {
+                    charset: "utf8mb4",
+                    collate: "utf8mb4_uca1400_ai_ci",
+                },
                 timezone: _configService.config.db.timezone,
                 logging:
                     process.env.NODE_ENV === "production"
@@ -38,7 +42,7 @@ export class DatabaseService implements Service {
                     acquire: 144000000,
                     idle: 10000,
                 },
-            }
+            },
         );
     }
 
