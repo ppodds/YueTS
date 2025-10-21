@@ -63,7 +63,7 @@
     "tslib": "^2.6.3",
     "tsyringe": "^4.8.0",
     "utf-8-validate": "^6.0.4",
-    "zlib-sync": "^0.1.9"
+    "zlib-sync": "^0.1.10"
   },
   "devDependencies": {
     "@types/async-lock": "^1.4.2",
