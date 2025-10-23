@@ -4,8 +4,8 @@ import { LoggerService } from "../../utils/logger-service";
 import {
     ApplicationCommandOptionType,
     AttachmentBuilder,
+    ChatInputCommandInteraction,
     CommandInteraction,
-    CommandInteractionOptionResolver,
     DMChannel,
     TextChannel,
 } from "discord.js";
@@ -31,24 +31,20 @@ const MinimumDemand = new Map<ImageType, number>([
 class ImageCommand {
     constructor(
         private readonly _loggerService: LoggerService,
-        private readonly _graphicService: GraphicService
+        private readonly _graphicService: GraphicService,
     ) {}
 
     private async validate(
         imageID: number | undefined,
-        interaction: CommandInteraction
+        interaction: ChatInputCommandInteraction,
     ): Promise<boolean> {
         const user = await User.get(interaction.user.id);
         const type: ImageType =
-            ImageType[
-                (interaction.options as CommandInteractionOptionResolver)
-                    .getSubcommand()
-                    .toUpperCase()
-            ];
+            ImageType[interaction.options.getSubcommand().toUpperCase()];
 
         if (user.contribution < (MinimumDemand.get(type) as number)) {
             await interaction.reply(
-                "你跟Yue還不夠熟呢... 他有跟我說不要隨便幫陌生人忙的..."
+                "你跟Yue還不夠熟呢... 他有跟我說不要隨便幫陌生人忙的...",
             );
             return false;
         }
@@ -77,20 +73,18 @@ class ImageCommand {
 
     private async pickImage(
         imageID: number | undefined,
-        interaction: CommandInteraction
+        interaction: ChatInputCommandInteraction,
     ): Promise<Image | null> {
         // user picked image (null if user doesn't assign)
         const type = ImageType[
-            (interaction.options as CommandInteractionOptionResolver)
-                .getSubcommand()
-                .toUpperCase()
+            interaction.options.getSubcommand().toUpperCase()
         ] as ImageType;
         let picked: Image | null = null;
         if (imageID) {
             picked = await Image.findOne({ where: { id: imageID } });
             if (!picked) {
                 await interaction.reply(
-                    "找不到這張圖片呢... 你確定編號是對的嗎?"
+                    "找不到這張圖片呢... 你確定編號是對的嗎?",
                 );
                 return null;
             }
@@ -118,7 +112,7 @@ class ImageCommand {
             type: ApplicationCommandOptionType.Integer,
         })
         id: number | undefined,
-        interaction: CommandInteraction
+        interaction: ChatInputCommandInteraction,
     ) {
         this.execute(id, interaction);
     }
@@ -133,7 +127,7 @@ class ImageCommand {
             type: ApplicationCommandOptionType.Integer,
         })
         id: number | undefined,
-        interaction: CommandInteraction
+        interaction: ChatInputCommandInteraction,
     ) {
         this.execute(id, interaction);
     }
@@ -148,12 +142,15 @@ class ImageCommand {
             type: ApplicationCommandOptionType.Integer,
         })
         id: number | undefined,
-        interaction: CommandInteraction
+        interaction: ChatInputCommandInteraction,
     ) {
         this.execute(id, interaction);
     }
 
-    async execute(id: number | undefined, interaction: CommandInteraction) {
+    async execute(
+        id: number | undefined,
+        interaction: ChatInputCommandInteraction,
+    ) {
         if (!(await this.validate(id, interaction))) return;
 
         const picked = await this.pickImage(id, interaction);
@@ -177,14 +174,14 @@ class ImageCommand {
         } catch (err) {
             this._loggerService.error(
                 "Got an error while trying to fetch user data",
-                err
+                err,
             );
         }
         uploader = uploader ? uploader : "窩不知道";
 
         const embed = this._graphicService.info(
             interaction.client,
-            "「我找到了這個...」"
+            "「我找到了這個...」",
         );
 
         embed.addFields(
@@ -198,7 +195,7 @@ class ImageCommand {
                 name: "上傳時間",
                 value: toDatetimeString(imageData.createdAt),
                 inline: false,
-            }
+            },
         );
         embed.setImage(`attachment://${imageData.id}.${imageData.ext}`);
         await interaction.reply({ embeds: [embed], files: [file] });

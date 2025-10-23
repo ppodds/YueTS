@@ -22,8 +22,8 @@ export class Image extends sequelize.Model {
         type: ImageType,
         uploader: string,
         ext: string,
-        data: ArrayBuffer,
-        phash: string
+        data: Buffer,
+        phash: string,
     ) {
         return await Image.create({
             type: type,
@@ -103,6 +103,6 @@ export function init(instance: sequelize.Sequelize) {
                 allowNull: false,
             },
         },
-        { sequelize: instance }
+        { sequelize: instance },
     );
 }
