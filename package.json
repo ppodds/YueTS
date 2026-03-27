@@ -51,7 +51,7 @@
     "discordx": "^11.13.2",
     "dotenv": "^16.6.1",
     "ehentai-api": "^0.0.4",
-    "file-type": "^16.5.4",
+    "file-type": "^22.0.0",
     "log4js": "^6.9.1",
     "mariadb": "^3.4.5",
     "node-worker-threads-pool": "^1.5.1",
