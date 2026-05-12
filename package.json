@@ -71,7 +71,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.18.12",
     "@types/sequelize": "^4.28.20",
-    "@types/stream-buffers": "^3.0.7",
+    "@types/stream-buffers": "^3.0.8",
     "@types/validator": "^13.15.3",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
