@@ -43,7 +43,7 @@
     "@ppodds/nhentai-api": "^0.0.1",
     "async-lock": "^1.4.1",
     "axios": "^1.12.2",
-    "bufferutil": "^4.0.9",
+    "bufferutil": "^4.1.0",
     "canvas": "^3.2.0",
     "discord-api-types": "^0.37.120",
     "discord.js": "^14.23.2",
