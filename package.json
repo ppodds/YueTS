@@ -48,7 +48,7 @@
     "discord-api-types": "^0.37.120",
     "discord.js": "^14.23.2",
     "discord.js-message-listener": "^3.0.3",
-    "discordx": "^11.13.2",
+    "discordx": "^11.13.3",
     "dotenv": "^16.6.1",
     "ehentai-api": "^0.0.4",
     "file-type": "^16.5.4",
