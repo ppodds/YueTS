@@ -1,4 +1,5 @@
-import { toDatetimeString } from "../time";
+import { test, expect } from "vitest";
+import { toDatetimeString } from "../time.js";
 
 test("date string should be equal", () => {
     const time1 = new Date(2022, 0, 18, 16, 38, 25);

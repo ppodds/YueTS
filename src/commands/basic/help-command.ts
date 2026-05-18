@@ -1,7 +1,7 @@
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 @Discord()
 @injectable()
@@ -15,7 +15,7 @@ class HelpCommand {
     async execute(interaction: CommandInteraction) {
         const embed = this._graphicService.info(
             interaction.client,
-            "「這麼想跟Yue說話嗎? 也...也不是不可以啦~」"
+            "「這麼想跟Yue說話嗎? 也...也不是不可以啦~」",
         );
         embed.addFields(
             {
@@ -82,7 +82,7 @@ class HelpCommand {
                 name: "image wtfpic 【編號(可選)】",
                 value: "從貢獻的wtfpic圖庫抽一張圖",
                 inline: false,
-            }
+            },
         );
         await interaction.reply({ embeds: [embed] });
     }

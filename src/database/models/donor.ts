@@ -1,5 +1,5 @@
 import sequelize from "sequelize";
-import { ImageType } from "../../image/image-type";
+import { ImageType } from "../../image/image-type.js";
 
 export class Donor extends sequelize.Model {
     declare id: number;
@@ -57,6 +57,6 @@ export function init(instance: sequelize.Sequelize) {
                 allowNull: false,
             },
         },
-        { sequelize: instance }
+        { sequelize: instance },
     );
 }

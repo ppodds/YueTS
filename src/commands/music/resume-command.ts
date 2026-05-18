@@ -1,8 +1,8 @@
-import { MusicService } from "../../music/music-service";
+import { MusicService } from "../../music/music-service.js";
 import { AudioPlayerStatus } from "@discordjs/voice";
 import { CommandInteraction } from "discord.js";
 import { Discord, Guard, Slash } from "discordx";
-import { GuildOnly } from "../../guards/guild-only";
+import { GuildOnly } from "../../guards/guild-only.js";
 import { injectable } from "tsyringe";
 
 @Discord()
@@ -26,7 +26,7 @@ class ResumeCommand {
         const musicPlayer = this._musicService.get(interaction);
         if (musicPlayer.getPlayerStatus() !== AudioPlayerStatus.Paused)
             return await interaction.reply(
-                "我現在已經在唱歌了啦 <:i_yoshino:583658336054935562>"
+                "我現在已經在唱歌了啦 <:i_yoshino:583658336054935562>",
             );
 
         musicPlayer.resume();

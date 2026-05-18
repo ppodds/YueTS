@@ -1,7 +1,7 @@
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 @Discord()
 @injectable()
@@ -12,7 +12,7 @@ class DhelpCommand {
     async execute(interaction: CommandInteraction) {
         const embed = this._graphicService.info(
             interaction.client,
-            "「想為Yue做些什麼? 可以呦....」\n貢獻說明:貢獻完會獲得Yue的喜愛，Yue會願意為你做更多事(不同貢獻類別獲取量不同)\n詳細請看dlist"
+            "「想為Yue做些什麼? 可以呦....」\n貢獻說明:貢獻完會獲得Yue的喜愛，Yue會願意為你做更多事(不同貢獻類別獲取量不同)\n詳細請看dlist",
         );
         embed.addFields(
             {
@@ -34,7 +34,7 @@ class DhelpCommand {
                 name: "exp 【目標(可選)】",
                 value: "檢視Yue對目標的好感度，若無目標則顯示自己的好感度",
                 inline: false,
-            }
+            },
         );
         await interaction.reply({ embeds: [embed] });
     }

@@ -1,13 +1,13 @@
 import { Sequelize } from "sequelize";
-import { LoggerService } from "../utils/logger-service";
-import * as user from "./models/user";
-import * as grab from "./models/grab";
-import * as image from "./models/image";
-import * as reply from "./models/reply";
-import * as donor from "./models/donor";
-import { Service } from "../service";
+import { LoggerService } from "../utils/logger-service.js";
+import * as user from "./models/user.js";
+import * as grab from "./models/grab.js";
+import * as image from "./models/image.js";
+import * as reply from "./models/reply.js";
+import * as donor from "./models/donor.js";
+import { Service } from "../service.js";
 import { singleton, injectable } from "tsyringe";
-import { ConfigService } from "../config/config-service";
+import { ConfigService } from "../config/config-service.js";
 
 @singleton()
 @injectable()

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -22,7 +22,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/image/phash.js"
+    "src/image/phash.cjs"
   ],
   "exclude": [
     "src/**/*.test.ts",

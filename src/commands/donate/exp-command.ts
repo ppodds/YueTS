@@ -1,4 +1,4 @@
-import { User } from "../../database/models/user";
+import { User } from "../../database/models/user.js";
 import { ApplicationCommandOptionType, CommandInteraction } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 
@@ -15,20 +15,22 @@ class ExpCommand {
             type: ApplicationCommandOptionType.User,
         })
         target: User | undefined,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
         const donor = target
             ? await User.get(target.id)
             : await User.get(interaction.user.id);
 
-        donor.contribution === 0
-            ? await interaction.reply(
-                  `嗯....Yue跟${target ? "他" : "你"}還不熟呢....`
-              )
-            : await interaction.reply(
-                  `目前我對${target ? "他" : "你"}的好感度是${
-                      donor.contribution
-                  }點喔!`
-              );
+        if (donor.contribution === 0) {
+            await interaction.reply(
+                `嗯....Yue跟${target ? "他" : "你"}還不熟呢....`,
+            );
+        } else {
+            await interaction.reply(
+                `目前我對${target ? "他" : "你"}的好感度是${
+                    donor.contribution
+                }點喔!`,
+            );
+        }
     }
 }

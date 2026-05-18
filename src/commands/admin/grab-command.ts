@@ -1,8 +1,8 @@
-import { ImageService } from "../../image/image-service";
-import { LoggerService } from "../../utils/logger-service";
-import { Grab } from "../../database/models/grab";
+import { ImageService } from "../../image/image-service.js";
+import { LoggerService } from "../../utils/logger-service.js";
+import { Grab } from "../../database/models/grab.js";
 import filetype from "file-type";
-import { toDatetimeString } from "../../utils/time";
+import { toDatetimeString } from "../../utils/time.js";
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
@@ -11,9 +11,9 @@ import {
     TextChannel,
     User,
 } from "discord.js";
-import { ImageType } from "../../image/image-type";
+import { ImageType } from "../../image/image-type.js";
 import { Discord, Guard, Slash, SlashOption } from "discordx";
-import { OwnerOnly } from "../../guards/owner-only";
+import { OwnerOnly } from "../../guards/owner-only.js";
 import { injectable } from "tsyringe";
 const { fromBuffer } = filetype;
 

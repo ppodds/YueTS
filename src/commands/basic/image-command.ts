@@ -1,6 +1,6 @@
-import { Image } from "../../database/models/image";
-import { User } from "../../database/models/user";
-import { LoggerService } from "../../utils/logger-service";
+import { Image } from "../../database/models/image.js";
+import { User } from "../../database/models/user.js";
+import { LoggerService } from "../../utils/logger-service.js";
 import {
     ApplicationCommandOptionType,
     AttachmentBuilder,
@@ -9,11 +9,11 @@ import {
     DMChannel,
     TextChannel,
 } from "discord.js";
-import { toDatetimeString } from "../../utils/time";
-import { ImageType } from "../../image/image-type";
+import { toDatetimeString } from "../../utils/time.js";
+import { ImageType } from "../../image/image-type.js";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 const MinimumDemand = new Map<ImageType, number>([
     [ImageType.PIC, 20],

@@ -31,7 +31,7 @@ async function makePhash(buf) {
             cosines[k] = new Array(SAMPLE_SIZE);
             for (let n = 0; n < SAMPLE_SIZE; n++) {
                 cosines[k][n] = Math.cos(
-                    ((2 * k + 1) / (2.0 * SAMPLE_SIZE)) * n * Math.PI
+                    ((2 * k + 1) / (2.0 * SAMPLE_SIZE)) * n * Math.PI,
                 );
             }
         }
@@ -88,5 +88,5 @@ async function makePhash(buf) {
 }
 
 parentPort.on("message", (buf) =>
-    makePhash(buf).then((phash) => parentPort.postMessage(phash))
+    makePhash(buf).then((phash) => parentPort.postMessage(phash)),
 );

@@ -1,19 +1,19 @@
-import { MusicService } from "../../music/music-service";
-import { Reaction } from "../../graphics/reaction";
+import { MusicService } from "../../music/music-service.js";
+import { Reaction } from "../../graphics/reaction.js";
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
     GuildMember,
 } from "discord.js";
-import { MusicPlayer } from "../../music/music-player";
+import { MusicPlayer } from "../../music/music-player.js";
 import { Discord, Guard, Slash, SlashOption } from "discordx";
-import { Track } from "../../music/track";
-import { GuildOnly } from "../../guards/guild-only";
+import { Track } from "../../music/track.js";
+import { GuildOnly } from "../../guards/guild-only.js";
 import { injectable } from "tsyringe";
-import { LoggerService } from "../../utils/logger-service";
-import { GraphicService } from "../../graphics/graphic-service";
-import { extractInfoFromPlaylist, search } from "../../music/ytdlp";
-import { batchRun } from "../../utils/promise";
+import { LoggerService } from "../../utils/logger-service.js";
+import { GraphicService } from "../../graphics/graphic-service.js";
+import { extractInfoFromPlaylist, search } from "../../music/ytdlp.js";
+import { batchRun } from "../../utils/promise.js";
 
 @Discord()
 @injectable()

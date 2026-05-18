@@ -1,17 +1,17 @@
 import { CommandInteraction, EmbedBuilder } from "discord.js";
-import { MusicService } from "../../music/music-service";
-import { Track } from "../../music/track";
+import { MusicService } from "../../music/music-service.js";
+import { Track } from "../../music/track.js";
 import { Discord, Guard, Slash } from "discordx";
-import { GuildOnly } from "../../guards/guild-only";
+import { GuildOnly } from "../../guards/guild-only.js";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 @Discord()
 @injectable()
 class QueueCommand {
     constructor(
         private readonly _musicService: MusicService,
-        private readonly _graphicService: GraphicService
+        private readonly _graphicService: GraphicService,
     ) {}
 
     @Slash({ name: "queue", description: "觀看接下來歌曲的順序" })
@@ -70,7 +70,7 @@ class QueueCommand {
     generateEmbed(interaction: CommandInteraction, queue: Track[]) {
         const embed = this._graphicService.info(
             interaction.client,
-            "「目前已經有這麼多人和Yue點歌了呢... Yue有點小高興...」"
+            "「目前已經有這麼多人和Yue點歌了呢... Yue有點小高興...」",
         );
 
         embed.addFields(
@@ -88,7 +88,7 @@ class QueueCommand {
                 name: "順序",
                 value: "歌曲名稱",
                 inline: false,
-            }
+            },
         );
         return embed;
     }
