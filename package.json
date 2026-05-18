@@ -84,7 +84,7 @@
     "rimraf": "^5.0.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.0"
+    "vitest": "^4.1.6"
   },
   "version": "1.2.0"
 }
