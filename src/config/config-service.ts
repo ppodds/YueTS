@@ -1,8 +1,8 @@
 import { singleton } from "tsyringe";
-import { Config } from "./config";
+import { Config } from "./config.js";
 import { config } from "dotenv";
-import { EnvParser } from "./env-parser";
-import { Service } from "../service";
+import { EnvParser } from "./env-parser.js";
+import { Service } from "../service.js";
 
 @singleton()
 export class ConfigService implements Service {

@@ -1,7 +1,7 @@
 import log4js from "log4js";
-import { Service } from "../service";
+import { Service } from "../service.js";
 import { singleton, injectable } from "tsyringe";
-import { ConfigService } from "../config/config-service";
+import { ConfigService } from "../config/config-service.js";
 const { configure, getLogger } = log4js;
 
 @singleton()
@@ -33,7 +33,7 @@ export class LoggerService implements Service {
     public error(text: string, err: unknown = null) {
         this._logger.error(
             `${text}
-        ${err ? JSON.stringify(err, Object.getOwnPropertyNames(err), 2) : ""}`
+        ${err ? JSON.stringify(err, Object.getOwnPropertyNames(err), 2) : ""}`,
         );
     }
 }

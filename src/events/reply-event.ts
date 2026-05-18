@@ -1,6 +1,6 @@
-import { ConfigService } from "../config/config-service";
-import { Reply } from "../database/models/reply";
-import { LoggerService } from "../utils/logger-service";
+import { ConfigService } from "../config/config-service.js";
+import { Reply } from "../database/models/reply.js";
+import { LoggerService } from "../utils/logger-service.js";
 import { Collection, Guild, Message, TextChannel } from "discord.js";
 import { ArgsOf, Discord, On } from "discordx";
 import { injectable } from "tsyringe";

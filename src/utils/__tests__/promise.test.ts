@@ -1,4 +1,5 @@
-import { batchRun } from "../promise";
+import { describe, test, expect } from "vitest";
+import { batchRun } from "../promise.js";
 
 describe("batchRun", () => {
     const tasks: (() => Promise<number>)[] = [
@@ -20,10 +21,14 @@ describe("batchRun", () => {
     });
 
     test("batch size = 0 should throw error", async () => {
-        expect(async () => await batchRun<number>(tasks, 0)).rejects.toThrow();
+        await expect(
+            async () => await batchRun<number>(tasks, 0),
+        ).rejects.toThrow();
     });
 
     test("batch size = -1 should throw error", async () => {
-        expect(async () => await batchRun<number>(tasks, -1)).rejects.toThrow();
+        await expect(
+            async () => await batchRun<number>(tasks, -1),
+        ).rejects.toThrow();
     });
 });

@@ -1,7 +1,7 @@
 import { Collection, CommandInteraction, Guild } from "discord.js";
-import { MusicPlayer } from "./music-player";
+import { MusicPlayer } from "./music-player.js";
 import { singleton, injectable } from "tsyringe";
-import { LoggerService } from "../utils/logger-service";
+import { LoggerService } from "../utils/logger-service.js";
 
 @singleton()
 @injectable()
@@ -26,7 +26,7 @@ export class MusicService {
             return musicPlayer;
         } else {
             this._loggerService.debug(
-                `Creating new music player for ${interaction.guild.name}`
+                `Creating new music player for ${interaction.guild.name}`,
             );
             const t = new MusicPlayer(this._loggerService, interaction);
             this.players.set(interaction.guildId, t);

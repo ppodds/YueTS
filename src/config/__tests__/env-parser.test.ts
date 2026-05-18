@@ -1,4 +1,5 @@
-import { EnvParser } from "../env-parser";
+import { describe, it, beforeEach, expect } from "vitest";
+import { EnvParser } from "../env-parser.js";
 
 describe("EnvParser", () => {
     let parser: EnvParser;
@@ -11,7 +12,7 @@ describe("EnvParser", () => {
         expect(
             parser.parseFromObject({
                 TEST: "test",
-            })
+            }),
         ).toEqual({
             test: "test",
         });
@@ -21,7 +22,7 @@ describe("EnvParser", () => {
         expect(
             parser.parseFromObject({
                 TEST_TEST: "test",
-            })
+            }),
         ).toEqual({
             testTest: "test",
         });
@@ -31,7 +32,7 @@ describe("EnvParser", () => {
         expect(
             parser.parseFromObject({
                 TesT_tEsT: "test",
-            })
+            }),
         ).toEqual({
             testTest: "test",
         });
@@ -41,7 +42,7 @@ describe("EnvParser", () => {
         expect(
             parser.parseFromObject({
                 TEST_test_: "test",
-            })
+            }),
         ).toEqual({
             testTest_: "test",
         });
@@ -51,7 +52,7 @@ describe("EnvParser", () => {
         expect(
             parser.parseFromObject({
                 TEST1__TEST2: "test",
-            })
+            }),
         ).toEqual({
             test1: {
                 test2: "test",
@@ -63,7 +64,7 @@ describe("EnvParser", () => {
         expect(
             parser.parseFromObject({
                 TEST1__TEST2_TEST3: "test",
-            })
+            }),
         ).toEqual({
             test1: {
                 test2Test3: "test",
@@ -77,7 +78,7 @@ describe("EnvParser", () => {
                 TEST__2: "test2",
                 TEST__0: "test0",
                 TEST__1: "test1",
-            })
+            }),
         ).toEqual({
             test: ["test0", "test1", "test2"],
         });
@@ -87,7 +88,7 @@ describe("EnvParser", () => {
         expect(
             parser.parseFromObject({
                 TEST__0: "test",
-            })
+            }),
         ).toEqual({
             test: ["test"],
         });
@@ -99,7 +100,7 @@ describe("EnvParser", () => {
                 TEST__0: "test0",
                 TEST__1: "test1",
                 TEST__2: "test2",
-            })
+            }),
         ).toEqual({
             test: ["test0", "test1", "test2"],
         });
@@ -110,7 +111,7 @@ describe("EnvParser", () => {
             parser.parseFromObject({
                 TEST1__TEST2__0: "0",
                 TEST1__TEST2__1: "1",
-            })
+            }),
         ).toEqual({
             test1: {
                 test2: ["0", "1"],
@@ -123,7 +124,7 @@ describe("EnvParser", () => {
             parser.parseFromObject({
                 TEST1__TEST2__TEST3__0: "0",
                 TEST1__TEST2__TEST3__1: "1",
-            })
+            }),
         ).toEqual({
             test1: {
                 test2: {
@@ -137,7 +138,7 @@ describe("EnvParser", () => {
         expect(
             parser.parseFromObject({
                 TEST__0A: "test",
-            })
+            }),
         ).toEqual({
             test: {
                 "0a": "test",
@@ -151,7 +152,7 @@ describe("EnvParser", () => {
                 TEST1: "test1",
                 TEST2: "test2",
                 TEST3: "test3",
-            })
+            }),
         ).toEqual({
             test1: "test1",
             test2: "test2",
@@ -164,7 +165,7 @@ describe("EnvParser", () => {
             parser.parseFromObject({
                 TEST1__TEST2: "test1.test2",
                 TEST1__TEST3: "test1.test3",
-            })
+            }),
         ).toEqual({
             test1: {
                 test2: "test1.test2",
@@ -178,7 +179,7 @@ describe("EnvParser", () => {
             parser.parseFromObject({
                 TEST1__TEST2__TEST3: "test1.test2.test3",
                 TEST1__TEST2__TEST4: "test1.test2.test4",
-            })
+            }),
         ).toEqual({
             test1: {
                 test2: {
@@ -195,7 +196,7 @@ describe("EnvParser", () => {
                 TEST1__TEST2: "test1.test2",
                 TEST1__TEST3: "test1.test3",
                 TEST1: "error",
-            })
+            }),
         ).toThrowError();
     });
 });

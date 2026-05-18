@@ -3,11 +3,13 @@ import { Client, DIService, tsyringeDependencyRegistryEngine } from "discordx";
 
 import { ActivityType, IntentsBitField, Partials } from "discord.js";
 import { importx } from "@discordx/importer";
-import { DatabaseService } from "./database/database-service";
-import { ImageService } from "./image/image-service";
-import { LoggerService } from "./utils/logger-service";
-import { Service } from "./service";
-import { ConfigService } from "./config/config-service";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { DatabaseService } from "./database/database-service.js";
+import { ImageService } from "./image/image-service.js";
+import { LoggerService } from "./utils/logger-service.js";
+import { Service } from "./service.js";
+import { ConfigService } from "./config/config-service.js";
 import { injectable, container } from "tsyringe";
 
 @injectable()
@@ -19,7 +21,7 @@ export class Bot {
         private readonly _configService: ConfigService,
         private readonly _loggerService: LoggerService,
         private readonly _databaseService: DatabaseService,
-        private readonly _imageService: ImageService
+        private readonly _imageService: ImageService,
     ) {
         this._services = [
             this._configService,
@@ -62,7 +64,10 @@ export class Bot {
         for (const service of this._services) {
             await service.init();
         }
-        await importx(__dirname + "/{events,commands}/**/*.{ts,js}");
+        await importx(
+            dirname(fileURLToPath(import.meta.url)) +
+                "/{events,commands}/**/*.{ts,js}",
+        );
         try {
             await this._client.login(this._configService.config.bot.token);
             console.log(`Logged in as ${this._client.user?.tag}!`);
@@ -73,7 +78,7 @@ export class Bot {
         }
         this._client.user?.setActivity(
             "「現在剛起床還沒搞清楚狀況... 等一下再叫我吧...」",
-            { type: ActivityType.Listening }
+            { type: ActivityType.Listening },
         );
         try {
             this._loggerService.info("Clearing application commands");
@@ -83,7 +88,7 @@ export class Bot {
         } catch (e) {
             this._loggerService.error(
                 "Error initializing application commands",
-                e
+                e,
             );
         }
         this._loggerService.info("Registering bot status updater");
@@ -93,15 +98,15 @@ export class Bot {
         this._loggerService.info("Registering error handler");
         // Some other somewhat important events that the bot should listen to
         this._client.on("error", (err) =>
-            this._loggerService.error("The client threw an error", err)
+            this._loggerService.error("The client threw an error", err),
         );
         this._loggerService.info("Registering shard error handler");
         this._client.on("shardError", (err) =>
-            this._loggerService.error("A shard threw an error", err)
+            this._loggerService.error("A shard threw an error", err),
         );
         this._loggerService.info("Registering warn handler");
         this._client.on("warn", (warn) =>
-            this._loggerService.warn("The client received a warning", warn)
+            this._loggerService.warn("The client received a warning", warn),
         );
         this._loggerService.info("Registering interaction handler");
         this._client.on("interactionCreate", async (interaction) => {
@@ -112,7 +117,7 @@ export class Bot {
                 if (!interaction.isCommand()) {
                     this._loggerService.error(
                         "Interaction threw an error",
-                        error
+                        error,
                     );
                     return;
                 }
@@ -124,7 +129,7 @@ export class Bot {
                             : JSON.stringify(
                                   error,
                                   Object.getOwnPropertyNames(error),
-                                  2
+                                  2,
                               ),
                     ephemeral: true,
                 };
@@ -139,7 +144,7 @@ export class Bot {
             }
         });
         this._loggerService.info(
-            `Launched in ${Date.now() - launchTimestamp}ms`
+            `Launched in ${Date.now() - launchTimestamp}ms`,
         );
     }
 
@@ -153,12 +158,12 @@ export class Bot {
             this._configService.config.bot.statusList[
                 Math.floor(
                     Math.random() *
-                        this._configService.config.bot.statusList.length
+                        this._configService.config.bot.statusList.length,
                 )
             ],
             {
                 type: statusType,
-            }
+            },
         );
     }
 

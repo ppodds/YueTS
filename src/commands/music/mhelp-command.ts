@@ -1,7 +1,7 @@
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 @Discord()
 @injectable()
@@ -12,7 +12,7 @@ class MhelpCommand {
     async execute(interaction: CommandInteraction) {
         const embed = this._graphicService.info(
             interaction.client,
-            "「想聽Yue唱歌嗎? 下次說不定有機會呢~~」"
+            "「想聽Yue唱歌嗎? 下次說不定有機會呢~~」",
         );
         embed.addFields(
             {
@@ -54,7 +54,7 @@ class MhelpCommand {
                 name: "stop",
                 value: "讓Yue離開 並清空預計要唱的歌曲",
                 inline: false,
-            }
+            },
         );
         await interaction.reply({ embeds: [embed] });
     }
