@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [get-latest-version, check-need-update]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: release
           token: ${{ secrets.CI_GH_TOKEN }}
