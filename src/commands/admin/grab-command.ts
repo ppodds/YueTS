@@ -1,7 +1,7 @@
 import { ImageService } from "../../image/image-service.js";
 import { LoggerService } from "../../utils/logger-service.js";
 import { Grab } from "../../database/models/grab.js";
-import filetype from "file-type";
+import { fileTypeFromBuffer } from "file-type";
 import { toDatetimeString } from "../../utils/time.js";
 import {
     ApplicationCommandOptionType,
@@ -15,7 +15,6 @@ import { ImageType } from "../../image/image-type.js";
 import { Discord, Guard, Slash, SlashOption } from "discordx";
 import { OwnerOnly } from "../../guards/owner-only.js";
 import { injectable } from "tsyringe";
-const { fromBuffer } = filetype;
 
 @Discord()
 @injectable()
@@ -87,7 +86,7 @@ class GrabCommand {
     ): Promise<number> {
         let imageCount = 0;
         for (const imageData of imagesData) {
-            const filetype = await fromBuffer(imageData);
+            const filetype = await fileTypeFromBuffer(imageData);
             if (!filetype) {
                 this._loggerService.warn("Filetype not detected, skipping");
                 continue;

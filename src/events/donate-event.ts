@@ -1,11 +1,10 @@
 import { Donor } from "../database/models/donor.js";
 import { TextChannel } from "discord.js";
-import filetype from "file-type";
+import { fileTypeFromBuffer } from "file-type";
 import { send } from "../graphics/message.js";
 import { ImageService } from "../image/image-service.js";
 import { ArgsOf, Discord, On } from "discordx";
 import { injectable } from "tsyringe";
-const { fromBuffer } = filetype;
 
 @Discord()
 @injectable()
@@ -43,7 +42,7 @@ export class DonateEvent {
         } else if (imgurImage) imagesData.push(imgurImage);
 
         for (const imageData of imagesData) {
-            const filetype = await fromBuffer(imageData);
+            const filetype = await fileTypeFromBuffer(imageData);
             if (!filetype || !this._imageService.isSupportType(filetype)) {
                 await send(
                     message.channel as TextChannel,
