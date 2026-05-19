@@ -34,7 +34,7 @@ npm version $1
 current_version=$(cat package.json | jq -r .version)
 extra_tag="v$current_version+yt-dlp$tag"
 echo "Add extra tag ($extra_tag)"
-git tag -a $extra_tag
+git tag -a $extra_tag -m "v$1"
 
 echo "Push changes"
 git push --follow-tags
