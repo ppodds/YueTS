@@ -57,7 +57,7 @@
     "node-worker-threads-pool": "^1.5.1",
     "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.8",
-    "sharp": "~0.33.5",
+    "sharp": "~0.35.3",
     "sodium-native": "^4.3.3",
     "stream-buffers": "^3.0.3",
     "tslib": "^2.8.1",
