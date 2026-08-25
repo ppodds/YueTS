@@ -66,7 +66,7 @@
     "zlib-sync": "^0.1.10"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.4",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^24.12.4",
     "@types/async-lock": "^1.4.2",
     "@types/sequelize": "^4.28.20",
@@ -76,7 +76,7 @@
     "@typescript-eslint/parser": "^8.59.3",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
-    "eslint": "^9.39.4",
+    "eslint": "^10.9.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.2",
     "nodemon": "^3.1.14",
