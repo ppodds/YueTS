@@ -51,8 +51,8 @@ importers:
         specifier: ^11.13.3
         version: 11.13.3(discord.js@14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6))
       dotenv:
-        specifier: ^16.6.1
-        version: 16.6.1
+        specifier: ^17.4.2
+        version: 17.4.2
       ehentai-api:
         specifier: ^0.0.4
         version: 0.0.4
@@ -1297,8 +1297,8 @@ packages:
     peerDependencies:
       discord.js: '>=14 || ^14.0.0-dev'
 
-  dotenv@16.6.1:
-    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
+  dotenv@17.4.2:
+    resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
 
   dottie@2.0.7:
@@ -1376,6 +1376,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -3586,7 +3587,7 @@ snapshots:
       discord.js: 14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       lodash: 4.18.1
 
-  dotenv@16.6.1: {}
+  dotenv@17.4.2: {}
 
   dottie@2.0.7: {}
 
