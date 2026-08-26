@@ -42,14 +42,14 @@ importers:
         specifier: ^0.37.120
         version: 0.37.120
       discord.js:
-        specifier: ^14.26.4
-        version: 14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+        specifier: ^14.27.0
+        version: 14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       discord.js-message-listener:
         specifier: ^3.0.3
-        version: 3.0.3(discord.js@14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6))
+        version: 3.0.3(discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))
       discordx:
         specifier: ^11.13.3
-        version: 11.13.3(discord.js@14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6))
+        version: 11.13.3(discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))
       dotenv:
         specifier: ^16.6.1
         version: 16.6.1
@@ -197,6 +197,10 @@ packages:
 
   '@discordjs/rest@2.6.1':
     resolution: {integrity: sha512-wwQdgjeaoYFiaG+atbqx6aJDpqW7JHAo0HrQkBTbYzM3/PJ3GweQIpgElNcGZ26DCUOXMyawYd0YF7vtr+fZXg==}
+    engines: {node: '>=18'}
+
+  '@discordjs/rest@2.6.3':
+    resolution: {integrity: sha512-wvOylxNYJkwKjctS/Mn5GP1w9r3/rzyH+ThD1JlAca6zEdlHs8QWBBUQJpU5Q+W6DoIj/Ljh1IPlZs7hTU+UAg==}
     engines: {node: '>=18'}
 
   '@discordjs/util@1.2.0':
@@ -730,10 +734,6 @@ packages:
   '@sapphire/shapeshift@4.0.0':
     resolution: {integrity: sha512-d9dUmWVA7MMiKobL3VpLF8P2aeanRTu6ypG2OIaEv/ZHH/SUQ2iHOVyi5wAPjQ+HmnMuL0whK9ez8I/raWbtIg==}
     engines: {node: '>=v16'}
-
-  '@sapphire/snowflake@3.5.3':
-    resolution: {integrity: sha512-jjmJywLAFoWeBi1W7994zZyiNWPIiqRRNAmSERxyg93xRGzNYvGjlZ0gR6x0F4gPRi2+0O6S71kOZYyr3cxaIQ==}
-    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
 
   '@sapphire/snowflake@3.5.5':
     resolution: {integrity: sha512-xzvBr1Q1c4lCe7i6sRnrofxeO1QTP/LKQ6A6qy0iB4x5yfiSfARMEQEghojzTNALDTcv8En04qYNIco9/K9eZQ==}
@@ -1282,13 +1282,16 @@ packages:
   discord-api-types@0.38.47:
     resolution: {integrity: sha512-XgXQodHQBAE6kfD7kMvVo30863iHX1LHSqNq6MGUTDwIFCCvHva13+rwxyxVXDqudyApMNAd32PGjgVETi5rjA==}
 
+  discord-api-types@0.38.53:
+    resolution: {integrity: sha512-HL1zz/UuZ+bbJjA/X8Kbxx9gk8v9rJAbTeWRNYKmIdjwJ7EovjlHgoJTxcLpATfNJ+AonOtMdy3Y5MVIJAAd/A==}
+
   discord.js-message-listener@3.0.3:
     resolution: {integrity: sha512-rryDNvmmqIQRR4bIKX4/WhhIoBiazEjlpG9kJRT09QU1Th7KYm98HG1LussHRtMnYPLdzg0/IG/s6lm4toP14Q==}
     peerDependencies:
       discord.js: ^14.0.0
 
-  discord.js@14.26.4:
-    resolution: {integrity: sha512-4oBp8tc6Kf8IDBwAHhbsMaAqx1b5fob9SNasZT7V6yyyUydoO5i5fGuX7TmvRtR+q/WgKRnRViRoAWnG7fNyvA==}
+  discord.js@14.27.0:
+    resolution: {integrity: sha512-qHbFlFG2N7y3LjPySYsL6A1+BnX6bkTVgo842EX0CqVPk/KTMwZkojPHEXKsQUpWZNyz5BISNHK1cPpQw0+m4A==}
     engines: {node: '>=18'}
 
   discordx@11.13.3:
@@ -1376,6 +1379,7 @@ packages:
   eslint@9.39.4:
     resolution: {integrity: sha512-XoMjdBOwe/esVgEvLmNsD3IRHkm7fbKIUGvrleloJXUZgDHig2IPWNniv+GwjyJXzuNqVjlr5+4yVUZjycJwfQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
@@ -2373,6 +2377,10 @@ packages:
     resolution: {integrity: sha512-sC+b0tB1whOCzbtlx20fx3WgCXwkW627p4EA9uM+/tNNPkSS+eSEld6pAs9nDv7WbY1UUljBMYPtu9BCOrCWKA==}
     engines: {node: '>=18.17'}
 
+  undici@6.28.0:
+    resolution: {integrity: sha512-LIY910g9TI13YS95lrMFrs8Rm/u/irgHeTWoKCoteeJ04CUJ92eEfj0rVn+7VKMPBpUPiUoBKfhNyLI23EE/KA==}
+    engines: {node: '>=18.17'}
+
   universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
@@ -2632,6 +2640,18 @@ snapshots:
       magic-bytes.js: 1.13.0
       tslib: 2.8.1
       undici: 6.24.1
+
+  '@discordjs/rest@2.6.3':
+    dependencies:
+      '@discordjs/collection': 2.1.1
+      '@discordjs/util': 1.2.0
+      '@sapphire/async-queue': 1.5.5
+      '@sapphire/snowflake': 3.5.5
+      '@vladfrangu/async_event_emitter': 2.4.7
+      discord-api-types: 0.38.53
+      magic-bytes.js: 1.13.0
+      tslib: 2.8.1
+      undici: 6.28.0
 
   '@discordjs/util@1.2.0':
     dependencies:
@@ -3013,8 +3033,6 @@ snapshots:
     dependencies:
       fast-deep-equal: 3.1.3
       lodash: 4.18.1
-
-  '@sapphire/snowflake@3.5.3': {}
 
   '@sapphire/snowflake@3.5.5': {}
 
@@ -3555,35 +3573,37 @@ snapshots:
 
   discord-api-types@0.38.47: {}
 
-  discord.js-message-listener@3.0.3(discord.js@14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6)):
+  discord-api-types@0.38.53: {}
+
+  discord.js-message-listener@3.0.3(discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)):
     dependencies:
-      discord.js: 14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      discord.js: 14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       tiny-typed-emitter: 2.1.0
 
-  discord.js@14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6):
+  discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       '@discordjs/builders': 1.14.1
       '@discordjs/collection': 1.5.3
       '@discordjs/formatters': 0.6.2
-      '@discordjs/rest': 2.6.1
+      '@discordjs/rest': 2.6.3
       '@discordjs/util': 1.2.0
       '@discordjs/ws': 1.2.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
-      '@sapphire/snowflake': 3.5.3
-      discord-api-types: 0.38.47
+      '@sapphire/snowflake': 3.5.5
+      discord-api-types: 0.38.53
       fast-deep-equal: 3.1.3
       lodash.snakecase: 4.1.1
       magic-bytes.js: 1.13.0
       tslib: 2.8.1
-      undici: 6.24.1
+      undici: 6.28.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  discordx@11.13.3(discord.js@14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6)):
+  discordx@11.13.3(discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)):
     dependencies:
       '@discordx/di': 3.3.4
       '@discordx/internal': 1.2.0
-      discord.js: 14.26.4(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      discord.js: 14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       lodash: 4.18.1
 
   dotenv@16.6.1: {}
@@ -4660,6 +4680,8 @@ snapshots:
   undici-types@7.16.0: {}
 
   undici@6.24.1: {}
+
+  undici@6.28.0: {}
 
   universalify@0.1.2: {}
 
