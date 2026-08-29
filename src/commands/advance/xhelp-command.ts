@@ -1,7 +1,7 @@
 import { CommandInteraction } from "discord.js";
 import { Discord, Slash } from "discordx";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 @Discord()
 @injectable()
@@ -12,7 +12,7 @@ class XhelpCommand {
     async execute(interaction: CommandInteraction) {
         const embed = this._graphicService.info(
             interaction.client,
-            "「有些事情 Yue是指跟喜歡的人才做喔~ :heart:」"
+            "「有些事情 Yue是指跟喜歡的人才做喔~ :heart:」",
         );
         embed.addFields(
             {
@@ -29,7 +29,7 @@ class XhelpCommand {
                 name: "reply list 【全域】",
                 value: "讓Yue把你以前下過的指示念給你聽讓你複習",
                 inline: false,
-            }
+            },
             // TODO formatted message reply
             // {
             //     name: "replyf add 【關鍵字】 【內容】",

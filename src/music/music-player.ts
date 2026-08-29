@@ -22,11 +22,11 @@ import {
     StreamType,
 } from "@discordjs/voice";
 import { promisify } from "node:util";
-import { Track } from "./track";
-import { Metadata } from "./metadata";
-import { LoggerService } from "../utils/logger-service";
-import { createOpusStreamByDownload } from "./ffmpeg";
-import { extractInfo } from "./ytdlp";
+import { Track } from "./track.js";
+import { Metadata } from "./metadata.js";
+import { LoggerService } from "../utils/logger-service.js";
+import { createOpusStreamByDownload } from "./ffmpeg.js";
+import { extractInfo } from "./ytdlp.js";
 
 export class MusicPlayer {
     private guild: Guild;

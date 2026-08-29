@@ -1,5 +1,5 @@
-import { Reply } from "../../database/models/reply";
-import { LoggerService } from "../../utils/logger-service";
+import { Reply } from "../../database/models/reply.js";
+import { LoggerService } from "../../utils/logger-service.js";
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import { Discord, Slash, SlashGroup, SlashOption } from "discordx";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 function getDm(interaction: CommandInteraction, isGlobal: boolean) {
     if (interaction.inGuild()) {

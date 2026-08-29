@@ -1,11 +1,10 @@
-import { Donor } from "../database/models/donor";
+import { Donor } from "../database/models/donor.js";
 import { TextChannel } from "discord.js";
-import filetype from "file-type";
-import { send } from "../graphics/message";
-import { ImageService } from "../image/image-service";
+import { fileTypeFromBuffer } from "file-type";
+import { send } from "../graphics/message.js";
+import { ImageService } from "../image/image-service.js";
 import { ArgsOf, Discord, On } from "discordx";
 import { injectable } from "tsyringe";
-const { fromBuffer } = filetype;
 
 @Discord()
 @injectable()
@@ -37,18 +36,18 @@ export class DonateEvent {
             for (const attachmentPair of message.attachments) {
                 const attachment = attachmentPair[1];
                 imagesData.push(
-                    await ImageService.getAttachmentImage(attachment)
+                    await ImageService.getAttachmentImage(attachment),
                 );
             }
         } else if (imgurImage) imagesData.push(imgurImage);
 
         for (const imageData of imagesData) {
-            const filetype = await fromBuffer(imageData);
+            const filetype = await fileTypeFromBuffer(imageData);
             if (!filetype || !this._imageService.isSupportType(filetype)) {
                 await send(
                     message.channel as TextChannel,
                     "這不是我能使用的呢....",
-                    20000
+                    20000,
                 );
                 continue;
             }
@@ -58,7 +57,7 @@ export class DonateEvent {
                 await send(
                     message.channel as TextChannel,
                     "Yue已經有這個了....",
-                    20000
+                    20000,
                 );
                 continue;
             }
@@ -68,17 +67,17 @@ export class DonateEvent {
                 message.author,
                 filetype.ext,
                 imageData,
-                imagePhash
+                imagePhash,
             );
             await donor.increment("amount", { by: 1 });
             await this._imageService.updateContribution(
                 message.author.id,
-                donor.type
+                donor.type,
             );
             await send(
                 message.channel as TextChannel,
                 "已收到! 請繼續上傳!",
-                5000
+                5000,
             );
         }
         if (message.deletable) await message.delete();

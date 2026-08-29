@@ -1,4 +1,4 @@
-FROM node:22.14.0 AS build
+FROM node:24.15.0 AS build
 
 WORKDIR /app
 
@@ -7,6 +7,7 @@ RUN corepack enable
 
 COPY ./package.json .
 COPY ./pnpm-lock.yaml .
+COPY ./pnpm-workspace.yaml .
 
 RUN pnpm install --frozen-lockfile
 
@@ -19,7 +20,7 @@ RUN npm pkg delete scripts.prepare
 
 RUN pnpm prune --prod
 
-FROM node:22.14.0-slim AS production
+FROM node:24.15.0-slim AS production
 
 RUN apt update && apt install -y wget ffmpeg python3   \
     && wget -O /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/download/2026.08.19/yt-dlp && chmod +x /usr/local/bin/yt-dlp  \

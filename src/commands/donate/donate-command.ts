@@ -1,15 +1,15 @@
-import { Donor } from "../../database/models/donor";
-import { LoggerService } from "../../utils/logger-service";
+import { Donor } from "../../database/models/donor.js";
+import { LoggerService } from "../../utils/logger-service.js";
 import {
     ApplicationCommandOptionType,
     CommandInteraction,
     TextChannel,
 } from "discord.js";
-import { ImageType } from "../../image/image-type";
+import { ImageType } from "../../image/image-type.js";
 import { Discord, Guard, Slash, SlashGroup, SlashOption } from "discordx";
-import { GuildOnly } from "../../guards/guild-only";
+import { GuildOnly } from "../../guards/guild-only.js";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 @Discord()
 @SlashGroup({ name: "donate", description: "貢獻相關指令" })
@@ -18,7 +18,7 @@ import { GraphicService } from "../../graphics/graphic-service";
 export class DonateCommand {
     constructor(
         private readonly _loggerService: LoggerService,
-        private readonly _graphicService: GraphicService
+        private readonly _graphicService: GraphicService,
     ) {}
 
     @Slash({ description: "開始貢獻資料" })
@@ -31,7 +31,7 @@ export class DonateCommand {
             type: ApplicationCommandOptionType.String,
         })
         typeText: string,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
         const type: ImageType | undefined = ImageType[typeText.toUpperCase()];
         if (type === undefined)
@@ -75,7 +75,7 @@ export class DonateCommand {
                           "-" +
                           interaction.channel.name
                         : "dm channel"
-                }`
+                }`,
             );
         return await interaction.reply("了解... 那麼把東西給我吧...");
     }
@@ -99,7 +99,7 @@ export class DonateCommand {
         await interaction.reply(
             `一共貢獻了${
                 donor.amount
-            }張圖片，貢獻值增加了${donor.gainContribution()}點`
+            }張圖片，貢獻值增加了${donor.gainContribution()}點`,
         );
         await donor.destroy();
     }
@@ -108,7 +108,7 @@ export class DonateCommand {
     async list(interaction: CommandInteraction) {
         const embed = this._graphicService.info(
             interaction.client,
-            "「想為Yue做些什麼? 可以呦....」\n貢獻說明:貢獻完會獲得Yue的喜愛，Yue會願意為你做更多事"
+            "「想為Yue做些什麼? 可以呦....」\n貢獻說明:貢獻完會獲得Yue的喜愛，Yue會願意為你做更多事",
         );
         embed.addFields(
             {
@@ -125,7 +125,7 @@ export class DonateCommand {
                 name: "wtfpic",
                 value: "圖戰圖或梗圖(一張一點)",
                 inline: false,
-            }
+            },
         );
         await interaction.reply({ embeds: [embed] });
     }

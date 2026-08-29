@@ -5,7 +5,7 @@ import {
 } from "discord.js";
 import { Discord, Slash, SlashOption } from "discordx";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../../graphics/graphic-service";
+import { GraphicService } from "../../graphics/graphic-service.js";
 
 @Discord()
 @injectable()
@@ -23,22 +23,22 @@ class AvatarCommand {
             type: ApplicationCommandOptionType.User,
         })
         target: User | undefined,
-        interaction: CommandInteraction
+        interaction: CommandInteraction,
     ) {
         const embed = this._graphicService.info(
             interaction.client,
-            "「看來這就是你要的呢...」"
+            "「看來這就是你要的呢...」",
         );
         if (target)
             embed.setImage(
-                target.displayAvatarURL({ extension: "png", size: 1024 })
+                target.displayAvatarURL({ extension: "png", size: 1024 }),
             );
         else
             embed.setImage(
                 interaction.user.displayAvatarURL({
                     extension: "png",
                     size: 1024,
-                })
+                }),
             );
         await interaction.reply({ embeds: [embed] });
     }

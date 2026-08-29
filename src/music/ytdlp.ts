@@ -1,7 +1,7 @@
 import { execFile } from "child_process";
 import { promisify } from "util";
-import { VideoInfo } from "./video-info";
-import { PlaylistInfo, PlaylistItem } from "./playlist-info";
+import { VideoInfo } from "./video-info.js";
+import { PlaylistInfo, PlaylistItem } from "./playlist-info.js";
 
 interface YTDLPBasicInfo {
     title: string;

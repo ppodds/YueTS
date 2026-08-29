@@ -1,7 +1,7 @@
 import { CommandInteraction } from "discord.js";
-import { MusicService } from "../../music/music-service";
+import { MusicService } from "../../music/music-service.js";
 import { Discord, Guard, Slash } from "discordx";
-import { GuildOnly } from "../../guards/guild-only";
+import { GuildOnly } from "../../guards/guild-only.js";
 import { injectable } from "tsyringe";
 
 @Discord()
@@ -25,7 +25,7 @@ class RandomCommand {
         const musicPlayer = this._musicService.get(interaction);
         musicPlayer.switchRandom();
         await interaction.reply(
-            `${musicPlayer.isRandom() ? "開啟" : "關閉"}歌曲隨機撥放`
+            `${musicPlayer.isRandom() ? "開啟" : "關閉"}歌曲隨機撥放`,
         );
     }
 }

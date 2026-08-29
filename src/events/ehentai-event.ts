@@ -2,7 +2,7 @@ import axios from "axios";
 import { GalleryMetadata, GDataResponse } from "ehentai-api";
 import { ArgsOf, Discord, On } from "discordx";
 import { injectable } from "tsyringe";
-import { GraphicService } from "../graphics/graphic-service";
+import { GraphicService } from "../graphics/graphic-service.js";
 
 @Discord()
 @injectable()
@@ -13,7 +13,7 @@ export class EhentaiEvent {
     async execute([message]: ArgsOf<"messageCreate">) {
         if (message.author.bot) return;
         const result = message.content.match(
-            /https:\/\/e(?:x|-)hentai\.org\/g\/([0-9]+)\/([0-9a-z]+)\//
+            /https:\/\/e(?:x|-)hentai\.org\/g\/([0-9]+)\/([0-9a-z]+)\//,
         );
         if (result) {
             // const url = result[0];
@@ -33,7 +33,7 @@ export class EhentaiEvent {
             ).gmetadata[0];
             const embed = this._graphicService.ehentaiBookPreviewEmbed(
                 message.client,
-                galleryMetadata
+                galleryMetadata,
             );
 
             await message.channel.send({ embeds: [embed] });

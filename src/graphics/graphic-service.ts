@@ -10,9 +10,9 @@ import {
     ButtonStyle,
     User,
 } from "discord.js";
-import { Color } from "./color";
-import { Reaction } from "./reaction";
-import { LoggerService } from "../utils/logger-service";
+import { Color } from "./color.js";
+import { Reaction } from "./reaction.js";
+import { LoggerService } from "../utils/logger-service.js";
 import {
     ActionRowMessageListener,
     Paginator,
@@ -20,7 +20,7 @@ import {
 import { GalleryMetadata } from "ehentai-api";
 import { GalleryResponse, URLBuilder } from "@ppodds/nhentai-api";
 import { singleton, injectable } from "tsyringe";
-import { ConfigService } from "../config/config-service";
+import { ConfigService } from "../config/config-service.js";
 
 @singleton()
 @injectable()
@@ -32,7 +32,7 @@ export class GraphicService {
 
     constructor(
         private readonly _configService: ConfigService,
-        private readonly _loggerService: LoggerService
+        private readonly _loggerService: LoggerService,
     ) {
         this._author = _configService.config.bot.author;
     }
@@ -40,7 +40,7 @@ export class GraphicService {
     info(
         client: Client,
         description: string,
-        color?: Color | ColorResolvable
+        color?: Color | ColorResolvable,
     ): EmbedBuilder {
         return new EmbedBuilder()
             .setColor(color || Color.PRIMARY)
@@ -63,7 +63,7 @@ export class GraphicService {
      */
     async paginationEmbed(
         interaction: CommandInteraction,
-        pages: EmbedBuilder[]
+        pages: EmbedBuilder[],
     ): Promise<void> {
         const buttonList = [
             new ButtonBuilder()
@@ -80,7 +80,7 @@ export class GraphicService {
             pages[page].setDescription(
                 pages[page].toJSON().description +
                     `
-                目前顯示的是第 ${page + 1} 頁的結果 共有 ${pages.length} 頁`
+                目前顯示的是第 ${page + 1} 頁的結果 共有 ${pages.length} 頁`,
             );
         }
         const message = (
@@ -121,7 +121,7 @@ export class GraphicService {
         embed: EmbedBuilder,
         options: number,
         callback: (option: number) => void,
-        timeout = 60000
+        timeout = 60000,
     ): Promise<void> {
         if (options > 5 || options < 1)
             throw new Error("options amount need be a integer in 1~5.");
@@ -134,7 +134,7 @@ export class GraphicService {
                         new ButtonBuilder()
                             .setCustomId("one")
                             .setEmoji(Reaction.one)
-                            .setStyle(ButtonStyle.Secondary)
+                            .setStyle(ButtonStyle.Secondary),
                     );
                     break;
                 case 1:
@@ -142,7 +142,7 @@ export class GraphicService {
                         new ButtonBuilder()
                             .setCustomId("two")
                             .setEmoji(Reaction.two)
-                            .setStyle(ButtonStyle.Secondary)
+                            .setStyle(ButtonStyle.Secondary),
                     );
                     break;
                 case 2:
@@ -150,7 +150,7 @@ export class GraphicService {
                         new ButtonBuilder()
                             .setCustomId("three")
                             .setEmoji(Reaction.three)
-                            .setStyle(ButtonStyle.Secondary)
+                            .setStyle(ButtonStyle.Secondary),
                     );
                     break;
                 case 3:
@@ -158,7 +158,7 @@ export class GraphicService {
                         new ButtonBuilder()
                             .setCustomId("four")
                             .setEmoji(Reaction.four)
-                            .setStyle(ButtonStyle.Secondary)
+                            .setStyle(ButtonStyle.Secondary),
                     );
                     break;
                 case 4:
@@ -166,7 +166,7 @@ export class GraphicService {
                         new ButtonBuilder()
                             .setCustomId("five")
                             .setEmoji(Reaction.five)
-                            .setStyle(ButtonStyle.Secondary)
+                            .setStyle(ButtonStyle.Secondary),
                     );
                     break;
             }
@@ -189,7 +189,7 @@ export class GraphicService {
             .on("collect", (arg) => {
                 for (let i = 0; i < 5; i++) {
                     if (
-                        (arg as ButtonInteraction).customId ===
+                        arg.customId ===
                         (buttonList[i].data as { custom_id?: string }).custom_id
                     ) {
                         callback(i);
@@ -216,8 +216,8 @@ export class GraphicService {
             .on("collectError", (error) =>
                 this._loggerService.error(
                     "Button select menu encounter collect error!",
-                    error.error as Error
-                )
+                    error.error as Error,
+                ),
             );
         await listener.start();
     }
@@ -309,7 +309,7 @@ export class GraphicService {
                 name: "token",
                 value: galleryMetadata.token,
                 inline: true,
-            }
+            },
         );
 
         return embed;
@@ -320,7 +320,7 @@ export class GraphicService {
 
         const builder = new URLBuilder(galleryResponse);
         const category = galleryResponse.tags.find(
-            (tag) => tag.type === "category"
+            (tag) => tag.type === "category",
         );
         const tags: string[] = [];
 
@@ -365,7 +365,7 @@ export class GraphicService {
                 name: "media id",
                 value: `${galleryResponse.media_id}`,
                 inline: true,
-            }
+            },
         );
 
         return embed;

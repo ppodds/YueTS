@@ -1,17 +1,17 @@
 import { Collection, Attachment } from "discord.js";
-import { Image } from "../database/models/image";
+import { Image } from "../database/models/image.js";
 import AsyncLock from "async-lock";
-import { ImageType, toString } from "./image-type";
+import { ImageType, toString } from "./image-type.js";
 import { StaticPool } from "node-worker-threads-pool";
-import { PhashData } from "./phash-data";
+import { PhashData } from "./phash-data.js";
 import { FileTypeResult } from "file-type";
-import { Donor } from "../database/models/donor";
-import { User } from "../database/models/user";
+import { Donor } from "../database/models/donor.js";
+import { User } from "../database/models/user.js";
 import { User as DiscordUser } from "discord.js";
 import axios from "axios";
-import { Service } from "../service";
+import { Service } from "../service.js";
 import { singleton, injectable } from "tsyringe";
-import { LoggerService } from "../utils/logger-service";
+import { LoggerService } from "../utils/logger-service.js";
 
 @singleton()
 @injectable()
@@ -20,7 +20,7 @@ export class ImageService implements Service {
     private readonly _lock = new AsyncLock();
     private readonly _staticPool = new StaticPool({
         size: 4,
-        task: "./dist/image/phash.js",
+        task: "./dist/image/phash.cjs",
     });
 
     public constructor(private readonly _loggerService: LoggerService) {
