@@ -28,7 +28,7 @@ jobs:
       current-release-tag: ${{ steps.get-current-version.outputs.tag }}
       current-release-date: ${{ steps.get-current-version.outputs.date }}
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
       with:
         ref: ${{ inputs.branch }}
     - name: Check the current version
