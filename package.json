@@ -3,7 +3,7 @@
   "private": "true",
   "description": "A TypeScript rewrite version of Discord bot Yue.",
   "type": "module",
-  "packageManager": "pnpm@12.0.0",
+  "packageManager": "pnpm@12.3.4",
   "scripts": {
     "build": "npm run clean && tsc",
     "watch": "tsc --watch",
