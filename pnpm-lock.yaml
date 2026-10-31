@@ -114,13 +114,13 @@ importers:
         version: 1.14.1
       '@discordjs/opus':
         specifier: ^0.10.0
-        version: 0.10.0
+        version: 0.10.0(supports-color@5.5.0)
       '@discordjs/rest':
         specifier: ^2.6.3
         version: 2.6.3
       '@discordjs/voice':
         specifier: ^0.19.2
-        version: 0.19.2(@discordjs/opus@0.10.0)(@emnapi/core@1.10.0)(@emnapi/runtime@1.11.3)(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+        version: 0.19.2(@discordjs/opus@0.10.0(supports-color@5.5.0))(@emnapi/core@1.10.0)(@emnapi/runtime@1.11.3)(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       '@discordx/importer':
         specifier: ^1.3.3
         version: 1.3.3
@@ -132,7 +132,7 @@ importers:
         version: 1.4.1
       axios:
         specifier: ^1.20.0
-        version: 1.20.0
+        version: 1.20.0(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0)
       bufferutil:
         specifier: ^4.1.0
         version: 4.1.0
@@ -143,14 +143,14 @@ importers:
         specifier: ^0.38.53
         version: 0.38.53
       discord.js:
-        specifier: ^14.27.0
-        version: 14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+        specifier: ^14.28.0
+        version: 14.28.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       discord.js-message-listener:
         specifier: ^3.0.3
-        version: 3.0.3(discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))
+        version: 3.0.3(discord.js@14.28.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))
       discordx:
         specifier: ^11.13.3
-        version: 11.13.3(discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))
+        version: 11.13.3(discord.js@14.28.0(bufferutil@4.1.0)(utf-8-validate@6.0.6))
       dotenv:
         specifier: ^17.4.2
         version: 17.4.2
@@ -159,10 +159,10 @@ importers:
         version: 0.0.4
       file-type:
         specifier: ^22.0.2
-        version: 22.0.2
+        version: 22.0.2(supports-color@5.5.0)
       log4js:
         specifier: ^6.9.1
-        version: 6.9.1
+        version: 6.9.1(supports-color@5.5.0)
       mariadb:
         specifier: ^3.5.3
         version: 3.5.3
@@ -174,7 +174,7 @@ importers:
         version: 0.2.2
       sequelize:
         specifier: ^6.37.8
-        version: 6.37.8(mariadb@3.5.3)
+        version: 6.37.8(mariadb@3.5.3)(supports-color@5.5.0)
       sharp:
         specifier: ~0.35.4
         version: 0.35.4(@types/node@26.4.0)
@@ -199,7 +199,7 @@ importers:
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
-        version: 10.0.1(eslint@10.9.1)
+        version: 10.0.1(eslint@10.9.1(supports-color@5.5.0))
       '@types/async-lock':
         specifier: ^1.4.2
         version: 1.4.2
@@ -214,10 +214,10 @@ importers:
         version: 13.15.10
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.68.0
-        version: 8.68.0(@typescript-eslint/parser@8.68.0(eslint@10.9.1)(typescript@6.0.3))(eslint@10.9.1)(typescript@6.0.3)
+        version: 8.68.0(@typescript-eslint/parser@8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3))(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)
       '@typescript-eslint/parser':
         specifier: ^8.68.0
-        version: 8.68.0(eslint@10.9.1)(typescript@6.0.3)
+        version: 8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)
       concurrently:
         specifier: ^10.0.5
         version: 10.0.5
@@ -226,7 +226,7 @@ importers:
         version: 10.1.0
       eslint:
         specifier: ^10.9.1
-        version: 10.9.1
+        version: 10.9.1(supports-color@5.5.0)
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -265,6 +265,10 @@ packages:
     resolution: {integrity: sha512-gSKkhXLqs96TCzk66VZuHHl8z2bQMJFGwrXC0f33ngK+FLNau4hU1PYny3DNJfNdSH+gVMzE85/d5FQ2BpcNwQ==}
     engines: {node: '>=16.11.0'}
 
+  '@discordjs/builders@1.15.0':
+    resolution: {integrity: sha512-AifaDWTw6WUDhKBn8E6mwwoyjDAcfsYq+ZE0nKSu1dMH1NLR22D3hGkNx+ctEv8NqHEHdAZnP5REteHDmn1lkA==}
+    engines: {node: '>=16.11.0'}
+
   '@discordjs/collection@1.5.3':
     resolution: {integrity: sha512-SVb428OMd3WO1paV3rm6tSjM4wC+Kecaa1EUGX7vc6/fddvw/6lg90z4QtCqm21zvVe92vMMDt9+DkIvjXImQQ==}
     engines: {node: '>=16.11.0'}
@@ -284,10 +288,6 @@ packages:
   '@discordjs/opus@0.10.0':
     resolution: {integrity: sha512-HHEnSNrSPmFEyndRdQBJN2YE6egyXS9JUnJWyP6jficK0Y+qKMEZXyYTgmzpjrxXP1exM/hKaNP7BRBUEWkU5w==}
     engines: {node: '>=12.0.0'}
-
-  '@discordjs/rest@2.6.1':
-    resolution: {integrity: sha512-wwQdgjeaoYFiaG+atbqx6aJDpqW7JHAo0HrQkBTbYzM3/PJ3GweQIpgElNcGZ26DCUOXMyawYd0YF7vtr+fZXg==}
-    engines: {node: '>=18'}
 
   '@discordjs/rest@2.6.3':
     resolution: {integrity: sha512-wvOylxNYJkwKjctS/Mn5GP1w9r3/rzyH+ThD1JlAca6zEdlHs8QWBBUQJpU5Q+W6DoIj/Ljh1IPlZs7hTU+UAg==}
@@ -1421,8 +1421,8 @@ packages:
     peerDependencies:
       discord.js: ^14.0.0
 
-  discord.js@14.27.0:
-    resolution: {integrity: sha512-qHbFlFG2N7y3LjPySYsL6A1+BnX6bkTVgo842EX0CqVPk/KTMwZkojPHEXKsQUpWZNyz5BISNHK1cPpQw0+m4A==}
+  discord.js@14.28.0:
+    resolution: {integrity: sha512-l/mIllvqvWQDWqa8NPw7b2AU2tM9oPWiWR6Jk54DTNlUdyArXbi+Y0m0sLIUtQ9O0x+tyVpDMCG6K6Kf0yeAWQ==}
     engines: {node: '>=18'}
 
   discordx@11.13.3:
@@ -2402,10 +2402,6 @@ packages:
   undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
-  undici@6.24.1:
-    resolution: {integrity: sha512-sC+b0tB1whOCzbtlx20fx3WgCXwkW627p4EA9uM+/tNNPkSS+eSEld6pAs9nDv7WbY1UUljBMYPtu9BCOrCWKA==}
-    engines: {node: '>=18.17'}
-
   undici@6.28.0:
     resolution: {integrity: sha512-LIY910g9TI13YS95lrMFrs8Rm/u/irgHeTWoKCoteeJ04CUJ92eEfj0rVn+7VKMPBpUPiUoBKfhNyLI23EE/KA==}
     engines: {node: '>=18.17'}
@@ -2614,6 +2610,16 @@ snapshots:
       ts-mixer: 6.0.4
       tslib: 2.8.1
 
+  '@discordjs/builders@1.15.0':
+    dependencies:
+      '@discordjs/formatters': 0.6.2
+      '@discordjs/util': 1.2.0
+      '@sapphire/shapeshift': 4.0.0
+      discord-api-types: 0.38.53
+      fast-deep-equal: 3.1.3
+      ts-mixer: 6.0.4
+      tslib: 2.8.1
+
   '@discordjs/collection@1.5.3': {}
 
   '@discordjs/collection@2.1.1': {}
@@ -2622,10 +2628,10 @@ snapshots:
     dependencies:
       discord-api-types: 0.38.47
 
-  '@discordjs/node-pre-gyp@0.4.5':
+  '@discordjs/node-pre-gyp@0.4.5(supports-color@5.5.0)':
     dependencies:
       detect-libc: 2.1.2
-      https-proxy-agent: 5.0.1
+      https-proxy-agent: 5.0.1(supports-color@5.5.0)
       make-dir: 3.1.0
       node-fetch: 2.7.0
       nopt: 5.0.0
@@ -2637,25 +2643,13 @@ snapshots:
       - encoding
       - supports-color
 
-  '@discordjs/opus@0.10.0':
+  '@discordjs/opus@0.10.0(supports-color@5.5.0)':
     dependencies:
-      '@discordjs/node-pre-gyp': 0.4.5
+      '@discordjs/node-pre-gyp': 0.4.5(supports-color@5.5.0)
       node-addon-api: 8.7.0
     transitivePeerDependencies:
       - encoding
       - supports-color
-
-  '@discordjs/rest@2.6.1':
-    dependencies:
-      '@discordjs/collection': 2.1.1
-      '@discordjs/util': 1.2.0
-      '@sapphire/async-queue': 1.5.5
-      '@sapphire/snowflake': 3.5.5
-      '@vladfrangu/async_event_emitter': 2.4.7
-      discord-api-types: 0.38.47
-      magic-bytes.js: 1.13.0
-      tslib: 2.8.1
-      undici: 6.24.1
 
   '@discordjs/rest@2.6.3':
     dependencies:
@@ -2673,12 +2667,12 @@ snapshots:
     dependencies:
       discord-api-types: 0.38.47
 
-  '@discordjs/voice@0.19.2(@discordjs/opus@0.10.0)(@emnapi/core@1.10.0)(@emnapi/runtime@1.11.3)(bufferutil@4.1.0)(utf-8-validate@6.0.6)':
+  '@discordjs/voice@0.19.2(@discordjs/opus@0.10.0(supports-color@5.5.0))(@emnapi/core@1.10.0)(@emnapi/runtime@1.11.3)(bufferutil@4.1.0)(utf-8-validate@6.0.6)':
     dependencies:
       '@snazzah/davey': 0.1.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.11.3)
       '@types/ws': 8.18.1
       discord-api-types: 0.38.47
-      prism-media: 1.3.5(@discordjs/opus@0.10.0)
+      prism-media: 1.3.5(@discordjs/opus@0.10.0(supports-color@5.5.0))
       tslib: 2.8.1
       ws: 8.20.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
@@ -2694,12 +2688,12 @@ snapshots:
   '@discordjs/ws@1.2.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)':
     dependencies:
       '@discordjs/collection': 2.1.1
-      '@discordjs/rest': 2.6.1
+      '@discordjs/rest': 2.6.3
       '@discordjs/util': 1.2.0
       '@sapphire/async-queue': 1.5.5
       '@types/ws': 8.18.1
       '@vladfrangu/async_event_emitter': 2.4.7
-      discord-api-types: 0.38.47
+      discord-api-types: 0.38.53
       tslib: 2.8.1
       ws: 8.20.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
@@ -2813,14 +2807,14 @@ snapshots:
   '@esbuild/win32-x64@0.27.7':
     optional: true
 
-  '@eslint-community/eslint-utils@4.9.1(eslint@10.9.1)':
+  '@eslint-community/eslint-utils@4.9.1(eslint@10.9.1(supports-color@5.5.0))':
     dependencies:
-      eslint: 10.9.1
+      eslint: 10.9.1(supports-color@5.5.0)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.2': {}
 
-  '@eslint/config-array@0.23.5':
+  '@eslint/config-array@0.23.5(supports-color@5.5.0)':
     dependencies:
       '@eslint/object-schema': 3.0.5
       debug: 4.4.3(supports-color@5.5.0)
@@ -2836,9 +2830,9 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
 
-  '@eslint/js@10.0.1(eslint@10.9.1)':
+  '@eslint/js@10.0.1(eslint@10.9.1(supports-color@5.5.0))':
     optionalDependencies:
-      eslint: 10.9.1
+      eslint: 10.9.1(supports-color@5.5.0)
 
   '@eslint/object-schema@3.0.5': {}
 
@@ -3145,7 +3139,7 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@tokenizer/inflate@0.4.1':
+  '@tokenizer/inflate@0.4.1(supports-color@5.5.0)':
     dependencies:
       debug: 4.4.3(supports-color@5.5.0)
       token-types: 6.1.2
@@ -3208,15 +3202,15 @@ snapshots:
     dependencies:
       '@types/node': 24.12.4
 
-  '@typescript-eslint/eslint-plugin@8.68.0(@typescript-eslint/parser@8.68.0(eslint@10.9.1)(typescript@6.0.3))(eslint@10.9.1)(typescript@6.0.3)':
+  '@typescript-eslint/eslint-plugin@8.68.0(@typescript-eslint/parser@8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3))(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)':
     dependencies:
       '@eslint-community/regexpp': 4.12.2
-      '@typescript-eslint/parser': 8.68.0(eslint@10.9.1)(typescript@6.0.3)
+      '@typescript-eslint/parser': 8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)
       '@typescript-eslint/scope-manager': 8.68.0
-      '@typescript-eslint/type-utils': 8.68.0(eslint@10.9.1)(typescript@6.0.3)
-      '@typescript-eslint/utils': 8.68.0(eslint@10.9.1)(typescript@6.0.3)
+      '@typescript-eslint/type-utils': 8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)
+      '@typescript-eslint/utils': 8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)
       '@typescript-eslint/visitor-keys': 8.68.0
-      eslint: 10.9.1
+      eslint: 10.9.1(supports-color@5.5.0)
       ignore: 7.0.5
       natural-compare: 1.4.0
       ts-api-utils: 2.5.0(typescript@6.0.3)
@@ -3224,19 +3218,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@8.68.0(eslint@10.9.1)(typescript@6.0.3)':
+  '@typescript-eslint/parser@8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/scope-manager': 8.68.0
       '@typescript-eslint/types': 8.68.0
-      '@typescript-eslint/typescript-estree': 8.68.0(typescript@6.0.3)
+      '@typescript-eslint/typescript-estree': 8.68.0(supports-color@5.5.0)(typescript@6.0.3)
       '@typescript-eslint/visitor-keys': 8.68.0
       debug: 4.4.3(supports-color@5.5.0)
-      eslint: 10.9.1
+      eslint: 10.9.1(supports-color@5.5.0)
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/project-service@8.68.0(typescript@6.0.3)':
+  '@typescript-eslint/project-service@8.68.0(supports-color@5.5.0)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/tsconfig-utils': 8.68.0(typescript@6.0.3)
       '@typescript-eslint/types': 8.68.0
@@ -3254,13 +3248,13 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  '@typescript-eslint/type-utils@8.68.0(eslint@10.9.1)(typescript@6.0.3)':
+  '@typescript-eslint/type-utils@8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/types': 8.68.0
-      '@typescript-eslint/typescript-estree': 8.68.0(typescript@6.0.3)
-      '@typescript-eslint/utils': 8.68.0(eslint@10.9.1)(typescript@6.0.3)
+      '@typescript-eslint/typescript-estree': 8.68.0(supports-color@5.5.0)(typescript@6.0.3)
+      '@typescript-eslint/utils': 8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)
       debug: 4.4.3(supports-color@5.5.0)
-      eslint: 10.9.1
+      eslint: 10.9.1(supports-color@5.5.0)
       ts-api-utils: 2.5.0(typescript@6.0.3)
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -3268,9 +3262,9 @@ snapshots:
 
   '@typescript-eslint/types@8.68.0': {}
 
-  '@typescript-eslint/typescript-estree@8.68.0(typescript@6.0.3)':
+  '@typescript-eslint/typescript-estree@8.68.0(supports-color@5.5.0)(typescript@6.0.3)':
     dependencies:
-      '@typescript-eslint/project-service': 8.68.0(typescript@6.0.3)
+      '@typescript-eslint/project-service': 8.68.0(supports-color@5.5.0)(typescript@6.0.3)
       '@typescript-eslint/tsconfig-utils': 8.68.0(typescript@6.0.3)
       '@typescript-eslint/types': 8.68.0
       '@typescript-eslint/visitor-keys': 8.68.0
@@ -3283,13 +3277,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.68.0(eslint@10.9.1)(typescript@6.0.3)':
+  '@typescript-eslint/utils@8.68.0(eslint@10.9.1(supports-color@5.5.0))(supports-color@5.5.0)(typescript@6.0.3)':
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.9.1)
+      '@eslint-community/eslint-utils': 4.9.1(eslint@10.9.1(supports-color@5.5.0))
       '@typescript-eslint/scope-manager': 8.68.0
       '@typescript-eslint/types': 8.68.0
-      '@typescript-eslint/typescript-estree': 8.68.0(typescript@6.0.3)
-      eslint: 10.9.1
+      '@typescript-eslint/typescript-estree': 8.68.0(supports-color@5.5.0)(typescript@6.0.3)
+      eslint: 10.9.1(supports-color@5.5.0)
       typescript: 6.0.3
     transitivePeerDependencies:
       - supports-color
@@ -3354,7 +3348,7 @@ snapshots:
 
   acorn@8.16.0: {}
 
-  agent-base@6.0.2:
+  agent-base@6.0.2(supports-color@5.5.0):
     dependencies:
       debug: 4.4.3(supports-color@5.5.0)
     transitivePeerDependencies:
@@ -3393,11 +3387,11 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  axios@1.20.0:
+  axios@1.20.0(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0):
     dependencies:
-      follow-redirects: 1.16.0
+      follow-redirects: 1.16.0(debug@4.4.3(supports-color@5.5.0))
       form-data: 4.0.6
-      https-proxy-agent: 5.0.1
+      https-proxy-agent: 5.0.1(supports-color@5.5.0)
       proxy-from-env: 2.1.0
     transitivePeerDependencies:
       - debug
@@ -3593,14 +3587,14 @@ snapshots:
 
   discord-api-types@0.38.53: {}
 
-  discord.js-message-listener@3.0.3(discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)):
+  discord.js-message-listener@3.0.3(discord.js@14.28.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)):
     dependencies:
-      discord.js: 14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      discord.js: 14.28.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       tiny-typed-emitter: 2.1.0
 
-  discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6):
+  discord.js@14.28.0(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
-      '@discordjs/builders': 1.14.1
+      '@discordjs/builders': 1.15.0
       '@discordjs/collection': 1.5.3
       '@discordjs/formatters': 0.6.2
       '@discordjs/rest': 2.6.3
@@ -3617,11 +3611,11 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  discordx@11.13.3(discord.js@14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)):
+  discordx@11.13.3(discord.js@14.28.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)):
     dependencies:
       '@discordx/di': 3.3.4
       '@discordx/internal': 1.2.0
-      discord.js: 14.27.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      discord.js: 14.28.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       lodash: 4.18.1
 
   dotenv@17.4.2: {}
@@ -3705,11 +3699,11 @@ snapshots:
 
   eslint-visitor-keys@5.0.1: {}
 
-  eslint@10.9.1:
+  eslint@10.9.1(supports-color@5.5.0):
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.9.1)
+      '@eslint-community/eslint-utils': 4.9.1(eslint@10.9.1(supports-color@5.5.0))
       '@eslint-community/regexpp': 4.12.2
-      '@eslint/config-array': 0.23.5
+      '@eslint/config-array': 0.23.5(supports-color@5.5.0)
       '@eslint/config-helpers': 0.7.0
       '@eslint/core': 1.2.1
       '@eslint/plugin-kit': 0.7.2
@@ -3788,9 +3782,9 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-type@22.0.2:
+  file-type@22.0.2(supports-color@5.5.0):
     dependencies:
-      '@tokenizer/inflate': 0.4.1
+      '@tokenizer/inflate': 0.4.1(supports-color@5.5.0)
       strtok3: 10.3.5
       token-types: 6.1.2
       uint8array-extras: 1.5.0
@@ -3813,7 +3807,9 @@ snapshots:
 
   flatted@3.4.2: {}
 
-  follow-redirects@1.16.0: {}
+  follow-redirects@1.16.0(debug@4.4.3(supports-color@5.5.0)):
+    optionalDependencies:
+      debug: 4.4.3(supports-color@5.5.0)
 
   foreground-child@3.3.1:
     dependencies:
@@ -3937,9 +3933,9 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
-  https-proxy-agent@5.0.1:
+  https-proxy-agent@5.0.1(supports-color@5.5.0):
     dependencies:
-      agent-base: 6.0.2
+      agent-base: 6.0.2(supports-color@5.5.0)
       debug: 4.4.3(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
@@ -4026,13 +4022,13 @@ snapshots:
 
   lodash@4.18.1: {}
 
-  log4js@6.9.1:
+  log4js@6.9.1(supports-color@5.5.0):
     dependencies:
       date-format: 4.0.14
       debug: 4.4.3(supports-color@5.5.0)
       flatted: 3.4.2
       rfdc: 1.4.1
-      streamroller: 3.1.5
+      streamroller: 3.1.5(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -4230,9 +4226,9 @@ snapshots:
 
   prettier@3.9.6: {}
 
-  prism-media@1.3.5(@discordjs/opus@0.10.0):
+  prism-media@1.3.5(@discordjs/opus@0.10.0(supports-color@5.5.0)):
     optionalDependencies:
-      '@discordjs/opus': 0.10.0
+      '@discordjs/opus': 0.10.0(supports-color@5.5.0)
 
   proxy-from-env@2.1.0: {}
 
@@ -4331,7 +4327,7 @@ snapshots:
 
   sequelize-pool@7.1.0: {}
 
-  sequelize@6.37.8(mariadb@3.5.3):
+  sequelize@6.37.8(mariadb@3.5.3)(supports-color@5.5.0):
     dependencies:
       '@types/debug': 4.1.13
       '@types/validator': 13.15.10
@@ -4435,7 +4431,7 @@ snapshots:
 
   stream-buffers@3.0.3: {}
 
-  streamroller@3.1.5:
+  streamroller@3.1.5(supports-color@5.5.0):
     dependencies:
       date-format: 4.0.14
       debug: 4.4.3(supports-color@5.5.0)
@@ -4616,8 +4612,6 @@ snapshots:
   undici-types@7.16.0: {}
 
   undici-types@8.3.0: {}
-
-  undici@6.24.1: {}
 
   undici@6.28.0: {}
 
